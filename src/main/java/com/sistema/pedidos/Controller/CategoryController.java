@@ -51,6 +51,11 @@ public class CategoryController {
         return  new ResponseEntity<Page<Category>>(categoryPage,HttpStatus.OK);
     }
 
+    @GetMapping("/list/activo")
+    public ResponseEntity<?> listarCategoryActivo(){
+        return ResponseEntity.ok(categoryService.listarCategoryActivo());
+    }
+
     @DeleteMapping("/delete/{id}")
     public  void eliminarId(@PathVariable Long id){
         categoryService.eliminarCategory(id);

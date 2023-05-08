@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 08-05-2023 a las 01:41:27
--- Versión del servidor: 8.0.32-0ubuntu0.22.04.2
+-- Tiempo de generación: 08-05-2023 a las 14:16:04
+-- Versión del servidor: 8.0.33-0ubuntu0.22.04.1
 -- Versión de PHP: 8.1.2-1ubuntu2.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -44,11 +44,12 @@ INSERT INTO `categoria` (`id`, `ct_estado`, `ct_nombre`) VALUES
 (10, b'0', 'VERDURA02'),
 (11, b'0', 'VERDURA03'),
 (12, b'1', 'VERDURA10'),
-(13, b'1', 'VERDURA10'),
 (14, b'1', 'VERDURA12'),
 (15, b'0', 'VERDURA13'),
 (16, b'1', 'VERDURA14'),
-(17, b'0', 'VERDURA14');
+(17, b'0', 'VERDURA14'),
+(19, b'1', 'aaaaaaaaaaaaaaaaaaaaaaa'),
+(20, b'1', 'aaaaaaa');
 
 -- --------------------------------------------------------
 
@@ -88,7 +89,8 @@ CREATE TABLE `producto` (
 INSERT INTO `producto` (`id_producto`, `descripcion`, `estado`, `ganancia`, `nombre`, `precio_venta`, `url_imagen`, `category_id`, `evento_id_evento`, `promocion_id_promocion`) VALUES
 (1, 'PLATO FUER', b'0', NULL, 'PLAT01', 15, NULL, 3, NULL, NULL),
 (2, 'des', b'1', NULL, 'plato ferte', 150, 'https://www.facebook.com/', 7, NULL, NULL),
-(3, 'soipas', b'1', NULL, 'sopas', 1130, 'https://github.com/', 3, NULL, NULL);
+(3, 'soipas', b'1', NULL, 'sopas', 1130, 'https://github.com/', 3, NULL, NULL),
+(4, 'juuuuuuuu', b'1', 100, 'juuuuuuuu', 25, 'juuuuuuuu', 20, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -234,7 +236,7 @@ ALTER TABLE `usuario_rol`
 -- AUTO_INCREMENT de la tabla `categoria`
 --
 ALTER TABLE `categoria`
-  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de la tabla `evento`
@@ -246,7 +248,7 @@ ALTER TABLE `evento`
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `id_producto` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_producto` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `promocion`
