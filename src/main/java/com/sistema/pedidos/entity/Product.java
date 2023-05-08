@@ -18,7 +18,7 @@ public class Product {
     @Column
     private  String descripcion;
     @Column
-    private  boolean estado;
+    private  boolean estado=true;
     @Column
     private Double precioVenta;
     @Column

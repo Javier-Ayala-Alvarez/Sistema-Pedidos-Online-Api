@@ -1,8 +1,11 @@
 package com.sistema.pedidos.Controller;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.List;
+
+import com.sistema.pedidos.service.impl.UsuarioServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -34,7 +37,11 @@ public class UsuarioController {
 	
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
-	
+
+
+
+
+	/*clientes*/
 	@PostMapping("/")
 	//@PreAuthorize("hasAuthority('ADMIN')")
 	public Usuario guardaUsuario(@RequestBody Usuario usuario) throws Exception{
@@ -55,6 +62,12 @@ public class UsuarioController {
 		roles.add(usuarioRol);
 		return usuarioService.guardarUsuario(usuario, roles);
 	}
+
+	/*CREAR COCINA*/
+	/*CREAR DELIVERY*/
+
+
+
 	
 	@GetMapping("/todos")
 	//@PreAuthorize("hasAuthority('ADMIN')")
@@ -67,7 +80,8 @@ public class UsuarioController {
 	public Usuario obtenerUsuario(@PathVariable("username") String username) {
 		return usuarioService.obtenerUsuario(username);
 	}
-	
+
+
 	@DeleteMapping("/{usuarioId}")
 	public void eliminarUsuario(@PathVariable("usuarioId") Long usuarioId) {
 		usuarioService.eliminarUsuario(usuarioId);

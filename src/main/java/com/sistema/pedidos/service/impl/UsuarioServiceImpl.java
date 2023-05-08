@@ -1,5 +1,6 @@
 package com.sistema.pedidos.service.impl;
 
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 		// TODO Auto-generated method stub
 		return usuarioRepository.findByUsername(username);
 	}
+
+
 
 	@Override
 	public void eliminarUsuario(Long usuarioId) {

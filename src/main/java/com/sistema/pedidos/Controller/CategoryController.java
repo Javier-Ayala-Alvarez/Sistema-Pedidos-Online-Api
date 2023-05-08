@@ -22,9 +22,10 @@ public class CategoryController {
 
     @PostMapping("/new")
     public Category guardarCategory(@RequestBody Category category){
-
         return categoryService.guardarCategory(category);
     }
+
+
     @GetMapping("/list/pageables")
     public ResponseEntity<Page<Category>> listarCategoryPorPagina(
             @RequestParam(defaultValue = ConstantUtileria.NUMERO_PAGINA_DEFECTO)int page,
@@ -36,6 +37,23 @@ public class CategoryController {
                 PageRequest.of(page,size, Sort.by(order)));
 
         return new ResponseEntity<Page<Category>>(categoryPage, HttpStatus.OK);
+    }
+
+    @GetMapping("/list/search")
+    public ResponseEntity<Page<Category>>  listarCategoryPorNombrePagina(
+            @RequestParam("category")String cat_Nombre,
+            @RequestParam(defaultValue =ConstantUtileria.NUMERO_PAGINA_DEFECTO) int page,
+            @RequestParam(defaultValue =ConstantUtileria.MEDIDA_PAGINA_DEFECTO) int size,
+            @RequestParam(defaultValue =ConstantUtileria.ORDENAR_DIRECCION_DEFECTO) boolean asc)
+    {
+        Page<Category> categoryPage=categoryService.listarCategoryPorNombrePagina(cat_Nombre,
+                PageRequest.of(page,size));
+        return  new ResponseEntity<Page<Category>>(categoryPage,HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public  void eliminarId(@PathVariable Long id){
+        categoryService.eliminarCategory(id);
     }
 
 

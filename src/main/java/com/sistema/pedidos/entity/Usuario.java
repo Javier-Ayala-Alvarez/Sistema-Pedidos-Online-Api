@@ -35,7 +35,9 @@ public class Usuario implements UserDetails {
 	private String telefono;
 	private boolean enabled =true;
 	private String perfil;
-	
+
+
+	//nose
 	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "usuario")
 	@JsonIgnore
 	private Set<UsuarioRol> usuarioRoles=new HashSet<>();
