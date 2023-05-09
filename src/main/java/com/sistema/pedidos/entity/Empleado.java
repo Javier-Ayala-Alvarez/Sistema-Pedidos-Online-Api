@@ -14,8 +14,9 @@ import java.util.Date;
 @NoArgsConstructor
 public class Empleado {
     @Id
+    @Column(name = "id_empleado")
     @GeneratedValue(strategy =  GenerationType.AUTO)
-    private Integer idEmpleado;
+    private Integer id;
     @Column
     private String nombre;
     @Column
