@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 08-05-2023 a las 14:16:04
+-- Tiempo de generación: 08-05-2023 a las 20:28:42
 -- Versión del servidor: 8.0.33-0ubuntu0.22.04.1
 -- Versión de PHP: 8.1.2-1ubuntu2.11
 
@@ -50,6 +50,28 @@ INSERT INTO `categoria` (`id`, `ct_estado`, `ct_nombre`) VALUES
 (17, b'0', 'VERDURA14'),
 (19, b'1', 'aaaaaaaaaaaaaaaaaaaaaaa'),
 (20, b'1', 'aaaaaaa');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `company`
+--
+
+CREATE TABLE `company` (
+  `id` bigint NOT NULL,
+  `cp_direccion` varchar(255) DEFAULT NULL,
+  `cp_nombre` varchar(255) DEFAULT NULL,
+  `cp_abreviatura` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Volcado de datos para la tabla `company`
+--
+
+INSERT INTO `company` (`id`, `cp_direccion`, `cp_nombre`, `cp_abreviatura`) VALUES
+(1, 'AV SUR BULEVAR', 'primera matrizs', 'CM'),
+(3, 'AV SUR BULEVAR', 'CASA MATRIZzzzzzzzzzzzzzzzzzzzzzzzzz ', 'CM'),
+(4, 'AV SUR BULEVAR', 'CASA MATRIZzzzzzzzzzzzzzzzzzzzzzzzzz ', 'CM');
 
 -- --------------------------------------------------------
 
@@ -188,6 +210,12 @@ ALTER TABLE `categoria`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `company`
+--
+ALTER TABLE `company`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `evento`
 --
 ALTER TABLE `evento`
@@ -237,6 +265,12 @@ ALTER TABLE `usuario_rol`
 --
 ALTER TABLE `categoria`
   MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
+-- AUTO_INCREMENT de la tabla `company`
+--
+ALTER TABLE `company`
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `evento`
