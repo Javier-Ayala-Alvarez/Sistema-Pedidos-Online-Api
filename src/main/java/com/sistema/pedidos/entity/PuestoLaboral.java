@@ -1,26 +1,22 @@
 package com.sistema.pedidos.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "sucursales")
+@Table(name = "puesto")
 @Data
-public class Sucursal {
-
+@NoArgsConstructor
+@AllArgsConstructor
+public class PuestoLaboral {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-
     @Column
     private String nombre;
     @Column
-    private String abreviatura;
-    @Column
-    private String direccion;
-    @Column
-    private boolean estado;
-    @ManyToOne
-    private Company empresa;
+    private Boolean estado;
 }
