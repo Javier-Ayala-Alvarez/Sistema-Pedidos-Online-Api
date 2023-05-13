@@ -24,18 +24,26 @@ import com.sun.istack.NotNull;
 public class Usuario implements UserDetails {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String username;
 	@NotNull
 	private String password;
-	private String nombre;
-	private String apellido;
+	/*private String nombre;
+	private String apellido;*/
 	private String email;
-	private String telefono;
+	//private String telefono;
 	private boolean enabled =true;
-	private String perfil;
+	//private String perfil;
 
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
 	//nose
 	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "usuario")
@@ -66,37 +74,8 @@ public class Usuario implements UserDetails {
 		this.password = password;
 	}
 
-	public String getNombre() {
-		return nombre;
-	}
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
 
-	public String getApellido() {
-		return apellido;
-	}
-
-	public void setApellido(String apellido) {
-		this.apellido = apellido;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getTelefono() {
-		return telefono;
-	}
-
-	public void setTelefono(String telefono) {
-		this.telefono = telefono;
-	}
 
 	public boolean isEnabled() {
 		return enabled;
@@ -106,13 +85,6 @@ public class Usuario implements UserDetails {
 		this.enabled = enabled;
 	}
 
-	public String getPerfil() {
-		return perfil;
-	}
-
-	public void setPerfil(String perfil) {
-		this.perfil = perfil;
-	}
 
 	public Set<UsuarioRol> getUsuarioRoles() {
 		return usuarioRoles;
@@ -126,20 +98,7 @@ public class Usuario implements UserDetails {
 		super();
 	}
 
-	public Usuario(Long id, String username, String password, String nombre, String apellido, String email,
-			String telefono, boolean enabled, String perfil, Set<UsuarioRol> usuarioRoles) {
-		super();
-		this.id = id;
-		this.username = username;
-		this.password = password;
-		this.nombre = nombre;
-		this.apellido = apellido;
-		this.email = email;
-		this.telefono = telefono;
-		this.enabled = enabled;
-		this.perfil = perfil;
-		this.usuarioRoles = usuarioRoles;
-	}
+
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

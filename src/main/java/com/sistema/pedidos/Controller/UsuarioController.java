@@ -1,13 +1,17 @@
 package com.sistema.pedidos.Controller;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
-import java.util.List;
+import java.util.*;
 
-import com.sistema.pedidos.service.impl.UsuarioServiceImpl;
+import com.sistema.pedidos.DTO.RegistroDTO;
+import com.sistema.pedidos.entity.Rol;
+import com.sistema.pedidos.repository.RolRepositorio;
+import com.sistema.pedidos.repository.UsuarioRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,11 +21,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sistema.pedidos.entity.Rol;
 import com.sistema.pedidos.entity.Usuario;
 import com.sistema.pedidos.entity.UsuarioRol;
 import com.sistema.pedidos.repository.UsuarioRepository;
 import com.sistema.pedidos.service.UsuarioService;
+
+import javax.validation.Valid;
 
 
 @RestController
@@ -34,19 +39,23 @@ public class UsuarioController {
 	
 	@Autowired
 	private UsuarioRepository usuarioRepository;
-	
+	@Autowired
+	private UsuarioRepositorio usuarioRepositorio;
+	@Autowired
+	private RolRepositorio rolRepositorio;
+
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-
-
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	/*clientes*/
 	@PostMapping("/")
 	//@PreAuthorize("hasAuthority('ADMIN')")
-	public Usuario guardaUsuario(@RequestBody Usuario usuario) throws Exception{
+	public ResponseEntity<?> guardaUsuario(@RequestBody Usuario usuario) throws Exception{
 		
-		usuario.setPerfil("default.png");
+		//usuario.setPerfil("default.png");
 		usuario.setPassword(this.bCryptPasswordEncoder.encode(usuario.getPassword()));
 		
 		Set<UsuarioRol> roles = new HashSet<>();
@@ -60,15 +69,40 @@ public class UsuarioController {
 		usuarioRol.setRol(rol);
 		
 		roles.add(usuarioRol);
-		return usuarioService.guardarUsuario(usuario, roles);
+		return new ResponseEntity<>(usuarioService.guardarUsuario(usuario, roles), HttpStatus.CREATED);
+	}
+	//@PreAuthorize("hasRole('ADMIN')")
+	@PostMapping("/GuardarUsuarioEmpleado")
+	public ResponseEntity<?> registrarUsuario(@Valid  @RequestBody RegistroDTO registroDTO) throws Exception {
+		if (usuarioRepositorio.existsByUsername(registroDTO.getUsername())) {
+			return new ResponseEntity<>("Ese nombre de usuario ya existe", HttpStatus.BAD_REQUEST);
+		}
+
+		if (usuarioRepositorio.existsByEmail(registroDTO.getEmail())) {
+			return new ResponseEntity<>("Ese email de usuario ya existe", HttpStatus.BAD_REQUEST);
+		}
+
+		Usuario usuario = new Usuario();
+		//usuario.setUsername(registroDTO.getNombre());
+		usuario.setUsername(registroDTO.getUsername());
+		usuario.setEmail(registroDTO.getEmail());
+		usuario.setPassword(passwordEncoder.encode(registroDTO.getPassword()));
+		Rol rol;
+		try {
+			rol = rolRepositorio.findByNombre(registroDTO.getRol()).get();
+
+		} catch (Exception e) {
+			return new ResponseEntity<>("No existe el rol", HttpStatus.BAD_REQUEST);
+
+		}
+		UsuarioRol usuarioRol = new UsuarioRol();
+		usuarioRol.setUsuario(usuario);
+		usuarioRol.setRol(rol);
+		Set<UsuarioRol> roles = new HashSet<>();
+		roles.add(usuarioRol);
+		return new ResponseEntity<>(usuarioService.guardarUsuario(usuario, roles, registroDTO.getIdEmployee()), HttpStatus.CREATED);
 	}
 
-	/*CREAR COCINA*/
-	/*CREAR DELIVERY*/
-
-
-
-	
 	@GetMapping("/todos")
 	//@PreAuthorize("hasAuthority('ADMIN')")
 	public List<Usuario> listarUsuarios(){

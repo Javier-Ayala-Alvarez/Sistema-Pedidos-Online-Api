@@ -1,8 +1,5 @@
 package com.sistema.pedidos;
 
-import com.sistema.pedidos.entity.Rol;
-import com.sistema.pedidos.entity.Usuario;
-import com.sistema.pedidos.entity.UsuarioRol;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -12,9 +9,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.sistema.pedidos.service.UsuarioService;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @SpringBootApplication
 public class SistemaPedidosOnlineBackendApplication implements CommandLineRunner{
