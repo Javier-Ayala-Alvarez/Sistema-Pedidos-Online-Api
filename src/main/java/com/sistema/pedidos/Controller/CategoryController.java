@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("api/category")
 public class CategoryController {
@@ -25,6 +27,25 @@ public class CategoryController {
         return categoryService.guardarCategory(category);
     }
 
+    @PutMapping("/actualizar/{id}")
+    public ResponseEntity<Category>actualizarCategory(@RequestBody Category category,@PathVariable Long id){
+        return categoryService.actualizarCategory(category,id);
+    }
+
+    @GetMapping("/list/{id}")
+    public ResponseEntity<Category> listarCategoryPorId(@PathVariable Long id){
+        try {
+            Category category=categoryService.listarCategoryPorId(id);
+            return new ResponseEntity<Category>(category,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<Category>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/list")
+    public List<Category> listarCategory(){
+        return categoryService.listarCategory();
+    }
 
     @GetMapping("/list/pageables")
     public ResponseEntity<Page<Category>> listarCategoryPorPagina(
@@ -50,6 +71,9 @@ public class CategoryController {
                 PageRequest.of(page,size));
         return  new ResponseEntity<Page<Category>>(categoryPage,HttpStatus.OK);
     }
+
+
+
 
     @GetMapping("/list/activo")
     public ResponseEntity<?> listarCategoryActivo(){

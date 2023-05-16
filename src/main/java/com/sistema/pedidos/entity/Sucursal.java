@@ -10,8 +10,8 @@ import javax.persistence.*;
 public class Sucursal {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column
     private String nombre;
@@ -20,7 +20,7 @@ public class Sucursal {
     @Column
     private String direccion;
     @Column
-    private boolean estado;
+    private boolean estado=true;
     @ManyToOne
     private Company empresa;
 }

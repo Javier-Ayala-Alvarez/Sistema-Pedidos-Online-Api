@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CategoryServiceImpl  implements CategoryService {
@@ -28,20 +29,37 @@ public class CategoryServiceImpl  implements CategoryService {
     }
 
     @Override
+    public ResponseEntity<Category> actualizarCategory(Category category, Long id) {
+
+        Optional<Category>categoryOptional=categoryRepository.findById(id);
+        if(!categoryOptional.isPresent()){
+            return  ResponseEntity.unprocessableEntity().build();
+        }
+
+        category.setCT_Nombre(category.getCT_Nombre());
+        category.setCT_Estado(category.isCT_Estado());
+        category.setId(categoryOptional.get().getId());
+
+        Category categoryGuardado=categoryRepository.save(category);
+        return ResponseEntity.ok(categoryGuardado);
+    }
+
+
+    @Override
     public List<Category> listarCategoryActivo() {
         return new ArrayList<>(categoryRepository.listarCategoryActivo());
     }
 
     @Override
-    public Category actualizarCategory(Category category, Long id) {
-
-        Category existenteCategory=categoryRepository.findById(id).get();
-
-        existenteCategory.setCT_Nombre(category.getCT_Nombre());
-        existenteCategory.setCT_Estado(category.isCT_Estado());
-        Category categoryGuardado=categoryRepository.save(existenteCategory);
-        return new  ResponseEntity<Category>(categoryGuardado, HttpStatus.OK).getBody();
+    public List<Category> listarCategory() {
+        return categoryRepository.findAll();
     }
+
+    @Override
+    public Category listarCategoryPorId(Long id) {
+        return categoryRepository.findById(id).get();
+    }
+
 
     @Override
     public Page<Category> listarCategoryPorPagina(Pageable pageable) {

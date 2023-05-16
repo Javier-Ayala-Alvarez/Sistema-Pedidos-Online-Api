@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -33,5 +34,10 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public Company listarCompany(Long id) {
         return  companyRepository.findById(id).get() ;
+    }
+
+    @Override
+    public List<Company> listarCompanyTodos() {
+        return companyRepository.findAll();
     }
 }

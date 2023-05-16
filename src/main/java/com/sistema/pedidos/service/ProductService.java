@@ -8,8 +8,11 @@ import org.springframework.http.ResponseEntity;
 public interface ProductService {
 
 
-    public ResponseEntity<Object> agregarProduct(Product product);
+    public ResponseEntity<Object> guardarProduct(Product product);
 
+    public ResponseEntity<Product> actualizarProduct(Product product,Long id);
+
+    public Product listarProductPorId(Long id);
     public Page<Product> listarProductPorPagina(Pageable pageable);
 
     public Page<Product> listarProductPorNombrePagina(String nombre,Pageable pageable);
