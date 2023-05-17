@@ -27,7 +27,8 @@ public class EmpleadoController {
     public ResponseEntity<Page<Empleado>> listarEmpleadosPorPagina(
             @RequestParam(defaultValue = ConstantUtileria.NUMERO_PAGINA_DEFECTO) int page,
             @RequestParam(defaultValue = ConstantUtileria.MEDIDA_PAGINA_DEFECTO) int size,
-            @RequestParam(defaultValue = ConstantUtileria.ORDENAR_DEFECTO) String order
+            @RequestParam(defaultValue = ConstantUtileria.ORDENAR_DEFECTO) String order,
+            @RequestParam(defaultValue = ConstantUtileria.ORDENAR_DIRECCION_DEFECTO) boolean asc
     ) {
         Page<Empleado> empleadoPage = empleadoService.getAllWithPagination(PageRequest.of(page, size, Sort.by(order)));
         return new ResponseEntity<>(empleadoPage, HttpStatus.OK);
@@ -59,7 +60,8 @@ public class EmpleadoController {
     public ResponseEntity<Page<Empleado>> listarEmpleadosPorNombrePagina(
             @RequestParam("empleado")String emp_Nombre,
             @RequestParam(defaultValue =ConstantUtileria.NUMERO_PAGINA_DEFECTO) int page,
-            @RequestParam(defaultValue =ConstantUtileria.MEDIDA_PAGINA_DEFECTO) int size
+            @RequestParam(defaultValue =ConstantUtileria.MEDIDA_PAGINA_DEFECTO) int size,
+            @RequestParam(defaultValue = ConstantUtileria.ORDENAR_DIRECCION_DEFECTO) boolean asc
     ) {
         Page<Empleado> EmpleadoPage=empleadoService.listarEmpleadoPorNombrePagina(emp_Nombre,
                 PageRequest.of(page,size));
