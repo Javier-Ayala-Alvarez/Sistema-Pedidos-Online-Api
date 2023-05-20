@@ -16,7 +16,7 @@ public class RegistroDTO {
 
 	//private String nombre;
 	private String username;
-	@NotEmpty(message = "La contraseña de puede ser vacia")
+	@NotEmpty(message = "El email no puede ser vacia")
 	@Email(message = "Debe ser de tipo correo")
 	private String email;
 	@NotEmpty(message = "La contraseña de puede ser vacia")

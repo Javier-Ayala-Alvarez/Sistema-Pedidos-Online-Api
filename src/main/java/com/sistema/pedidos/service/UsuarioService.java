@@ -2,6 +2,7 @@ package com.sistema.pedidos.service;
 
 import java.util.Set;
 
+import com.sistema.pedidos.DTO.UsuarioDTO;
 import com.sistema.pedidos.entity.Usuario;
 import com.sistema.pedidos.entity.UsuarioRol;
 import org.springframework.http.ResponseEntity;
@@ -14,4 +15,5 @@ public interface UsuarioService {
 	public Usuario obtenerUsuario(String username);
 	
 	public void eliminarUsuario(Long usuarioId);
+	public ResponseEntity<UsuarioDTO> modificarUsuario(UsuarioDTO usuario);
 }
