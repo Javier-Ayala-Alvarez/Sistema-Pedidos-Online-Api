@@ -3,7 +3,9 @@ package com.sistema.pedidos.Controller;
 import java.util.*;
 
 import com.sistema.pedidos.DTO.RegistroDTO;
+import com.sistema.pedidos.DTO.UsuarioClienteDTO;
 import com.sistema.pedidos.DTO.UsuarioDTO;
+import com.sistema.pedidos.entity.ClientesEntity;
 import com.sistema.pedidos.entity.Rol;
 import com.sistema.pedidos.repository.RolRepositorio;
 import com.sistema.pedidos.repository.UsuarioRepositorio;
@@ -129,6 +131,42 @@ public class UsuarioController {
     @DeleteMapping("/{usuarioId}")
     public void eliminarUsuario(@PathVariable("usuarioId") Long usuarioId) {
         usuarioService.eliminarUsuario(usuarioId);
+    }
+
+
+    @PostMapping ("/GuardarUsuarioCliente")
+    public  ResponseEntity<?> guardarUsuarioCliente(@Valid @RequestBody UsuarioClienteDTO usurioCliente) throws Exception {
+        if (usuarioRepositorio.existsByUsername(usurioCliente.getUsuario().getUsername())) {
+            return new ResponseEntity<>("Ese nombre de usuario ya existe", HttpStatus.BAD_REQUEST);
+        }
+
+        if (usuarioRepositorio.existsByEmail(usurioCliente.getUsuario().getEmail())) {
+            return new ResponseEntity<>("Ese email de usuario ya existe", HttpStatus.BAD_REQUEST);
+        }
+
+        Usuario usuario = new Usuario();
+        usuario.setUsername(usurioCliente.getUsuario().getUsername());
+        usuario.setEmail(usurioCliente.getUsuario().getEmail());
+        usuario.setPassword(passwordEncoder.encode(usurioCliente.getUsuario().getPassword()));
+        Set<UsuarioRol> roles = new HashSet<>();
+        Rol rol = new Rol();
+        rol.setRolId(2L);
+        rol.setNombre("NORMAL");
+        UsuarioRol usuarioRol = new UsuarioRol();
+        usuarioRol.setUsuario(usuario);
+        usuarioRol.setRol(rol);
+
+        roles.add(usuarioRol);
+        ClientesEntity cliente = new ClientesEntity();
+        cliente.setNombre(usurioCliente.getNombre());
+        cliente.setApellido(usurioCliente.getApellido());
+        cliente.setEstado(usurioCliente.getEstado());
+        cliente.setUsuario(usuario);
+
+        usuario.setCliente(cliente);
+
+
+        return new ResponseEntity<>( usuarioService.guardarUsuario(usuario, roles),HttpStatus.OK);
     }
 
 

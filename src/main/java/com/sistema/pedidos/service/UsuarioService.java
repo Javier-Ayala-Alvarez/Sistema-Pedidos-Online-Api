@@ -1,5 +1,6 @@
 package com.sistema.pedidos.service;
 
+import java.util.Optional;
 import java.util.Set;
 
 import com.sistema.pedidos.DTO.UsuarioDTO;
@@ -16,4 +17,5 @@ public interface UsuarioService {
 	
 	public void eliminarUsuario(Long usuarioId);
 	public ResponseEntity<UsuarioDTO> modificarUsuario(UsuarioDTO usuario);
+	public Optional<Usuario> guardarUsuarioSinValidar(Usuario usuario, Set<UsuarioRol> usuarioRoles);
 }

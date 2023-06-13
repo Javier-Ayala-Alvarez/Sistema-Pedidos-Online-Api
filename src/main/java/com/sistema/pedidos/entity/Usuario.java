@@ -4,14 +4,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -34,8 +27,10 @@ public class Usuario implements UserDetails {
 	private String email;
 	//private String telefono;
 	private boolean enabled =true;
-	//private String perfil;
 
+	@JsonIgnore
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "usuario", fetch = FetchType.LAZY)
+	private ClientesEntity  cliente;
 
 	public String getEmail() {
 		return email;
@@ -47,7 +42,7 @@ public class Usuario implements UserDetails {
 
 	//nose
 	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "usuario")
-	@JsonIgnore
+	//@JsonIgnore
 	private Set<UsuarioRol> usuarioRoles=new HashSet<>();
 
 	public Long getId() {
@@ -99,6 +94,13 @@ public class Usuario implements UserDetails {
 	}
 
 
+	public ClientesEntity getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(ClientesEntity cliente) {
+		this.cliente = cliente;
+	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

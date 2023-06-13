@@ -24,7 +24,7 @@ import javax.transaction.Transactional;
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
     //@Autowired
-   // private ModelMapper modelMapper;
+    // private ModelMapper modelMapper;
     @Autowired
     private UsuarioRepository usuarioRepository;
 
@@ -75,6 +75,12 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     }
 
+    public Optional<Usuario> guardarUsuarioSinValidar(Usuario usuario, Set<UsuarioRol> usuarioRoles) {
+        // TODO Auto-generated method stub
+        Optional<Usuario> opt = Optional.of(usuarioRepository.save(usuario));
+        return opt;
+    }
+
     @Override
     public Usuario obtenerUsuario(String username) {
         // TODO Auto-generated method stub
@@ -99,10 +105,10 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuario1.setEmail(usuario.getEmail());
         usuario1.setEnabled(usuario.isEnabled());
         usuarioRepository.save(usuario1);
-        UsuarioRol rolUsuario =  usuarioRolesRepository.buscarRolUsuario(usuario.getId());
-       rolUsuario.setRol(usuario.getRol());
+        UsuarioRol rolUsuario = usuarioRolesRepository.buscarRolUsuario(usuario.getId());
+        rolUsuario.setRol(usuario.getRol());
         usuarioRolesRepository.save(rolUsuario);
-        return new ResponseEntity<>(usuario,HttpStatus.OK);
+        return new ResponseEntity<>(usuario, HttpStatus.OK);
     }
 
    /* private UsuarioDTO mapearDTO(Usuario usuario) {
