@@ -17,7 +17,7 @@ import com.sun.istack.NotNull;
 public class Usuario implements UserDetails {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String username;
 	@NotNull
@@ -40,9 +40,11 @@ public class Usuario implements UserDetails {
 		this.email = email;
 	}
 
+
+
 	//nose
 	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "usuario")
-	//@JsonIgnore
+	@JsonIgnore
 	private Set<UsuarioRol> usuarioRoles=new HashSet<>();
 
 	public Long getId() {
