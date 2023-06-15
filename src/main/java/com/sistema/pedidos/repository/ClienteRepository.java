@@ -14,4 +14,7 @@ public interface ClienteRepository extends JpaRepository<ClientesEntity, Integer
     @Query(value = "update ClientesEntity c  set c.estado = false where c.idCliente = ?1")
     int darBajaCliente(Integer id);
 
+    @Query(value = "select c from ClientesEntity c where c.usuario.id = ?1")
+    ClientesEntity buscarClientePorIdUsuario(Long idUsuario);
+
 }

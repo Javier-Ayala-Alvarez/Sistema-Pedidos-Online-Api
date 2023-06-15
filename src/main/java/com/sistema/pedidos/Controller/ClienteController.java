@@ -1,5 +1,6 @@
 package com.sistema.pedidos.Controller;
 
+import com.sistema.pedidos.DTO.ClienteUsuarioDTO;
 import com.sistema.pedidos.Utileria.ConstantUtileria;
 import com.sistema.pedidos.entity.ClientesEntity;
 import com.sistema.pedidos.entity.Empleado;
@@ -74,6 +75,11 @@ public class ClienteController {
         Page<ClientesEntity> clientePage=clienteRepository.listarClientesPorNombre(clienteNombre,
                 PageRequest.of(page,size));
         return  new ResponseEntity<Page<ClientesEntity>>(clientePage,HttpStatus.OK);
+    }
+
+    @GetMapping("/buscarPorId/{id}")
+    public ResponseEntity<ClienteUsuarioDTO> buscarPorId(@PathVariable Long id){
+        return clienteService.buscarClientePorIdUsuario(id);
     }
 
 
