@@ -18,7 +18,7 @@ public class UsuarioDIO {
 
     // is all parameter complete
     public boolean isAllParamComplete() {
-        return this.idUsuario != null && this.username != null && this.email != null && this.password != null;
+        return  this.username != null && this.email != null && this.password != null;
     }
 
 }

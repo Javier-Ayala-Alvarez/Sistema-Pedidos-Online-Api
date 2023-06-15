@@ -15,12 +15,12 @@ import java.util.Optional;
 
 @AllArgsConstructor
 @Service
-public class ClienteServiceImpl extends GenericServiceImpl<ClientesEntity, Integer> implements ClienteService {
+public class ClienteServiceImpl extends GenericServiceImpl<ClientesEntity, Long> implements ClienteService {
 
     private final ClienteRepository clienteRepository;
 
     @Override
-    public JpaRepository<ClientesEntity, Integer> getDao() {
+    public JpaRepository<ClientesEntity, Long> getDao() {
         return clienteRepository;
     }
 

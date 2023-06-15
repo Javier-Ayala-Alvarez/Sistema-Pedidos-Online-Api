@@ -51,7 +51,7 @@ public class ClienteController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<ClientesEntity> eliminarEmpleado(@PathVariable Integer id) {
+    public ResponseEntity<ClientesEntity> eliminarEmpleado(@PathVariable Long id) {
         clienteService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -63,7 +63,7 @@ public class ClienteController {
     }
 
     @PatchMapping("/baja/{id}")
-    public ResponseEntity darDeBajaCliente(@PathVariable Integer id) {
+    public ResponseEntity darDeBajaCliente(@PathVariable Long id) {
 
         Optional<ClientesEntity> cliente = clienteRepository.findById(id);
         if (!cliente.isPresent()) return ResponseEntity.notFound().build();

@@ -42,6 +42,8 @@ public class UsuarioController {
     private UsuarioRepositorio usuarioRepositorio;
     @Autowired
     private RolRepositorio rolRepositorio;
+    @Autowired
+    private ClienteService clienteService;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -175,31 +177,15 @@ public class UsuarioController {
     @PutMapping("/ModificarUsuarioCliente")
     public  ResponseEntity<?> ModificarUsuarioCliente(@Valid @RequestBody UsuarioClienteDTO usurioCliente) throws Exception {
 
-
         if (!usurioCliente.isIdClienteValid() || !usurioCliente.getUsuario().isAllParamComplete()) return new ResponseEntity<>("Ingrese datos validos", HttpStatus.BAD_REQUEST);
-
-        if (usuarioRepositorio.existsByUsername(usurioCliente.getUsuario().getUsername())) {
-            return new ResponseEntity<>("Ese nombre de usuario ya existe", HttpStatus.BAD_REQUEST);
-        }
-
-        if (usuarioRepositorio.existsByEmail(usurioCliente.getUsuario().getEmail())) {
-            return new ResponseEntity<>("Ese email de usuario ya existe", HttpStatus.BAD_REQUEST);
-        }
-
-
-        Optional<Usuario> usuarioObj = usuarioRepository.findById(usurioCliente.getUsuario().getIdUsuario());
-
-        if (!usuarioObj.isPresent()) return new ResponseEntity<>("No existe el usuario o el cliente", HttpStatus.BAD_REQUEST);
-
-        Usuario usuario = usuarioObj.get();
-        ClientesEntity cliente = usuarioObj.get().getCliente();
+        Optional<ClientesEntity> clienteObj = Optional.ofNullable(clienteService.get(usurioCliente.getIdCliente()));
+        if (!clienteObj.isPresent()) return new ResponseEntity<>("No existe el usuario o el cliente", HttpStatus.BAD_REQUEST);
+        ClientesEntity cliente = clienteObj.get();
+        Usuario usuario = clienteObj.get().getUsuario();
 
         cliente.setNombre(usurioCliente.getNombre());
         cliente.setApellido(usurioCliente.getApellido());
         cliente.setEstado(usurioCliente.getEstado());
-        cliente.setIdCliente(usurioCliente.getIdCliente());
-
-        usuario.setId(usurioCliente.getUsuario().getIdUsuario());
         usuario.setUsername(usurioCliente.getUsuario().getUsername());
         usuario.setEmail(usurioCliente.getUsuario().getEmail());
         usuario.setPassword(passwordEncoder.encode(usurioCliente.getUsuario().getPassword()));
