@@ -36,6 +36,7 @@ public class ClienteServiceImpl extends GenericServiceImpl<ClientesEntity, Integ
         clienteUsuarioDTO.setIdCliente(clienteObj.getIdCliente());
         clienteUsuarioDTO.setNombre(clienteObj.getNombre());
         clienteUsuarioDTO.setApellido(clienteObj.getApellido());
+        clienteUsuarioDTO.setEstado(clienteObj.isEstado());
         clienteUsuarioDTO.setCorreo(clienteObj.getUsuario().getEmail());
         clienteUsuarioDTO.setUsuario(clienteObj.getUsuario().getUsername());
 

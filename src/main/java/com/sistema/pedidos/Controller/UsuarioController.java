@@ -7,9 +7,12 @@ import com.sistema.pedidos.DTO.UsuarioClienteDTO;
 import com.sistema.pedidos.DTO.UsuarioDTO;
 import com.sistema.pedidos.entity.ClientesEntity;
 import com.sistema.pedidos.entity.Rol;
+import com.sistema.pedidos.repository.ClienteRepository;
 import com.sistema.pedidos.repository.RolRepositorio;
 import com.sistema.pedidos.repository.UsuarioRepositorio;
+import com.sistema.pedidos.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -169,5 +172,44 @@ public class UsuarioController {
         return new ResponseEntity<>( usuarioService.guardarUsuario(usuario, roles),HttpStatus.OK);
     }
 
+    @PutMapping("/ModificarUsuarioCliente")
+    public  ResponseEntity<?> ModificarUsuarioCliente(@Valid @RequestBody UsuarioClienteDTO usurioCliente) throws Exception {
+
+
+        if (!usurioCliente.isIdClienteValid() || !usurioCliente.getUsuario().isAllParamComplete()) return new ResponseEntity<>("Ingrese datos validos", HttpStatus.BAD_REQUEST);
+
+        if (usuarioRepositorio.existsByUsername(usurioCliente.getUsuario().getUsername())) {
+            return new ResponseEntity<>("Ese nombre de usuario ya existe", HttpStatus.BAD_REQUEST);
+        }
+
+        if (usuarioRepositorio.existsByEmail(usurioCliente.getUsuario().getEmail())) {
+            return new ResponseEntity<>("Ese email de usuario ya existe", HttpStatus.BAD_REQUEST);
+        }
+
+
+        Optional<Usuario> usuarioObj = usuarioRepository.findById(usurioCliente.getUsuario().getIdUsuario());
+
+        if (!usuarioObj.isPresent()) return new ResponseEntity<>("No existe el usuario o el cliente", HttpStatus.BAD_REQUEST);
+
+        Usuario usuario = usuarioObj.get();
+        ClientesEntity cliente = usuarioObj.get().getCliente();
+
+        cliente.setNombre(usurioCliente.getNombre());
+        cliente.setApellido(usurioCliente.getApellido());
+        cliente.setEstado(usurioCliente.getEstado());
+        cliente.setIdCliente(usurioCliente.getIdCliente());
+
+        usuario.setId(usurioCliente.getUsuario().getIdUsuario());
+        usuario.setUsername(usurioCliente.getUsuario().getUsername());
+        usuario.setEmail(usurioCliente.getUsuario().getEmail());
+        usuario.setPassword(passwordEncoder.encode(usurioCliente.getUsuario().getPassword()));
+        usuario.setEnabled(usurioCliente.getUsuario().getEstado());
+
+
+        cliente.setUsuario(usuario);
+        usuario.setCliente(cliente);
+
+        return new ResponseEntity<>( usuarioService.guardarUsuario(usuario),HttpStatus.OK);
+    }
 
 }
