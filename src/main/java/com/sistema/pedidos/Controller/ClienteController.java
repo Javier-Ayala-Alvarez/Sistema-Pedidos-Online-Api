@@ -62,7 +62,7 @@ public class ClienteController {
         return new ResponseEntity<>(clienteActualizado, HttpStatus.OK);
     }
 
-    @PatchMapping("/baja/{id}")
+    @PutMapping("/baja/{id}")
     public ResponseEntity darDeBajaCliente(@PathVariable Long id) {
 
         Optional<ClientesEntity> cliente = clienteRepository.findById(id);
