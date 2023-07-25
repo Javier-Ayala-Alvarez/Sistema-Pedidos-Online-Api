@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -75,6 +76,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Page<Product> listarProductPorPagina(Pageable pageable) {
         return productRepository.findAll(pageable);
+    }
+    @Override
+    public List<Product> listarProductPorPagina() {
+        return productRepository.findAll();
     }
 
     @Override

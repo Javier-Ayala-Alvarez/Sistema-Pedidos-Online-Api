@@ -16,4 +16,7 @@ public class Category {
     private String CT_Nombre;
     @Column
     private boolean CT_Estado=false;
+
+    @Column(length = 1000)
+    private String img;
 }

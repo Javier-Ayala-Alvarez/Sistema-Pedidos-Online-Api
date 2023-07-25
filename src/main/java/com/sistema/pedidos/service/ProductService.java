@@ -5,6 +5,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
+
 public interface ProductService {
 
 
@@ -14,7 +16,7 @@ public interface ProductService {
 
     public Product listarProductPorId(Long id);
     public Page<Product> listarProductPorPagina(Pageable pageable);
-
+    public List<Product> listarProductPorPagina();
     public Page<Product> listarProductPorNombrePagina(String nombre,Pageable pageable);
 
     public void eliminar(Long id);
