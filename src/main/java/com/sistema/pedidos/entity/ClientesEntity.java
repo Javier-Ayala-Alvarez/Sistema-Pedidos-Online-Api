@@ -10,7 +10,7 @@ import javax.persistence.*;
 public class ClientesEntity {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    private Integer idCliente;
+    private Long idCliente;
     @Column
     private String nombre;
     @Column

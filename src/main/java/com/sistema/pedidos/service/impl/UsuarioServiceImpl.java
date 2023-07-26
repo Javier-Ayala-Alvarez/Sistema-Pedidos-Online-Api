@@ -75,6 +75,15 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     }
 
+    public ResponseEntity<Usuario> guardarUsuario(Usuario usuario) throws Exception {
+        // TODO Auto-generated method stub
+
+        Usuario usuarioLocal=  usuarioRepository.save(usuario);
+
+        return new ResponseEntity<>(usuarioLocal, HttpStatus.CREATED);
+
+    }
+
     public Optional<Usuario> guardarUsuarioSinValidar(Usuario usuario, Set<UsuarioRol> usuarioRoles) {
         // TODO Auto-generated method stub
         Optional<Usuario> opt = Optional.of(usuarioRepository.save(usuario));
@@ -110,6 +119,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuarioRolesRepository.save(rolUsuario);
         return new ResponseEntity<>(usuario, HttpStatus.OK);
     }
+
 
    /* private UsuarioDTO mapearDTO(Usuario usuario) {
         UsuarioDTO usuarioDTO = modelMapper.map(usuario, UsuarioDTO.class);

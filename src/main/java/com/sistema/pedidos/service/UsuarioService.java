@@ -14,8 +14,11 @@ public interface UsuarioService {
 	public ResponseEntity<Usuario> guardarUsuario(Usuario usuario, Set<UsuarioRol> usuarioRoles) throws Exception;
 
 	public Usuario obtenerUsuario(String username);
+	ResponseEntity<Usuario> guardarUsuario(Usuario usuario) throws Exception;
 	
 	public void eliminarUsuario(Long usuarioId);
+
+
 	public ResponseEntity<UsuarioDTO> modificarUsuario(UsuarioDTO usuario);
 	public Optional<Usuario> guardarUsuarioSinValidar(Usuario usuario, Set<UsuarioRol> usuarioRoles);
 }

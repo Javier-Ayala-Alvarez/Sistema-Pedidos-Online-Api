@@ -1,5 +1,6 @@
 package com.sistema.pedidos.service;
 
+import com.sistema.pedidos.DTO.ProductoPlatoDTO;
 import com.sistema.pedidos.entity.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,7 +17,7 @@ public interface ProductService {
 
     public Product listarProductPorId(Long id);
     public Page<Product> listarProductPorPagina(Pageable pageable);
-    public List<Product> listarProductPorPagina();
+    public List<ProductoPlatoDTO> listarProductPorPagina();
     public Page<Product> listarProductPorNombrePagina(String nombre,Pageable pageable);
 
     public void eliminar(Long id);

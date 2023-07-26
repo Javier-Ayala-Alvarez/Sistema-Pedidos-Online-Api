@@ -1,12 +1,16 @@
 package com.sistema.pedidos.entity;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "Promocion")
-@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class Promocion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,4 +22,7 @@ public class Promocion {
     private int pr_Cantidad;
     @Column(name = "PR_Porcentaje")
     private double pr_Porcentaje;
+
+    @OneToMany(mappedBy = "promocion")
+    private Set<Plato> platos;
 }

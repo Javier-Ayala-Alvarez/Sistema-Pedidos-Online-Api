@@ -1,5 +1,6 @@
 package com.sistema.pedidos.Controller;
 
+import com.sistema.pedidos.DTO.ProductoPlatoDTO;
 import com.sistema.pedidos.Utileria.ConstantUtileria;
 import com.sistema.pedidos.entity.Product;
 import com.sistema.pedidos.service.ProductService;
@@ -54,9 +55,9 @@ public class ProductController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<List<Product>> listarProductPorPagina(){
-        List<Product> productPage=productService.listarProductPorPagina();
-        return new ResponseEntity<List<Product>>(productPage, HttpStatus.OK);
+    public ResponseEntity<List<ProductoPlatoDTO>> listarProductPorPagina() {
+        List<ProductoPlatoDTO> productPage = productService.listarProductPorPagina();
+        return new ResponseEntity<>(productPage, HttpStatus.OK);
     }
 
     @GetMapping("/list/search")

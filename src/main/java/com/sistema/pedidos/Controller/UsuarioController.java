@@ -2,14 +2,18 @@ package com.sistema.pedidos.Controller;
 
 import java.util.*;
 
+import com.sistema.pedidos.DTO.ClienteUsuarioDTO;
 import com.sistema.pedidos.DTO.RegistroDTO;
 import com.sistema.pedidos.DTO.UsuarioClienteDTO;
 import com.sistema.pedidos.DTO.UsuarioDTO;
 import com.sistema.pedidos.entity.ClientesEntity;
 import com.sistema.pedidos.entity.Rol;
+import com.sistema.pedidos.repository.ClienteRepository;
 import com.sistema.pedidos.repository.RolRepositorio;
 import com.sistema.pedidos.repository.UsuarioRepositorio;
+import com.sistema.pedidos.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -39,6 +43,8 @@ public class UsuarioController {
     private UsuarioRepositorio usuarioRepositorio;
     @Autowired
     private RolRepositorio rolRepositorio;
+    @Autowired
+    private ClienteService clienteService;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -104,7 +110,7 @@ public class UsuarioController {
     public ResponseEntity<?> modificar(@Valid @RequestBody UsuarioDTO usuario) {
         Rol rol = new Rol();
         try {
-         rol = rolRepositorio.findByNombre(usuario.getRol().getNombre()).get();
+            rol = rolRepositorio.findByNombre(usuario.getRol().getNombre()).get();
 
         } catch (Exception e) {
             return new ResponseEntity<>("No existe el rol", HttpStatus.BAD_REQUEST);
@@ -134,8 +140,8 @@ public class UsuarioController {
     }
 
 
-    @PostMapping ("/GuardarUsuarioCliente")
-    public  ResponseEntity<?> guardarUsuarioCliente(@Valid @RequestBody UsuarioClienteDTO usurioCliente) throws Exception {
+    @PostMapping("/GuardarUsuarioCliente")
+    public ResponseEntity<?> guardarUsuarioCliente(@Valid @RequestBody UsuarioClienteDTO usurioCliente) throws Exception {
         if (usuarioRepositorio.existsByUsername(usurioCliente.getUsuario().getUsername())) {
             return new ResponseEntity<>("Ese nombre de usuario ya existe", HttpStatus.BAD_REQUEST);
         }
@@ -166,8 +172,33 @@ public class UsuarioController {
         usuario.setCliente(cliente);
 
 
-        return new ResponseEntity<>( usuarioService.guardarUsuario(usuario, roles),HttpStatus.OK);
+        return new ResponseEntity<>(usuarioService.guardarUsuario(usuario, roles), HttpStatus.OK);
     }
 
+    @PutMapping("/ModificarUsuario/{idUsuario}")
+    public ResponseEntity<?> ModificarUsuarioCliente(@Valid @RequestBody
+                                                     ClienteUsuarioDTO usurioCliente,
+                                                     @PathVariable Long idUsuario) throws Exception {
+
+        if (!usurioCliente.isParamComplete() || idUsuario == null )
+            return new ResponseEntity<>("Ingrese datos validos", HttpStatus.BAD_REQUEST);
+
+        Optional<ClientesEntity> clienteObj = Optional.ofNullable(clienteService.get(usurioCliente.getIdCliente()));
+        if (!clienteObj.isPresent())
+            return new ResponseEntity<>("No existe el usuario o el cliente", HttpStatus.BAD_REQUEST);
+        ClientesEntity cliente = clienteObj.get();
+        Usuario usuario = clienteObj.get().getUsuario();
+
+        cliente.setNombre(usurioCliente.getNombre());
+        cliente.setApellido(usurioCliente.getApellido());
+        usuario.setUsername(usurioCliente.getUsuario());
+        usuario.setEmail(usurioCliente.getCorreo());
+        usuario.setPassword(passwordEncoder.encode(usurioCliente.getPassword()));
+
+        cliente.setUsuario(usuario);
+        usuario.setCliente(cliente);
+
+        return new ResponseEntity<>(usuarioService.guardarUsuario(usuario), HttpStatus.OK);
+    }
 
 }
