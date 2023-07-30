@@ -68,6 +68,7 @@ public class PlatoServiceImpl extends GenericServiceImpl<Plato, Long> implements
 
     }
 
+
     @Override
     public JpaRepository<Plato, Long> getDao() {
         return platoRepository;
