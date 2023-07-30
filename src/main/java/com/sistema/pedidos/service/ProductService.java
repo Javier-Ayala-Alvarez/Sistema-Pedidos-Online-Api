@@ -18,6 +18,7 @@ public interface ProductService {
     public Product listarProductPorId(Long id);
     public Page<Product> listarProductPorPagina(Pageable pageable);
     public List<ProductoPlatoDTO> listarProductPorPagina();
+    public List<Product> listarProductPorCombo(Long id);
     public Page<Product> listarProductPorNombrePagina(String nombre,Pageable pageable);
 
     public void eliminar(Long id);

@@ -59,6 +59,11 @@ public class ProductController {
         List<ProductoPlatoDTO> productPage = productService.listarProductPorPagina();
         return new ResponseEntity<>(productPage, HttpStatus.OK);
     }
+    @GetMapping("/listCombo/{id}")
+    public ResponseEntity<List<Product>> listarProductPorCombo(@PathVariable Long id) {
+        List<Product> productPage = productService.listarProductPorCombo(id);
+        return new ResponseEntity<>(productPage, HttpStatus.OK);
+    }
 
     @GetMapping("/list/search")
     public ResponseEntity<Page<Product>> listarProductPorNombrePagina(

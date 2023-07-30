@@ -109,6 +109,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<Product> listarProductPorCombo(Long id) {
+        return (List<Product>) productRepository.listarProductPorCombo(id);
+    }
+
+    @Override
     public Page<Product> listarProductPorNombrePagina(String nombre, Pageable pageable) {
         return productRepository.listarProductPorNombrePagina(nombre,pageable);
     }
