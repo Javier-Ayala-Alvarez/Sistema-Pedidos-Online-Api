@@ -1,5 +1,6 @@
 package com.sistema.pedidos.Controller;
 
+import com.sistema.pedidos.DTO.ProductoPlatoDTO;
 import com.sistema.pedidos.Utileria.ConstantUtileria;
 import com.sistema.pedidos.entity.Product;
 import com.sistema.pedidos.service.ProductService;
@@ -10,6 +11,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/product")
@@ -49,6 +52,17 @@ public class ProductController {
         Page<Product> productPage=productService.listarProductPorPagina(
                 PageRequest.of(page,size, Sort.by(order)));
         return new ResponseEntity<Page<Product>>(productPage, HttpStatus.OK);
+    }
+
+    @GetMapping("/list")
+    public ResponseEntity<List<ProductoPlatoDTO>> listarProductPorPagina() {
+        List<ProductoPlatoDTO> productPage = productService.listarProductPorPagina();
+        return new ResponseEntity<>(productPage, HttpStatus.OK);
+    }
+    @GetMapping("/listCombo/{id}")
+    public ResponseEntity<List<Product>> listarProductPorCombo(@PathVariable Long id) {
+        List<Product> productPage = productService.listarProductPorCombo(id);
+        return new ResponseEntity<>(productPage, HttpStatus.OK);
     }
 
     @GetMapping("/list/search")

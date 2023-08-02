@@ -34,53 +34,50 @@ public class SistemaPedidosOnlineBackendApplication implements CommandLineRunner
 
 	@Override
 	public void run(String... args) throws Exception {
-/*
-		Usuario usuario = new Usuario();
-	
-		
-		usuario.setUsername("nelson");
-		usuario.setPassword(bCryptPasswordEncoder.encode("12345"));
-
-		usuario.setEmail("nelson.karma2012@gmail.com");
-
-		Rol rol = new Rol();
-		rol.setRolId(1L);
-		rol.setNombre("ADMIN");
-		
-		Set<UsuarioRol> usuarioRoles = new HashSet<>();
-		UsuarioRol usuarioRol = new UsuarioRol();
-		usuarioRol.setRol(rol);
-		usuarioRol.setUsuario(usuario);
-		usuarioRoles.add(usuarioRol);
-		Usuario usuarioGuardado = usuarioService.guardarUsuario(usuario, usuarioRoles).getBody();
-		System.out.println(usuarioGuardado.getUsername());
-
-
-
-
-		/*Usuario usuario2 = new Usuario();
-	
-		
-		usuario2.setUsername("mauricio");
-		usuario2.setPassword(bCryptPasswordEncoder.encode("123456"));
-		usuario2.setNombre("MAURICIO");
-		usuario2.setApellido("MARTINEZ");
-		usuario2.setEmail("mauricoi_cc@gmail.com");
-		usuario2.setPerfil("foto2.png");
-		usuario2.setTelefono("7451-6993");
-		
-		Rol rol2 = new Rol();
-		rol2.setRolId(2L);
-		rol2.setNombre("NORMAL");
-		
-		Set<UsuarioRol> usuarioRoles2 = new HashSet<>();
-		UsuarioRol usuarioRol2 = new UsuarioRol();
-		usuarioRol2.setRol(rol2);
-		usuarioRol2.setUsuario(usuario2);
-		usuarioRoles2.add(usuarioRol2);
-		
-		Usuario usuarioGuardado = usuarioService.guardarUsuario(usuario2, usuarioRoles2);
-		System.out.println(usuarioGuardado.getUsername());*/
+//
+//		Usuario usuario = new Usuario();
+//
+//
+//		usuario.setUsername("nelson");
+//		usuario.setPassword(bCryptPasswordEncoder.encode("12345"));
+//
+//		usuario.setEmail("nelson.karma2012@gmail.com");
+//
+//		Rol rol = new Rol();
+//		rol.setRolId(1L);
+//		rol.setNombre("ADMIN");
+//
+//		Set<UsuarioRol> usuarioRoles = new HashSet<>();
+//		UsuarioRol usuarioRol = new UsuarioRol();
+//		usuarioRol.setRol(rol);
+//		usuarioRol.setUsuario(usuario);
+//		usuarioRoles.add(usuarioRol);
+//		Usuario usuarioGuardado = usuarioService.guardarUsuario(usuario, usuarioRoles).getBody();
+//		System.out.println(usuarioGuardado.getUsername());
+//
+//
+//
+//
+//		Usuario usuario2 = new Usuario();
+//
+//
+//		usuario2.setUsername("mauricio");
+//		usuario2.setPassword(bCryptPasswordEncoder.encode("123456"));
+//
+//		usuario2.setEmail("mauricoi_cc@gmail.com");
+//
+//		Rol rol2 = new Rol();
+//		rol2.setRolId(2L);
+//		rol2.setNombre("NORMAL");
+//
+//		Set<UsuarioRol> usuarioRoles2 = new HashSet<>();
+//		UsuarioRol usuarioRol2 = new UsuarioRol();
+//		usuarioRol2.setRol(rol2);
+//		usuarioRol2.setUsuario(usuario2);
+//		usuarioRoles2.add(usuarioRol2);
+//
+//		 usuarioGuardado = usuarioService.guardarUsuario(usuario2, usuarioRoles2).getBody();
+//		System.out.println(usuarioGuardado.getUsername());
 	}
 	/*@Bean
 	public WebMvcConfigurer crosConfigurer() {

@@ -30,7 +30,7 @@ public class Plato {
     private boolean estado;
 
     @Column (name = "precio_total")
-    private BigDecimal precio;
+    private Double precio;
 
     @Column (name = "url_imagen")
     private String urlImagen;

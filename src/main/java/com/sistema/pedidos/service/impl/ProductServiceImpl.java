@@ -1,6 +1,7 @@
 package com.sistema.pedidos.service.impl;
 
 
+import com.sistema.pedidos.DTO.ProductoPlatoDTO;
 import com.sistema.pedidos.entity.Category;
 import com.sistema.pedidos.entity.Product;
 import com.sistema.pedidos.repository.CategoryRepository;
@@ -12,6 +13,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -75,6 +80,37 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Page<Product> listarProductPorPagina(Pageable pageable) {
         return productRepository.findAll(pageable);
+    }
+    @Override
+    public List<ProductoPlatoDTO> listarProductPorPagina() {
+        List<Map<String, Object>> resultados = productRepository.listarProductPorPagina();
+        List<ProductoPlatoDTO> productos = new ArrayList<>();
+        for (Map<String, Object> resultado : resultados) {
+            ProductoPlatoDTO producto = new ProductoPlatoDTO();
+           producto.setIdProducto((BigInteger) resultado.get("idProducto"));
+            producto.setNombre((String) resultado.get("nombre"));
+            producto.setDescripcion((String) resultado.get("descripcion"));
+          producto.setPrecioVenta((Double) resultado.get("precioVenta"));
+          producto.setGanancia((Double) resultado.get("ganancia"));
+            producto.setEstado((Boolean) resultado.get("estado"));
+            producto.setUrlImagen((String) resultado.get("url_imagen"));
+            producto.setEvento((String) resultado.get("evento"));
+            producto.setPromocion((Long) resultado.get("promocion"));
+            producto.setIdCombo((BigInteger) resultado.get("idCombo"));
+            producto.setNombreProducto((String) resultado.get("nombreProducto"));
+            producto.setUrlImagenProducto((String) resultado.get("urlImagenProducto"));
+            producto.setCategory((BigInteger) resultado.get("categoria_id"));
+            productos.add(producto);
+        }
+
+        return productos;
+
+       // return productRepository.listarProductPorPagina();
+    }
+
+    @Override
+    public List<Product> listarProductPorCombo(Long id) {
+        return (List<Product>) productRepository.listarProductPorCombo(id);
     }
 
     @Override

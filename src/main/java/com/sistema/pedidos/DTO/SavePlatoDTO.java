@@ -18,7 +18,7 @@ public class SavePlatoDTO {
     private List<Long> listaProductos;
     private Long idCategoria;
     private Long idPromocion;
-    private BigDecimal precio;
+    private Double precio;
 
     public Boolean nonNullFields(){
         return nombre != null && descripcion != null && urlImagen != null && listaProductos != null && idCategoria != null  && precio != null;

@@ -14,9 +14,11 @@ public class UsuarioRol {
     private Long usuarioRolId;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @Cascade(CascadeType.PERSIST)
     private Usuario usuario;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
+    @Cascade(CascadeType.PERSIST)
     private Rol rol;
 
     public Long getUsuarioRolId() {

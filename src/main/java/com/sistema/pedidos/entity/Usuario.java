@@ -29,7 +29,7 @@ public class Usuario implements UserDetails {
 	private boolean enabled =true;
 
 	@JsonIgnore
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "usuario", fetch = FetchType.LAZY)
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "usuario")
 	private ClientesEntity  cliente;
 
 	public String getEmail() {

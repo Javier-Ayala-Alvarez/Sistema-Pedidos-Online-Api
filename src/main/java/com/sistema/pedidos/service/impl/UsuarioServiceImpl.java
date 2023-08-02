@@ -65,11 +65,15 @@ public class UsuarioServiceImpl implements UsuarioService {
         if (usuarioLocal != null) {
             throw new Exception("el usario ya existe");
         } else {
+//            usuarioLocal = usuarioRepository.save(usuario);
+//            for (UsuarioRol usuarioRol : usuarioRoles) {
+//                usuario.setUsuarioRoles(usuarioRoles);
+//                usuarioRol.setUsuario(usuarioLocal);
+//                usuarioRolesRepository.save(usuarioRol);
+//            }
+
+            usuario.setUsuarioRoles(usuarioRoles);
             usuarioLocal = usuarioRepository.save(usuario);
-            for (UsuarioRol usuarioRol : usuarioRoles) {
-                usuarioRol.setUsuario(usuarioLocal);
-                usuarioRolesRepository.save(usuarioRol);
-            }
         }
         return new ResponseEntity<>(usuarioLocal, HttpStatus.CREATED);
 

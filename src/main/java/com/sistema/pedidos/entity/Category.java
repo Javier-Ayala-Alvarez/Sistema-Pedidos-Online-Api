@@ -22,6 +22,10 @@ public class Category {
     @Column(name = "categoria_estado")
     private boolean CT_Estado=false;
 
+
+    @Column(length = 1000)
+    private String img;
+
     @JsonManagedReference
     @OneToMany(mappedBy = "categoria")
     private List<Plato> platosList;
