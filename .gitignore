@@ -33,7 +33,3 @@ build/
 .vscode/
 
 
-### properties file ###
-*.properties
-
-*pom.xml
