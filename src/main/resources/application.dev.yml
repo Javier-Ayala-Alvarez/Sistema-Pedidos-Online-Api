@@ -1,5 +1,5 @@
 #config db
-spring.profiles.active=prod
+spring.profiles.active=dev
 spring.jpa.database=POSTGRESQL
 spring.datasource.drive-class-name=org.postgresql.Driver
 spring.datasource.url=jdbc:${DATABASE_URL}
@@ -8,8 +8,7 @@ spring.datasource.password=${PGPASSWORD}
 spring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation=true
 spring.jpa.hibernate.ddl-auto=update
 
-
-#allowed.origin=http://localhost:4200
+allowed.origin=http://localhost:4200
 #jwt propiedades
 app.jwt-secret=JWTSecretKey
 app.jwt-expiration-milliseconds=604800000
