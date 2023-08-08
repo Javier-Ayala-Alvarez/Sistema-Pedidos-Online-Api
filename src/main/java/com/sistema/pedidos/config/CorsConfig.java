@@ -6,21 +6,20 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-//import net.bytebuddy.pool.TypePool.Default.LazyTypeDescription.GenericTypeToken.ForParameterizedType.Nested;
-//@EnableWebMvc
 @Configuration
 public class CorsConfig {
 
 	@Value("${allowed.origin}")
 	private String allowedOrigin;
+
 	@Bean
 	public WebMvcConfigurer getCorsConfigurer() {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/**")
-						.allowedOrigins("http://localhost:4200")
-						.allowedMethods("GET","POST","PUT","DELETE")
+						.allowedOrigins(allowedOrigin) // Usa el valor de allowedOrigin aquí
+						.allowedMethods("GET", "POST", "PUT", "DELETE")
 						.allowedHeaders("*");
 			}
 		};
