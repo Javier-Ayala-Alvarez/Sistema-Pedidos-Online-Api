@@ -85,6 +85,17 @@
             <version>17.0.0</version>
             <scope>compile</scope>
         </dependency>
+
+            <!-- Otras dependencias -->
+
+
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-ui</artifactId>
+                <version>[1.2.0,)</version> <!-- Define un rango de versiones (1.5.0 y posteriores) -->
+            </dependency>
+
+
     </dependencies>
 
     <build>
