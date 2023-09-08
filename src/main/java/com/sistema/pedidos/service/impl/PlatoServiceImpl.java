@@ -1,5 +1,6 @@
 package com.sistema.pedidos.service.impl;
 
+import com.sistema.pedidos.DTO.EditPlatoDTO;
 import com.sistema.pedidos.DTO.PlatoDTO;
 import com.sistema.pedidos.DTO.SavePlatoDTO;
 import com.sistema.pedidos.commons.GenericServiceImpl;
@@ -71,13 +72,14 @@ public class PlatoServiceImpl extends GenericServiceImpl<Plato, Long> implements
 
             plato.setPromocion(objPromocion.get());
         }
-        return new ResponseEntity<>(save(plato), HttpStatus.CREATED);
+
+        return new ResponseEntity<>(new PlatoMapper().platoToPlatoDTO(save(plato)), HttpStatus.CREATED);
 
     }
 
     @Override
     public Page<PlatoDTO> listPlateActiveWithPagination(Pageable pageable) {
-        Page<Plato> platoPage = platoRepository.getAllByEstadoEquals(Boolean.TRUE,pageable);
+        Page<Plato> platoPage = platoRepository.getAllByEstadoEquals(Boolean.TRUE, pageable);
         PlatoMapper platoMapper = new PlatoMapper();
         return platoPage.map(platoMapper::platoToPlatoDTO);
     }
@@ -90,8 +92,13 @@ public class PlatoServiceImpl extends GenericServiceImpl<Plato, Long> implements
         return new ResponseEntity("no existe", HttpStatus.NOT_FOUND);
     }
 
+    @Override
+    public Optional<Plato> getPlateById(Long id) {
+        return platoRepository.findById(id);
+    }
 
-    public ResponseEntity<Object> updatePlato(SavePlatoDTO savePlatoDTO) {
+
+    public ResponseEntity<Object> updatePlato(EditPlatoDTO savePlatoDTO) {
 
 
         Optional<Plato> platoOptional = platoRepository.findById(savePlatoDTO.getId());
@@ -103,7 +110,7 @@ public class PlatoServiceImpl extends GenericServiceImpl<Plato, Long> implements
         plato.setPrecio(savePlatoDTO.getPrecio());
         plato.setDescripcion(savePlatoDTO.getDescripcion());
         plato.setUrlImagen(savePlatoDTO.getUrlImagen());
-
+        plato.setEstado(savePlatoDTO.getEstado());
         List<PlatoProducto> listaPlatoProducto = plato.getPlatoProducto();
         listaPlatoProducto.clear();
 

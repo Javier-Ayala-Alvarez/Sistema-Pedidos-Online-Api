@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
@@ -12,15 +13,15 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Category {
+public class Category implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private long id;
     @Column(name = "categoria_nombre")
-    private String CT_Nombre;
+    private String nombre;
     @Column(name = "categoria_estado")
-    private boolean CT_Estado=false;
+    private Boolean estado = false;
 
 
     @Column(length = 1000)
@@ -30,3 +31,5 @@ public class Category {
     @OneToMany(mappedBy = "categoria")
     private List<Plato> platosList;
 }
+
+

@@ -22,4 +22,6 @@ public interface PlatoRepository extends JpaRepository<Plato, Long> {
     @Query("update Plato p set p.estado = ?1 where p.id = ?2")
     int updateEstado(Boolean estado, Long id);
 
+
+
 }

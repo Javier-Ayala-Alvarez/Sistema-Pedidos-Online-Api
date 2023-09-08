@@ -1,11 +1,13 @@
 package com.sistema.pedidos.DTO;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
 import java.util.List;
 
 @AllArgsConstructor
@@ -13,35 +15,8 @@ import java.util.List;
 @Getter
 @Setter
 
-/**
- = ''{_id: 0, _nombre: "2", _descripcion: "2", _urlImagen: "2", _listaProductos: [2], _idCategoria: 2,…}
- _descripcion
- :
- "2"
- _id
- :
- 0
- _idCategoria
- :
- 2
- _idPromocion
- :
- 0
- _listaProductos
- :
- [2]
- _nombre
- :
- "2"
- _precio
- :
- 22
- _urlImagen
- :
- "2"
- */
 
-public class SavePlatoDTO {
+public class EditPlatoDTO {
     private Long id;
     @NotBlank(message = "El nombre es obligatorio")
     private String nombre;
@@ -57,6 +32,8 @@ public class SavePlatoDTO {
     private Long idPromocion;
     @NotNull(message = "El precio es obligatorio")
     private Double precio;
+    @NotNull(message = "El estado es obligatorio")
+    private Boolean estado;
 
     public boolean nonNullPromocion() {
         return this.idPromocion != null;

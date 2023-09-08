@@ -83,4 +83,9 @@ public class ProductController {
         productService.eliminar(id);
     }
 
+        @GetMapping("/list/DTO/activo")
+    public ResponseEntity<?> listarProductDTOActivo(){
+        return ResponseEntity.ok(productService.produtosDTOActivos());
+    }
+
 }

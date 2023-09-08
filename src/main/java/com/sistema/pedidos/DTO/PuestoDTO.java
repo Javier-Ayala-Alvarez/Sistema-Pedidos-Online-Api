@@ -11,7 +11,6 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PuestoDTO {
-
     private Integer id;
     @NotEmpty
     @Size(min = 5,message = "El nombre del puesto deberia tener al menos 5 caracteres")

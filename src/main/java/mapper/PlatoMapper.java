@@ -22,8 +22,8 @@ public  class PlatoMapper {
         platoDTO.setUrlImagen(plato.getUrlImagen());
 
         categoriaDTO.setId(plato.getCategoria().getId());
-        categoriaDTO.setNombre(plato.getCategoria().getCT_Nombre());
-        categoriaDTO.setEstado(plato.getCategoria().isCT_Estado());
+        categoriaDTO.setNombre(plato.getCategoria().getNombre());
+        categoriaDTO.setEstado(plato.getCategoria().getEstado());
         categoriaDTO.setImg(plato.getCategoria().getImg());
 
         plato.getPlatoProducto().forEach(x -> {
@@ -43,9 +43,9 @@ public  class PlatoMapper {
         if (plato.getPromocion() != null) {
             PromocionDTO promocionDTO = new PromocionDTO();
             promocionDTO.setId(plato.getPromocion().getId());
-            promocionDTO.setNombre(plato.getPromocion().getPr_Nombre());
-            promocionDTO.setCantidad(plato.getPromocion().getPr_Cantidad());
-            promocionDTO.setPorcentaje(plato.getPromocion().getPr_Porcentaje());
+            promocionDTO.setNombre(plato.getPromocion().getNombre());
+            promocionDTO.setCantidad(plato.getPromocion().getCantidad());
+            promocionDTO.setPorcentaje(plato.getPromocion().getPorcentaje());
             platoDTO.setPromocion(promocionDTO);
         }
 
@@ -67,8 +67,8 @@ public  class PlatoMapper {
         plato.setUrlImagen(platoDTO.getUrlImagen());
 
         category.setId(platoDTO.getCategoria().getId());
-        category.setCT_Nombre(platoDTO.getCategoria().getNombre());
-        category.setCT_Estado(platoDTO.getCategoria().isEstado());
+        category.setNombre(platoDTO.getCategoria().getNombre());
+        category.setEstado(platoDTO.getCategoria().isEstado());
         category.setImg(platoDTO.getCategoria().getImg());
 
         platoDTO.getProductos().forEach(x -> {
@@ -90,9 +90,9 @@ public  class PlatoMapper {
         if (platoDTO.getPromocion() != null) {
             Promocion promocion = new Promocion();
             promocion.setId(platoDTO.getPromocion().getId());
-            promocion.setPr_Nombre(platoDTO.getPromocion().getNombre());
-            promocion.setPr_Cantidad(platoDTO.getPromocion().getCantidad());
-            promocion.setPr_Porcentaje(platoDTO.getPromocion().getPorcentaje());
+            promocion.setNombre(platoDTO.getPromocion().getNombre());
+            promocion.setCantidad(platoDTO.getPromocion().getCantidad());
+            promocion.setPorcentaje(platoDTO.getPromocion().getPorcentaje());
             plato.setPromocion(promocion);
         }
 

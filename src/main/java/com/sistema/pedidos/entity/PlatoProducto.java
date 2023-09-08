@@ -25,7 +25,7 @@ public class PlatoProducto implements Serializable {
     @JoinColumn(name = "producto_id" , nullable = false)
     @JsonBackReference
     private Product producto;
-    @Id
+
     @Column (name = "fecha_registro", nullable = false)
     private Date fechaRegistro;
 

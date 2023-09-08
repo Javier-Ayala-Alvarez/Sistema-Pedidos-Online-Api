@@ -80,6 +80,11 @@ public class CategoryController {
         return ResponseEntity.ok(categoryService.listarCategoryActivo());
     }
 
+    @GetMapping("/list/DTO/activo")
+    public ResponseEntity<?> listarCategoriaDTOActivo(){
+        return ResponseEntity.ok(categoryService.listarCategoriaDTOActivo());
+    }
+
     @DeleteMapping("/delete/{id}")
     public  void eliminarId(@PathVariable Long id){
         categoryService.eliminarCategory(id);

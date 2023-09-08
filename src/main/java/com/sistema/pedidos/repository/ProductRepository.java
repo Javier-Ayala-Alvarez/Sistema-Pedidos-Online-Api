@@ -15,6 +15,9 @@ import java.util.Optional;
 
 public interface ProductRepository extends JpaRepository <Product, Long>{
 
+    @Query(value = "select p from Product p where p.estado = true")
+    List<Product> listarProductosActivos();
+
 
 
     @Transactional

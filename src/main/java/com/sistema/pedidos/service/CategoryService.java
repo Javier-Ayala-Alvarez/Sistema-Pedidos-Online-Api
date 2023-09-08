@@ -1,5 +1,6 @@
 package com.sistema.pedidos.service;
 
+import com.sistema.pedidos.DTO.CategoriaDTO;
 import com.sistema.pedidos.entity.Category;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,6 +27,8 @@ public interface CategoryService {
     public Page<Category> listarCategoryPorNombrePagina(String CT_Nombre,Pageable pageable );
 
     public void eliminarCategory(Long id);
+
+    public List<CategoriaDTO> listarCategoriaDTOActivo();
 
 
 
