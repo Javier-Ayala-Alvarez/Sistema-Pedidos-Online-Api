@@ -111,37 +111,60 @@ public class PlatoServiceImpl extends GenericServiceImpl<Plato, Long> implements
         plato.setDescripcion(savePlatoDTO.getDescripcion());
         plato.setUrlImagen(savePlatoDTO.getUrlImagen());
         plato.setEstado(savePlatoDTO.getEstado());
-        List<PlatoProducto> listaPlatoProducto = plato.getPlatoProducto();
-        listaPlatoProducto.clear();
-
-        for (Long productoId : savePlatoDTO.getListaProductos()) {
-            Optional<Product> obj = productRepository.findById(productoId);
-            obj.ifPresent(producto -> {
-                PlatoProducto platoProducto = new PlatoProducto();
-                platoProducto.setProducto(producto);
-                platoProducto.setPlato(plato);
-                platoProducto.setFechaRegistro(new Date());
-                listaPlatoProducto.add(platoProducto);
-            });
-            if (!obj.isPresent())
-                return new ResponseEntity<>("No existe el producto con id: " + productoId, HttpStatus.BAD_REQUEST);
-        }
-        plato.setPlatoProducto(listaPlatoProducto);
         Optional<Category> obj = categoryRepository.findById(savePlatoDTO.getIdCategoria());
         if (!obj.isPresent())
             return new ResponseEntity<>("No existe la categoria con id: " + savePlatoDTO.getIdCategoria(), HttpStatus.BAD_REQUEST);
         plato.setCategoria(obj.get());
+        List<PlatoProducto> listaPlatoProducto = plato.getPlatoProducto();
 
-        if (savePlatoDTO.nonNullPromocion()) {
-            Optional<Promocion> objPromocion = promocionRepository.findById(savePlatoDTO.getIdPromocion());
-            if (!objPromocion.isPresent())
-                return new ResponseEntity<>("No existe la promocion con id: " + savePlatoDTO.getIdPromocion(), HttpStatus.BAD_REQUEST);
+        int totalproductos = savePlatoDTO.getListaProductos().size() - 1;
+        int totalplatoProducto = listaPlatoProducto.size() - 1;
+        int totalGuardado = 0;
+        if (totalproductos > totalplatoProducto) totalGuardado = totalproductos;
+        if (totalproductos < totalplatoProducto) totalGuardado = totalplatoProducto;
 
-            plato.setPromocion(objPromocion.get());
+        for (int i = 0; i <= totalGuardado; i++) {
+            // agregar en caso que haya mas productos en la lista de productos
+            if (i > totalplatoProducto) {
+                PlatoProducto platoProducto = new PlatoProducto();
+                listaPlatoProducto.add(platoProducto);
+            }
+            // eliminar en caso de que haya más productos en la lista de platoProducto
+            if (i > totalproductos) {
+                platoRepository.deletePlatoProducto(listaPlatoProducto.get(i).getId());
+                listaPlatoProducto.remove(i);
+                continue;
+            }
+
+
+            Optional<Product> objProducto = productRepository.findById(savePlatoDTO.getListaProductos().get(i));
+            int finalI = i;
+            objProducto.ifPresent(producto -> {
+                listaPlatoProducto.get(finalI).setProducto(producto);
+                listaPlatoProducto.get(finalI).setPlato(plato);
+                listaPlatoProducto.get(finalI).setFechaRegistro(new Date());
+            });
+            if (!objProducto.isPresent())
+                return new ResponseEntity<>("No existe el producto con id: " + savePlatoDTO.getListaProductos().get(i), HttpStatus.BAD_REQUEST);
+
+
         }
 
-        return new ResponseEntity<>(new PlatoMapper().platoToPlatoDTO(save(plato)), HttpStatus.CREATED);
+        Plato platoGuardado = transacionPlato(plato);
 
+        return new ResponseEntity<>(new
+
+                PlatoMapper().
+
+                platoToPlatoDTO(platoGuardado), HttpStatus.CREATED);
+
+    }
+
+
+    public Plato transacionPlato(Plato plato) {
+        //platoRepository.deleteRelationPlatoProducto(plato.getId());
+        Plato platoGuardado = platoRepository.save(plato);
+        return platoGuardado;
     }
 
 
