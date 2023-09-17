@@ -20,7 +20,6 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
-
     @PostMapping("/new")
     public ResponseEntity<Object> agregarProduct(@RequestBody Product product){
         return  productService.guardarProduct(product);
