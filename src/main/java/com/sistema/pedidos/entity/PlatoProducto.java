@@ -15,12 +15,16 @@ import java.util.Date;
 @Setter
 
 public class PlatoProducto implements Serializable {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JsonBackReference
     @JoinColumn(name = "plato_id", nullable = false)
     private Plato plato;
-    @Id
+
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "producto_id" , nullable = false)
     @JsonBackReference
