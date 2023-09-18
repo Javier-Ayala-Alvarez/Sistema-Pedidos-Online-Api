@@ -27,5 +27,6 @@ public class Promocion implements Serializable {
     private Boolean estado;
 
     @OneToMany(mappedBy = "promocion")
+
     private Set<Plato> platos;
 }

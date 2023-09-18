@@ -57,6 +57,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     }
 
+    @Transactional
     @Override
     public ResponseEntity<Usuario> guardarUsuario(Usuario usuario, Set<UsuarioRol> usuarioRoles) throws Exception {
         // TODO Auto-generated method stub

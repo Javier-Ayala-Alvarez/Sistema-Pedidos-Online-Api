@@ -1,5 +1,6 @@
 package com.sistema.pedidos.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
@@ -27,6 +28,7 @@ public class Category implements Serializable {
     @Column(length = 1000)
     private String img;
 
+    @JsonIgnore
     @JsonManagedReference
     @OneToMany(mappedBy = "categoria")
     private List<Plato> platosList;
