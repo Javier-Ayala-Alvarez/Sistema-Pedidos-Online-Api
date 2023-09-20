@@ -1,5 +1,6 @@
 package com.sistema.pedidos.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
@@ -36,8 +37,11 @@ public class Product implements Serializable {
     private Category category;
     @ManyToOne
     private Evento evento;
+
+    @JsonIgnore
     @ManyToOne
     private  Promocion promocion;
+
     @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<PlatoProducto> platoProducto;

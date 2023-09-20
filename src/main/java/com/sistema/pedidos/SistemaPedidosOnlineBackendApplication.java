@@ -12,6 +12,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.sistema.pedidos.service.UsuarioService;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -34,19 +37,19 @@ public class SistemaPedidosOnlineBackendApplication implements CommandLineRunner
 
 	@Override
 	public void run(String... args) throws Exception {
-//
+
 //		Usuario usuario = new Usuario();
-//
-//
-//		usuario.setUsername("nelson");
+
+
+//		usuario.setUsername("admin");
 //		usuario.setPassword(bCryptPasswordEncoder.encode("12345"));
-//
+
 //		usuario.setEmail("nelson.karma2012@gmail.com");
-//
+
 //		Rol rol = new Rol();
 //		rol.setRolId(1L);
 //		rol.setNombre("ADMIN");
-//
+
 //		Set<UsuarioRol> usuarioRoles = new HashSet<>();
 //		UsuarioRol usuarioRol = new UsuarioRol();
 //		usuarioRol.setRol(rol);
@@ -61,14 +64,14 @@ public class SistemaPedidosOnlineBackendApplication implements CommandLineRunner
 //		Usuario usuario2 = new Usuario();
 //
 //
-//		usuario2.setUsername("mauricio");
+//		usuario2.setUsername("cliente");
 //		usuario2.setPassword(bCryptPasswordEncoder.encode("123456"));
 //
 //		usuario2.setEmail("mauricoi_cc@gmail.com");
 //
 //		Rol rol2 = new Rol();
 //		rol2.setRolId(2L);
-//		rol2.setNombre("NORMAL");
+//		rol2.setNombre("CLIENTE");
 //
 //		Set<UsuarioRol> usuarioRoles2 = new HashSet<>();
 //		UsuarioRol usuarioRol2 = new UsuarioRol();
@@ -89,7 +92,7 @@ public class SistemaPedidosOnlineBackendApplication implements CommandLineRunner
         };
 	}*/
 
-	/*Bean
+	/*@Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurerAdapter() {
             @Override

@@ -64,7 +64,7 @@ public class UsuarioController {
 
         Rol rol = new Rol();
         rol.setRolId(2L);
-        rol.setNombre("NORMAL");
+        rol.setNombre("CLIENTE");
 
         UsuarioRol usuarioRol = new UsuarioRol();
         usuarioRol.setUsuario(usuario);
@@ -154,10 +154,12 @@ public class UsuarioController {
         usuario.setUsername(usurioCliente.getUsuario().getUsername());
         usuario.setEmail(usurioCliente.getUsuario().getEmail());
         usuario.setPassword(passwordEncoder.encode(usurioCliente.getUsuario().getPassword()));
+
         Set<UsuarioRol> roles = new HashSet<>();
         Rol rol = new Rol();
         rol.setRolId(2L);
-        rol.setNombre("NORMAL");
+        rol.setNombre("CLIENTE");
+
         UsuarioRol usuarioRol = new UsuarioRol();
         usuarioRol.setUsuario(usuario);
         usuarioRol.setRol(rol);
