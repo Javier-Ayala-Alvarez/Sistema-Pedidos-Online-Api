@@ -22,15 +22,15 @@ import io.jsonwebtoken.ExpiredJwtException;
 @Component
 public class JwtAuthenticationFilter  extends OncePerRequestFilter{
 
-	
-	@Autowired
-	private UserDetailsServiceImpl userDetailService;
-	
-	@Autowired
-	private JwtUtils jwtUtil;
-	
-	@Override
-	 protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+
+    @Autowired
+    private UserDetailsServiceImpl userDetailService;
+
+    @Autowired
+    private JwtUtils jwtUtil;
+
+    @Override
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String requestTokenHeader = request.getHeader("Authorization");
         String username = null;
         String jwtToken = null;
@@ -64,5 +64,5 @@ public class JwtAuthenticationFilter  extends OncePerRequestFilter{
         filterChain.doFilter(request,response);
     }
 
-	
+
 }
