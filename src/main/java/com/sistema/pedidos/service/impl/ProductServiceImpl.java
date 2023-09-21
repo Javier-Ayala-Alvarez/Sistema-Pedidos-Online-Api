@@ -98,7 +98,7 @@ public class ProductServiceImpl implements ProductService {
             producto.setEstado((Boolean) resultado.get("estado"));
             producto.setUrlImagen((String) resultado.get("url_imagen"));
             producto.setEvento((String) resultado.get("evento"));
-            producto.setPromocion((Long) resultado.get("promocion"));
+            producto.setPromocion((BigInteger) resultado.get("promocion"));
             producto.setIdCombo((BigInteger) resultado.get("idCombo"));
             producto.setNombreProducto((String) resultado.get("nombreProducto"));
             producto.setUrlImagenProducto((String) resultado.get("urlImagenProducto"));
