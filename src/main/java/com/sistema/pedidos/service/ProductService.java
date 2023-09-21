@@ -12,7 +12,7 @@ import java.util.List;
 public interface ProductService {
 
 
-    public ResponseEntity<Object> guardarProduct(Product product);
+    public ResponseEntity<Object> guardarProduct(ProductDTO product);
 
     public ResponseEntity<Product> actualizarProduct(Product product,Long id);
 

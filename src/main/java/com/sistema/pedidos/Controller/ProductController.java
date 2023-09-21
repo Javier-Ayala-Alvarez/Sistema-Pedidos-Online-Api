@@ -1,5 +1,6 @@
 package com.sistema.pedidos.Controller;
 
+import com.sistema.pedidos.DTO.ProductDTO;
 import com.sistema.pedidos.DTO.ProductoPlatoDTO;
 import com.sistema.pedidos.Utileria.ConstantUtileria;
 import com.sistema.pedidos.entity.Product;
@@ -21,7 +22,7 @@ public class ProductController {
     @Autowired
     private ProductService productService;
     @PostMapping("/new")
-    public ResponseEntity<Object> agregarProduct(@RequestBody Product product){
+    public ResponseEntity<Object> agregarProduct(@RequestBody ProductDTO product){
         return  productService.guardarProduct(product);
     }
 

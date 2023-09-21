@@ -30,20 +30,22 @@ public class ProductServiceImpl implements ProductService {
     private ModelMapper modelMapper;
 
     @Override
-    public ResponseEntity<Object> guardarProduct(Product product) {
+    public ResponseEntity<Object> guardarProduct(ProductDTO product) {
         Optional<Category> categoryOptional = categoryRepository.findById(product.getCategory().getId());
         if (!categoryOptional.isPresent()) {
             return ResponseEntity.unprocessableEntity().build();
         }
-        product.setNombre(product.getNombre());
-        product.setDescripcion(product.getDescripcion());
-        product.setEstado(product.isEstado());
-        product.setPrecioVenta(product.getPrecioVenta());
-        product.setGanancia(product.getGanancia());
-        product.setUrlImagen(product.getUrlImagen());
-        product.setCategory(categoryOptional.get());
+        Product product1 = new Product();
+       product1.setId(productRepository.idMaximo()+1);
+        product1.setNombre(product.getNombre());
+        product1.setDescripcion(product.getDescripcion());
+        product1.setEstado(product.isEstado());
+        product1.setPrecioVenta(product.getPrecioVenta());
+        product1.setGanancia(product.getGanancia());
+        product1.setUrlImagen(product.getUrlImagen());
+        product1.setCategory(categoryOptional.get());
 
-        Product productGuardado = productRepository.save(product);
+        Product productGuardado = productRepository.save(product1);
         return ResponseEntity.ok(productGuardado);
     }
 

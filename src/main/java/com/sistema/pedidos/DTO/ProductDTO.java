@@ -23,5 +23,7 @@ public class ProductDTO implements Serializable {
     private  String descripcion;
     private Double precioVenta;
     private  Double ganancia;
+    private  boolean estado=true;
     private  String urlImagen;
+    private CategoriaDTO category;
 }
