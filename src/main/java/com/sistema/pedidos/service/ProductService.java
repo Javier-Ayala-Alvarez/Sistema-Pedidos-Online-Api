@@ -14,7 +14,7 @@ public interface ProductService {
 
     public ResponseEntity<Object> guardarProduct(ProductDTO product);
 
-    public ResponseEntity<Product> actualizarProduct(Product product,Long id);
+    public ResponseEntity<Product> actualizarProduct(ProductDTO product,Long id);
 
     public Product listarProductPorId(Long id);
     public Page<Product> listarProductPorPagina(Pageable pageable);

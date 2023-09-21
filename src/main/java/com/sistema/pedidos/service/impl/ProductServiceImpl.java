@@ -50,7 +50,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseEntity<Product> actualizarProduct(Product product, Long id) {
+    public ResponseEntity<Product> actualizarProduct(ProductDTO product, Long id) {
         Optional<Category> categoryOptional = categoryRepository.findById(product.getCategory().getId());
         Optional<Product> productOptional = productRepository.findById(id);
 
@@ -60,18 +60,18 @@ public class ProductServiceImpl implements ProductService {
         if (!productOptional.isPresent()) {
             return ResponseEntity.unprocessableEntity().build();
         }
+    Product product1 = new Product();
+        product1.setId(productOptional.get().getId());
+        product1.setCategory(categoryOptional.get());
 
-        product.setId(productOptional.get().getId());
-        product.setCategory(categoryOptional.get());
+        product1.setNombre(product.getNombre());
+        product1.setDescripcion(product.getDescripcion());
+        product1.setEstado(product.isEstado());
+        product1.setPrecioVenta(product.getPrecioVenta());
+        product1.setGanancia(product.getGanancia());
+        product1.setUrlImagen(product.getUrlImagen());
 
-        product.setNombre(product.getNombre());
-        product.setDescripcion(product.getDescripcion());
-        product.setEstado(product.isEstado());
-        product.setPrecioVenta(product.getPrecioVenta());
-        product.setGanancia(product.getGanancia());
-        product.setUrlImagen(product.getUrlImagen());
-
-        Product productGuardado = productRepository.save(product);
+        Product productGuardado = productRepository.save(product1);
 
         return ResponseEntity.ok(productGuardado);
     }
