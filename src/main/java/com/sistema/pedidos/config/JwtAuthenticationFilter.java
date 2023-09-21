@@ -21,6 +21,8 @@ import io.jsonwebtoken.ExpiredJwtException;
 
 @Component
 public class JwtAuthenticationFilter  extends OncePerRequestFilter{
+
+
     @Autowired
     private UserDetailsServiceImpl userDetailService;
 
@@ -61,4 +63,5 @@ public class JwtAuthenticationFilter  extends OncePerRequestFilter{
         }
         filterChain.doFilter(request,response);
     }
+
 }
