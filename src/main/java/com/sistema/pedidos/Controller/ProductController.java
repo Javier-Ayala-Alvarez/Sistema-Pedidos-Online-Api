@@ -49,6 +49,7 @@ public class ProductController {
             @RequestParam(defaultValue = ConstantUtileria.ORDENAR_DEFECTO)String order,
             @RequestParam(defaultValue = ConstantUtileria.ORDENAR_DIRECCION_DEFECTO) boolean asc
     ){
+
         Page<Product> productPage=productService.listarProductPorPagina(
                 PageRequest.of(page,size, Sort.by(order)));
         return new ResponseEntity<Page<Product>>(productPage, HttpStatus.OK);
