@@ -123,6 +123,9 @@ public class PlatoServiceImpl extends GenericServiceImpl<Plato, Long> implements
         if (totalproductos > totalplatoProducto) totalGuardado = totalproductos;
         if (totalproductos < totalplatoProducto) totalGuardado = totalplatoProducto;
 
+        if (totalproductos == totalplatoProducto) totalGuardado = totalplatoProducto;
+
+
         for (int i = 0; i <= totalGuardado; i++) {
             // agregar en caso que haya mas productos en la lista de productos
             if (i > totalplatoProducto) {
@@ -139,8 +142,8 @@ public class PlatoServiceImpl extends GenericServiceImpl<Plato, Long> implements
 
             Optional<Product> objProducto = productRepository.findById(savePlatoDTO.getListaProductos().get(i));
             int finalI = i;
-            objProducto.ifPresent(producto -> {
-                listaPlatoProducto.get(finalI).setProducto(producto);
+            objProducto.ifPresent(productoObjBD -> {
+                listaPlatoProducto.get(finalI).setProducto(productoObjBD);
                 listaPlatoProducto.get(finalI).setPlato(plato);
                 listaPlatoProducto.get(finalI).setFechaRegistro(new Date());
             });

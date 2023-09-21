@@ -15,7 +15,7 @@ public class ProductoPlatoDTO {
     private Double ganancia;
     private String urlImagen;
     private String evento;
-    private Long promocion;
+    private BigInteger promocion;
     private BigInteger idCombo;
     private String nombreProducto;
     private String urlImagenProducto;
