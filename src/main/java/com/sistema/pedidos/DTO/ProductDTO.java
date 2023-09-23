@@ -1,14 +1,8 @@
 package com.sistema.pedidos.DTO;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.sistema.pedidos.entity.Category;
-import com.sistema.pedidos.entity.Evento;
-import com.sistema.pedidos.entity.PlatoProducto;
-import com.sistema.pedidos.entity.Promocion;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.sistema.pedidos.entity.*;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.List;
@@ -17,6 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
+@Data
 public class ProductDTO implements Serializable {
     private long id;
     private  String nombre;
@@ -26,4 +21,6 @@ public class ProductDTO implements Serializable {
     private  boolean estado=true;
     private  String urlImagen;
     private CategoriaDTO category;
+
+
 }

@@ -43,16 +43,16 @@ public class ProductController {
     }
 
     @GetMapping("/list/pageables")
-    public ResponseEntity<Page<Product>> listarProductPorPagina(
+    public ResponseEntity<Page<ProductDTO>> listarProductPorPagina(
             @RequestParam(defaultValue = ConstantUtileria.NUMERO_PAGINA_DEFECTO)int page,
             @RequestParam(defaultValue = ConstantUtileria.MEDIDA_PAGINA_DEFECTO)int size,
             @RequestParam(defaultValue = ConstantUtileria.ORDENAR_DEFECTO)String order,
             @RequestParam(defaultValue = ConstantUtileria.ORDENAR_DIRECCION_DEFECTO) boolean asc
     ){
 
-        Page<Product> productPage=productService.listarProductPorPagina(
+        Page<ProductDTO> productPage=productService.listarProductPorPagina(
                 PageRequest.of(page,size, Sort.by(order)));
-        return new ResponseEntity<Page<Product>>(productPage, HttpStatus.OK);
+        return new ResponseEntity<Page<ProductDTO>>(productPage, HttpStatus.OK);
     }
 
     @GetMapping("/list")

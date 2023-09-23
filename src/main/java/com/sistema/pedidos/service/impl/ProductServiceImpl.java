@@ -11,7 +11,9 @@ import com.sistema.pedidos.repository.ProductRepository;
 import com.sistema.pedidos.service.ProductService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -82,9 +85,25 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<Product> listarProductPorPagina(Pageable pageable) {
-        return productRepository.findAll(pageable);
-    }
+   // public Page<ProductDTO> listarProductPorPagina(Pageable pageable) {
+   //     return productRepository.findAll(pageable);
+   // }
+
+
+        public Page<ProductDTO> listarProductPorPagina(Pageable pageable) {
+            Page<Product> productPage = productRepository.findAll(pageable);
+
+            List<ProductDTO> productDTOList = productPage
+                    .getContent()
+                    .stream()
+                    .map(product -> modelMapper.map(product, ProductDTO.class))
+                    .collect(Collectors.toList());
+
+            return new PageImpl<>(productDTOList, pageable, productPage.getTotalElements());
+        }
+
+
+
 
     @Override
     public List<ProductoPlatoDTO> listarProductPorPagina() {
