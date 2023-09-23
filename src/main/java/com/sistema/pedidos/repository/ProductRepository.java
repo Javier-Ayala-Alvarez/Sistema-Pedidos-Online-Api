@@ -31,12 +31,12 @@ public interface ProductRepository extends JpaRepository <Product, Long>{
             " p.id AS idCombo, r.nombre AS nombreProducto, r.url_imagen AS urlImagenProducto, p.categoria_id" +
             " FROM plato_menu p" +
             " INNER JOIN plato_producto m ON m.plato_id = p.id" +
-            " INNER JOIN producto r ON r.id_producto = m.producto_id" +
+            " INNER JOIN producto r ON r.id_producto = m.producto_id WHERE p.estado = true" +
             " UNION ALL" +
             " SELECT r.id_producto AS idProducto, r.nombre AS nombreProducto, r.descripcion, r.estado, r.precio_venta AS precioVenta," +
             " r.ganancia, r.url_imagen, r.evento_id_evento, r.promocion_id_promocion AS promocion," +
             " 0 AS idCombo, NULL AS nombreProducto, NULL AS urlImagenProducto, r.category_id" +
-            " FROM producto r " +
+            " FROM producto r WHERE r.estado = true" +
             " ) a", nativeQuery = true)
     List<Map<String, Object>> listarProductPorPagina();
 
