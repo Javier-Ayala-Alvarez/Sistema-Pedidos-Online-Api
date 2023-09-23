@@ -17,7 +17,7 @@ public interface ProductService {
     public ResponseEntity<Product> actualizarProduct(ProductDTO product,Long id);
 
     public Product listarProductPorId(Long id);
-    public Page<ProductDTO> listarProductPorPagina(Pageable pageable);
+    public Page<Product> listarProductPorPagina(Pageable pageable);
     public List<ProductoPlatoDTO> listarProductPorPagina();
     public List<Product> listarProductPorCombo(Long id);
     public Page<Product> listarProductPorNombrePagina(String nombre,Pageable pageable);
