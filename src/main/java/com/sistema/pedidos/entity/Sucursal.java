@@ -23,4 +23,11 @@ public class Sucursal {
     private boolean estado=true;
     @ManyToOne
     private Company empresa;
+    @Column
+    private Double altitud;
+    @Column
+    private Double longitud;
+    @Column
+    private Double radio;
+    
 }

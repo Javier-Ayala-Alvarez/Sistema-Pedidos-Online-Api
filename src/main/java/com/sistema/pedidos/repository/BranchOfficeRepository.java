@@ -12,7 +12,7 @@ import java.util.List;
 public interface BranchOfficeRepository extends JpaRepository<Sucursal, Long>  {
 
 
-   @Query(value = "SELECT * FROM sucursales s WHERE s.nombre LIKE UPPER(CONCAT(?1, '%')) ", nativeQuery = true)
+   @Query(value = "SELECT * FROM sucursales s WHERE s.nombre LIKE ?1% ", nativeQuery = true)
     Page <Sucursal> listarSucursalPorNombrePagina(String nombre, Pageable pageable);
 
     @Query(value = "SELECT * FROM sucursales s WHERE s.estado=1",nativeQuery = true)
