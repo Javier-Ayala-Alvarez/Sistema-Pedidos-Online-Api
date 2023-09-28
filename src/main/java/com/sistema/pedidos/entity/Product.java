@@ -1,5 +1,6 @@
 package com.sistema.pedidos.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
@@ -34,6 +35,7 @@ public class Product implements Serializable {
     private  String urlImagen;
     @ManyToOne
     private Category category;
+    @JsonIgnore
     @ManyToOne
     private Evento evento;
     @ManyToOne
