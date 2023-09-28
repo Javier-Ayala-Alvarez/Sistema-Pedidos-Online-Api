@@ -2,10 +2,7 @@ package com.sistema.pedidos.Controller;
 
 import java.util.*;
 
-import com.sistema.pedidos.DTO.ClienteUsuarioDTO;
-import com.sistema.pedidos.DTO.RegistroDTO;
-import com.sistema.pedidos.DTO.UsuarioClienteDTO;
-import com.sistema.pedidos.DTO.UsuarioDTO;
+import com.sistema.pedidos.DTO.*;
 import com.sistema.pedidos.entity.ClientesEntity;
 import com.sistema.pedidos.entity.Rol;
 import com.sistema.pedidos.repository.ClienteRepository;
@@ -173,6 +170,10 @@ public class UsuarioController {
 
 
         return new ResponseEntity<>(usuarioService.guardarUsuario(usuario, roles), HttpStatus.OK);
+    }
+    @PostMapping("/GuardarUsuarioCocina")
+    public ResponseEntity<?>guardarUsuarioCocina(@Valid @RequestBody UsuarioCocinaDTO usuarioCocinaDTO)throws Exception{
+        return null;
     }
 
     @PutMapping("/ModificarUsuario/{idUsuario}")
