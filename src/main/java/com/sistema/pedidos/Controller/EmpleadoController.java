@@ -67,6 +67,16 @@ public class EmpleadoController {
                 PageRequest.of(page,size));
         return  new ResponseEntity<Page<Empleado>>(EmpleadoPage,HttpStatus.OK);
     }
+
+    @GetMapping("/list/{id}")
+    public ResponseEntity<Empleado> listarEmpleadoPorId(@PathVariable int id){
+        try {
+            Empleado empleado=empleadoService.listarEmpleadoPorId(id);
+            return new ResponseEntity<Empleado>(empleado,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<Empleado>(HttpStatus.NOT_FOUND);
+        }
+    }
 }
 
 
