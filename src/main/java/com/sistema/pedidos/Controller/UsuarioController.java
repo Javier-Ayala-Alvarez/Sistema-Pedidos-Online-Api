@@ -64,7 +64,7 @@ public class UsuarioController {
 
         Rol rol = new Rol();
         rol.setRolId(2L);
-        rol.setNombre("CLIENTE");
+        rol.setNombre("NORMAL");
 
         UsuarioRol usuarioRol = new UsuarioRol();
         usuarioRol.setUsuario(usuario);
@@ -73,7 +73,6 @@ public class UsuarioController {
         roles.add(usuarioRol);
         return new ResponseEntity<>(usuarioService.guardarUsuario(usuario, roles), HttpStatus.CREATED);
     }
-
 
     //@PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/GuardarUsuarioEmpleado")
@@ -158,7 +157,7 @@ public class UsuarioController {
         Set<UsuarioRol> roles = new HashSet<>();
         Rol rol = new Rol();
         rol.setRolId(2L);
-        rol.setNombre("CLIENTE");
+        rol.setNombre("NORMAL");
         UsuarioRol usuarioRol = new UsuarioRol();
         usuarioRol.setUsuario(usuario);
         usuarioRol.setRol(rol);
