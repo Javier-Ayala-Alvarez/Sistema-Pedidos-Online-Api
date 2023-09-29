@@ -13,6 +13,6 @@ public interface EmpleadoService extends GenericServiceApi<Empleado,Integer> {
 
     Page<Empleado>listarEmpleadoPorNombrePagina(String CT_Nombre, Pageable pageable);
 
-    Empleado listarEmpleadoPorId(int id);
+    Empleado listarEmpleadoPorId(Integer id);
 
 }
