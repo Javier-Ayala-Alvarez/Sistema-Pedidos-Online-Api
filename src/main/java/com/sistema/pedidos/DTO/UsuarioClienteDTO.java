@@ -2,14 +2,20 @@ package com.sistema.pedidos.DTO;
 
 import lombok.Data;
 
+import javax.persistence.Column;
+import java.util.Date;
+
 @Data
 public class UsuarioClienteDTO {
-    Long idCliente;
-    String nombre;
-    String apellido;
-    Boolean estado;
+    private Long idCliente;
+    private String nombre;
+    private String apellido;
+    private Boolean estado;
 
-    UsuarioDIO usuario;
+    private UsuarioDIO usuario;
+    private String apodo;
+    private Date fechaNacimiento;
+
 
     // id not null validation method
     public boolean isIdClienteValid() {

@@ -3,6 +3,7 @@ package com.sistema.pedidos.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "cliente")
@@ -15,6 +16,12 @@ public class ClientesEntity {
     private String nombre;
     @Column
     private String apellido;
+    @Column
+    private String apodo;
+    @Column
+    private Date fechaNacimiento;
+
+
     @Column
     private boolean estado;
     @OneToOne

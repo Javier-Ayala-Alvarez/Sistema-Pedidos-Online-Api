@@ -63,22 +63,28 @@ public class UsuarioServiceImpl implements UsuarioService {
         // TODO Auto-generated method stub
 
         Usuario usuarioLocal = usuarioRepository.findByUsername(usuario.getUsername());
+        try {
         if (usuarioLocal != null) {
             throw new Exception("el usario ya existe");
         } else {
-//            usuarioLocal = usuarioRepository.save(usuario);
-//            for (UsuarioRol usuarioRol : usuarioRoles) {
-//                usuario.setUsuarioRoles(usuarioRoles);
-//                usuarioRol.setUsuario(usuarioLocal);
-//                usuarioRolesRepository.save(usuarioRol);
-//            }
 
             usuario.setUsuarioRoles(usuarioRoles);
             usuarioLocal = usuarioRepository.save(usuario);
         }
+        } catch (Exception ex) {
+            // Captura la excepción y devuelve un mensaje de error adecuado
+            String mensajeDeError = "Ha ocurrido un error al guardar el usuario";
+            System.out.println(ex.getMessage());
+            if (ex.getMessage() != null && !ex.getMessage().isEmpty()) {
+                mensajeDeError = ex.getMessage();
+            }
+            throw new Exception(mensajeDeError);
+
+        }
         return new ResponseEntity<>(usuarioLocal, HttpStatus.CREATED);
 
     }
+
 
     public ResponseEntity<Usuario> guardarUsuario(Usuario usuario) throws Exception {
         // TODO Auto-generated method stub
