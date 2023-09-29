@@ -5,15 +5,12 @@ import java.util.*;
 import com.sistema.pedidos.DTO.*;
 import com.sistema.pedidos.entity.ClientesEntity;
 import com.sistema.pedidos.entity.Rol;
-import com.sistema.pedidos.repository.ClienteRepository;
 import com.sistema.pedidos.repository.RolRepositorio;
 import com.sistema.pedidos.repository.UsuarioRepositorio;
 import com.sistema.pedidos.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -170,10 +167,6 @@ public class UsuarioController {
 
 
         return new ResponseEntity<>(usuarioService.guardarUsuario(usuario, roles), HttpStatus.OK);
-    }
-    @PostMapping("/GuardarUsuarioCocina")
-    public ResponseEntity<?>guardarUsuarioCocina(@Valid @RequestBody UsuarioCocinaDTO usuarioCocinaDTO)throws Exception{
-        return null;
     }
 
     @PutMapping("/ModificarUsuario/{idUsuario}")

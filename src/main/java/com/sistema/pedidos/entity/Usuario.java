@@ -31,6 +31,9 @@ public class Usuario implements UserDetails {
 	@JsonIgnore
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "usuario")
 	private ClientesEntity  cliente;
+	@JsonIgnore
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "usuario")
+	private Empleado  empleado;
 
 	public String getEmail() {
 		return email;
@@ -103,6 +106,9 @@ public class Usuario implements UserDetails {
 	public void setCliente(ClientesEntity cliente) {
 		this.cliente = cliente;
 	}
+
+	public Empleado getEmpleado(){return empleado;}
+	public void setEmpleado(Empleado empleado){this.empleado=empleado;}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

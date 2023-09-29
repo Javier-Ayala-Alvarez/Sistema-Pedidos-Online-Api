@@ -37,6 +37,7 @@ public class Empleado {
     private Sucursal sucursal;
     @ManyToOne
     private PuestoLaboral puestoLaboral;
-    @ManyToOne
+    @OneToOne
+    @JoinColumn(name = "usuario_id" , nullable = false)
     private Usuario usuario;
 }
