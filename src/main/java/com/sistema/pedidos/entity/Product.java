@@ -35,6 +35,7 @@ public class Product implements Serializable {
     private  String urlImagen;
     @ManyToOne
     private Category category;
+    @JsonIgnore
     @ManyToOne
     private Evento evento;
 

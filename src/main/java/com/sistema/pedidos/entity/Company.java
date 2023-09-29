@@ -20,4 +20,6 @@ public class Company {
 
     @Column
     private  String cp_abreviatura;
+    @ManyToOne
+    private Evento evento;
 }

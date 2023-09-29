@@ -47,4 +47,9 @@ public class EmpleadoServiceImpl extends GenericServiceImpl<Empleado,Integer> im
         return empleadoRepository.listarEmpleadoPorNombrePagina(CT_Nombre,pageable);
     }
 
+    @Override
+    public Empleado listarEmpleadoPorId(int id) {
+        return empleadoRepository.findById(id).get();
+    }
+
 }

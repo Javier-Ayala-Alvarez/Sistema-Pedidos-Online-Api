@@ -29,4 +29,6 @@ public class Sucursal {
     private boolean estado=true;
     @ManyToOne
     private Company empresa;
+
+    
 }

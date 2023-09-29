@@ -13,7 +13,7 @@ public interface CategoryRepository extends JpaRepository<Category, Long>  {
 
 
 
-   @Query(value = "SELECT * FROM categoria c WHERE c.ct_nombre LIKE UPPER(CONCAT(?1, '%'))", nativeQuery = true)
+   @Query(value = "SELECT * FROM categoria c WHERE c.categoria_nombre LIKE ?1%", nativeQuery = true)
     Page<Category> listarCategoryPorNombrePagina(String CT_Nombre, Pageable pageable);
 
    @Query(value = "select c from Category c where c.estado = true")

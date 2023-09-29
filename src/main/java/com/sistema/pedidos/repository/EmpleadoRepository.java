@@ -20,7 +20,7 @@ public interface EmpleadoRepository extends JpaRepository<Empleado, Integer> {
      @Query("UPDATE Empleado e SET e.estado = false WHERE e.id = ?1")
      void darDeBajaEmpleado(Integer id);
 
-     @Query(value = "SELECT * FROM empleado e WHERE e.estado = true and e.nombre LIKE UPPER(CONCAT(?1, '%'))",nativeQuery = true)
+     @Query(value = "SELECT * FROM empleado e WHERE  e.nombre LIKE ?1%",nativeQuery = true)
      Page<Empleado> listarEmpleadoPorNombrePagina(String CT_Nombre, Pageable pageable);
 
 
