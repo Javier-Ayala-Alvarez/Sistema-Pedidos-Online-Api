@@ -114,8 +114,12 @@ public class EmpleadoController {
         Empleado empleadoActualizado = empleadoService.save(empleado);
         return new ResponseEntity<>(empleadoActualizado, HttpStatus.OK);
     }
+    @PutMapping("update2/{id}")
+    public ResponseEntity<Empleado> actualizarEmpleado2(@RequestBody Empleado empleado,@PathVariable Integer id){
+        return empleadoService.actualizarEmpleado2(empleado,id);
+    }
 
-    @PatchMapping("/baja/{id}")
+    @PutMapping("/baja/{id}")
     public ResponseEntity darDeBajaEmpleado(@PathVariable Integer id) {
         return empleadoService.darDeBajaEmpleado(id);
     }
