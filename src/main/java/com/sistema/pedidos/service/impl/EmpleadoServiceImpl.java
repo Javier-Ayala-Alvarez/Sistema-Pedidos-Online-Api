@@ -48,7 +48,7 @@ public class EmpleadoServiceImpl extends GenericServiceImpl<Empleado,Integer> im
     }
 
     @Override
-    public Empleado listarEmpleadoPorId(int id) {
+    public Empleado listarEmpleadoPorId(Integer id) {
         return empleadoRepository.findById(id).get();
     }
 

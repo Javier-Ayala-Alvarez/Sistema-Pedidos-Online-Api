@@ -63,7 +63,7 @@ public class EmpleadoController {
     public ResponseEntity<Empleado> agregarEmpleado(@RequestBody Empleado empleado) {
         return new ResponseEntity<>(empleadoService.save(empleado), HttpStatus.CREATED);
     }
-    @PostMapping("/GuardarUsuarioEmpleado")
+   /* @PostMapping("/GuardarUsuarioEmpleado")
     public ResponseEntity<?> guardarUsuarioEmpleado(@Valid @RequestBody Empleado empleado)throws Exception{
 
         Optional<Sucursal>sucursalOptional=branchOfficeRepository.findById(empleado.getSucursal().getId());
@@ -100,7 +100,7 @@ public class EmpleadoController {
         usuario.setEmpleado(empleado);
 
         return new ResponseEntity<>(usuarioService.guardarUsuario(usuario,roles),HttpStatus.OK);
-    }
+    }*/
 
 
     @DeleteMapping("/delete/{id}")
@@ -133,13 +133,18 @@ public class EmpleadoController {
     }
 
     @GetMapping("/list/{id}")
-    public ResponseEntity<Empleado> listarEmpleadoPorId(@PathVariable int id){
+    public ResponseEntity<Empleado> listarEmpleadoPorId(@PathVariable Integer id){
         try {
             Empleado empleado=empleadoService.listarEmpleadoPorId(id);
             return new ResponseEntity<Empleado>(empleado,HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<Empleado>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping("/listtt/{id}")
+    public Empleado getEmpleado(@PathVariable Integer id){
+        return empleadoService.listarEmpleadoPorId(id);
     }
 }
 
