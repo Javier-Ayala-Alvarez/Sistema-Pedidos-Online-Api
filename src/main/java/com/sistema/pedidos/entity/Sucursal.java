@@ -20,7 +20,15 @@ public class Sucursal {
     @Column
     private String direccion;
     @Column
+    private Double altitud;
+    @Column
+    private Double longitud;
+    @Column
+    private Double radio;
+    @Column
     private boolean estado=true;
     @ManyToOne
     private Company empresa;
+
+    
 }

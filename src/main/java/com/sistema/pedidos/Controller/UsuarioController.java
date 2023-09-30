@@ -2,21 +2,15 @@ package com.sistema.pedidos.Controller;
 
 import java.util.*;
 
-import com.sistema.pedidos.DTO.ClienteUsuarioDTO;
-import com.sistema.pedidos.DTO.RegistroDTO;
-import com.sistema.pedidos.DTO.UsuarioClienteDTO;
-import com.sistema.pedidos.DTO.UsuarioDTO;
+import com.sistema.pedidos.DTO.*;
 import com.sistema.pedidos.entity.ClientesEntity;
 import com.sistema.pedidos.entity.Rol;
-import com.sistema.pedidos.repository.ClienteRepository;
 import com.sistema.pedidos.repository.RolRepositorio;
 import com.sistema.pedidos.repository.UsuarioRepositorio;
 import com.sistema.pedidos.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -141,19 +135,19 @@ public class UsuarioController {
 
 
     @PostMapping("/GuardarUsuarioCliente")
-    public ResponseEntity<?> guardarUsuarioCliente(@Valid @RequestBody UsuarioClienteDTO usurioCliente) throws Exception {
-        if (usuarioRepositorio.existsByUsername(usurioCliente.getUsuario().getUsername())) {
+    public ResponseEntity<?> guardarUsuarioCliente(@Valid @RequestBody UsuarioClienteDTO usuarioCliente) throws Exception {
+        if (usuarioRepositorio.existsByUsername(usuarioCliente.getUsuario().getUsername())) {
             return new ResponseEntity<>("Ese nombre de usuario ya existe", HttpStatus.BAD_REQUEST);
         }
 
-        if (usuarioRepositorio.existsByEmail(usurioCliente.getUsuario().getEmail())) {
+        if (usuarioRepositorio.existsByEmail(usuarioCliente.getUsuario().getEmail())) {
             return new ResponseEntity<>("Ese email de usuario ya existe", HttpStatus.BAD_REQUEST);
         }
 
         Usuario usuario = new Usuario();
-        usuario.setUsername(usurioCliente.getUsuario().getUsername());
-        usuario.setEmail(usurioCliente.getUsuario().getEmail());
-        usuario.setPassword(passwordEncoder.encode(usurioCliente.getUsuario().getPassword()));
+        usuario.setUsername(usuarioCliente.getUsuario().getUsername());
+        usuario.setEmail(usuarioCliente.getUsuario().getEmail());
+        usuario.setPassword(passwordEncoder.encode(usuarioCliente.getUsuario().getPassword()));
 
         Set<UsuarioRol> roles = new HashSet<>();
         Rol rol = new Rol();
@@ -166,13 +160,14 @@ public class UsuarioController {
 
         roles.add(usuarioRol);
         ClientesEntity cliente = new ClientesEntity();
-        cliente.setNombre(usurioCliente.getNombre());
-        cliente.setApellido(usurioCliente.getApellido());
-        cliente.setEstado(usurioCliente.getEstado());
+        cliente.setNombre(usuarioCliente.getNombre());
+        cliente.setApellido(usuarioCliente.getApellido());
+        cliente.setEstado(usuarioCliente.getEstado());
         cliente.setUsuario(usuario);
+        cliente.setApodo(usuarioCliente.getApodo());
+        cliente.setFechaNacimiento(usuarioCliente.getFechaNacimiento());
 
         usuario.setCliente(cliente);
-
 
         return new ResponseEntity<>(usuarioService.guardarUsuario(usuario, roles), HttpStatus.OK);
     }

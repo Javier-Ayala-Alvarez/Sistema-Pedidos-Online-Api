@@ -42,7 +42,7 @@ public interface ProductRepository extends JpaRepository <Product, Long>{
 
     Optional<Product> findById(Long id);
 
-    @Query(value = "SELECT * FROM producto p WHERE p.nombre LIKE UPPER(CONCAT(?1, '%')) ",nativeQuery = true)
+    @Query(value = "SELECT * FROM producto p WHERE p.nombre LIKE ?1%",nativeQuery = true)
     Page<Product> listarProductPorNombrePagina(String nombre, Pageable pageable);
     @Query(value = "SELECT p.* FROM producto p inner join plato_producto pp on pp.producto_id = p.id_producto where pp.plato_id = ?1 ",nativeQuery = true)
     List<Product> listarProductPorCombo(Long id);

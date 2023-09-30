@@ -37,6 +37,6 @@ public class Empleado {
     private Sucursal sucursal;
     @ManyToOne
     private PuestoLaboral puestoLaboral;
-    @ManyToOne
+    @OneToOne
     private Usuario usuario;
 }
