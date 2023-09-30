@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -70,12 +71,17 @@ public class BranchOfficeServiceImpl implements BranchOfficeService {
 
     @Override
     public List<Sucursal> listarSucursalActivo() {
-        return null;
+        return new ArrayList<>(branchOfficeRepository.listarSucursalActivo());
     }
 
     @Override
     public Sucursal listarSucursalPorId(Long id) {
         return branchOfficeRepository.findById(id).get();
+    }
+
+    @Override
+    public List<Sucursal> listarSucursal() {
+        return branchOfficeRepository.findAll();
     }
 
 

@@ -2,6 +2,8 @@ package com.sistema.pedidos.service.impl;
 
 import com.sistema.pedidos.commons.GenericServiceImpl;
 import com.sistema.pedidos.entity.Empleado;
+import com.sistema.pedidos.entity.Sucursal;
+import com.sistema.pedidos.repository.BranchOfficeRepository;
 import com.sistema.pedidos.repository.EmpleadoRepository;
 import com.sistema.pedidos.service.EmpleadoService;
 import lombok.AllArgsConstructor;
@@ -13,12 +15,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.PersistenceException;
+import java.util.Optional;
 
 @AllArgsConstructor
 
 @Service
 public class EmpleadoServiceImpl extends GenericServiceImpl<Empleado,Integer> implements EmpleadoService {
     private final EmpleadoRepository empleadoRepository;
+    private final BranchOfficeRepository branchOfficeRepository;
 
     @Override
     public JpaRepository<Empleado, Integer> getDao() {
@@ -50,6 +54,24 @@ public class EmpleadoServiceImpl extends GenericServiceImpl<Empleado,Integer> im
     @Override
     public Empleado listarEmpleadoPorId(Integer id) {
         return empleadoRepository.findById(id).get();
+    }
+
+    @Override
+    public ResponseEntity<Empleado> actualizarEmpleado2(Empleado empleado, Integer id) {
+        Optional<Empleado> empleadoOptional=empleadoRepository.findById(id);
+        Optional<Sucursal> sucursalOptional=branchOfficeRepository.findById(empleado.getSucursal().getId());
+        if (!empleadoOptional.isPresent()){
+            return ResponseEntity.unprocessableEntity().build();
+        }
+        if (!sucursalOptional.isPresent()){
+            return ResponseEntity.unprocessableEntity().build();
+        }
+        empleado.setId(empleadoOptional.get().getId());
+        empleado.setSucursal(sucursalOptional.get());
+
+
+        Empleado emmpleadoGuardado=empleadoRepository.save(empleado);
+        return  ResponseEntity.ok(emmpleadoGuardado);
     }
 
 }

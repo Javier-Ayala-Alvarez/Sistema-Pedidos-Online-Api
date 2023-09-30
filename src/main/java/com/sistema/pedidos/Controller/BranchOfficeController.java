@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/sucursal")
 public class BranchOfficeController {
@@ -37,6 +39,14 @@ public class BranchOfficeController {
             return new ResponseEntity<Sucursal>(HttpStatus.NOT_FOUND);
         }
 
+    }
+    @GetMapping("/list/activo")
+    public ResponseEntity<?> listarSucursalActivo(){
+        return ResponseEntity.ok(branchOfficeService.listarSucursalActivo());
+    }
+    @GetMapping("/list")
+    public List<Sucursal> listarSucursal(){
+        return branchOfficeService.listarSucursal();
     }
 
 

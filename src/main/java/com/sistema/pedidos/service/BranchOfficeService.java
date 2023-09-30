@@ -19,7 +19,7 @@ public interface BranchOfficeService {
 
     public Sucursal listarSucursalPorId(Long id);
 
-
+    public List<Sucursal> listarSucursal();
     public Page<Sucursal> listarSucursalPorPagina(Pageable pageable);
 
     public Page<Sucursal> listarSucursalPorNombrePagina(String nombre, Pageable pageable);
