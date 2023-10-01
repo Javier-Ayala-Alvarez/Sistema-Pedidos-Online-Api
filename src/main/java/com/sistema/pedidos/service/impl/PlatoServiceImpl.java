@@ -88,7 +88,7 @@ public class PlatoServiceImpl extends GenericServiceImpl<Plato, Long> implements
 
     public ResponseEntity<String> updatePlateState(Boolean estado, Long id) {
         int result = platoRepository.updateEstado(estado, id);
-        if (result > 0) return new ResponseEntity("Plato dado de baja", HttpStatus.OK);
+        if (result > 0) return new ResponseEntity(HttpStatus.OK);
         return new ResponseEntity("no existe", HttpStatus.NOT_FOUND);
     }
 
