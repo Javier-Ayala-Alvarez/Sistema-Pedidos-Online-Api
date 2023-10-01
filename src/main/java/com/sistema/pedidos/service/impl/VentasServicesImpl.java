@@ -17,19 +17,18 @@ import java.util.Collections;
 public class VentasServicesImpl implements VentasServices {
     @Autowired
      private ModelMapper modelMapper;
+    @Autowired
     private VentasRepository ventasRepository;
     @Override
     public ResponseEntity<VentasDTO> save(VentasDTO ventasDTO) {
         try {
             // Convierte el DTO a la entidad
+            ventasDTO.setEstado("p");
             VentaEntity ventaEntity = mapearEntidad(ventasDTO);
-
             // Guarda la entidad en la base de datos
             ventaEntity = ventasRepository.save(ventaEntity);
-
             // Convierte la entidad guardada de nuevo a DTO
             VentasDTO ventaGuardadoDTO = mapearDTO(ventaEntity);
-
             // Retorna la respuesta con el DTO del detalle de ventas guardado
             return new ResponseEntity<>(ventaGuardadoDTO, HttpStatus.CREATED);
         } catch (Exception e) {

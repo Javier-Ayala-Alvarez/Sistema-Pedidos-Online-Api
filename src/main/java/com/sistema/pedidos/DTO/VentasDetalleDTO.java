@@ -20,4 +20,5 @@ public class VentasDetalleDTO {
     private  PlatoDTO platoDTO;
 
     private VentasDTO ventaEntity;
+
 }
