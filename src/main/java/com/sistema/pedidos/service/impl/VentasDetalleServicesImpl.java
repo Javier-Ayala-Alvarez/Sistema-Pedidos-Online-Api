@@ -10,38 +10,43 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class VentasDetalleServicesImpl implements VentasDetalleServices {
     @Autowired
     private ModelMapper modelMapper;
-
+    @Autowired
     private VentasDetalleRepository ventasDetalleRepository;
 
     @Override
-    public ResponseEntity<List<VentasDetalleDTO>> save(List<VentasDetalleDTO> ventasDetalleDTOList) {
+    public ResponseEntity<Object> save(ArrayList<VentasDetalleDTO> ventasDetalleDTOList) {
         try {
-            List<VentaDetalleEntity> ventaDetalleEntities = new ArrayList<>();
-            // Convierte cada DTO a entidad y agrega a la lista de entidades
-            for (VentasDetalleDTO ventasDetalleDTO : ventasDetalleDTOList) {
-                VentaDetalleEntity ventaDetalleEntity = mapearEntidad(ventasDetalleDTO);
-                ventaDetalleEntities.add(ventaDetalleEntity);
-            }
-            // Guarda la lista de entidades en la base de datos
+            // Mapea los DTO a entidades
+            List<VentaDetalleEntity> ventaDetalleEntities = ventasDetalleDTOList.stream()
+                    .map(this::mapearEntidad)
+                    .collect(Collectors.toList());
+
+            // Guarda las entidades en la base de datos
             ventaDetalleEntities = ventasDetalleRepository.saveAll(ventaDetalleEntities);
-            // Convierte la lista de entidades guardadas de nuevo a DTOs
-            List<VentasDetalleDTO> ventasDetalleGuardadoDTOList = new ArrayList<>();
-            for (VentaDetalleEntity ventaDetalleEntity : ventaDetalleEntities) {
-                ventasDetalleGuardadoDTOList.add(mapearDTO(ventaDetalleEntity));
-            }
-            // Retorna la respuesta con la lista de DTOs del detalle de ventas guardados
+
+            // Mapea las entidades guardadas de nuevo a DTOs
+            List<VentasDetalleDTO> ventasDetalleGuardadoDTOList = ventaDetalleEntities.stream()
+                    .map(this::mapearDTO)
+                    .collect(Collectors.toList());
+
+            // Retorna la respuesta con la lista de DTOs de ventas guardados
             return new ResponseEntity<>(ventasDetalleGuardadoDTOList, HttpStatus.CREATED);
         } catch (Exception e) {
-            // En caso de error, maneja la excepción y devuelve una respuesta de error
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            e.getStackTrace();
+            return new ResponseEntity<>(Collections.singletonMap("error", e.toString()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 
 
 
@@ -53,11 +58,23 @@ public class VentasDetalleServicesImpl implements VentasDetalleServices {
     // Convierte de DTO a Entidad
     private VentaDetalleEntity mapearEntidad(VentasDetalleDTO ventasDTO) {
         VentaDetalleEntity venta = modelMapper.map(ventasDTO, VentaDetalleEntity.class);
+        // Manejar el caso de product con id null
+        if (ventasDTO.getProduct() != null && ventasDTO.getProduct().getId() == 0) {
+            venta.setProduct(null);
+        }
+        if (ventasDTO.getPlatoDTO() != null && ventasDTO.getPlatoDTO().getId() == 0) {
+            venta.setPlato(null);
+        }
         return venta;
     }
 
 
+
 }
+
+
+
+
 
 
 

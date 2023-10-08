@@ -21,8 +21,9 @@ public class VentasDetalleController {
     @Autowired
     VentasDetalleServices ventasDetalleServices;
     @PostMapping("/guardar")
-    public ResponseEntity<List<VentasDetalleDTO>> guardar(@Valid @RequestBody ArrayList<VentasDetalleDTO> ventasDetalleDTOList) {
-        List<VentasDetalleDTO> ventasDetalleGuardadoDTOList = (List<VentasDetalleDTO>) ventasDetalleServices.save(ventasDetalleDTOList);
+    public ResponseEntity<ArrayList<VentasDetalleDTO>> guardar(@Valid @RequestBody ArrayList<VentasDetalleDTO> ventasDetalleDTOList) {
+
+        ArrayList<VentasDetalleDTO> ventasDetalleGuardadoDTOList = (ArrayList<VentasDetalleDTO>) ventasDetalleServices.save(ventasDetalleDTOList).getBody();
 
         if (!ventasDetalleGuardadoDTOList.isEmpty()) {
             return new ResponseEntity<>(ventasDetalleGuardadoDTOList, HttpStatus.CREATED);
