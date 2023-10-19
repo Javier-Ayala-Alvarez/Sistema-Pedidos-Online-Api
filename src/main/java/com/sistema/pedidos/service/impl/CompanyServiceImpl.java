@@ -24,6 +24,7 @@ public class CompanyServiceImpl implements CompanyService {
             existenteCompany.setCp_Nombre(company.getCp_Nombre());
             existenteCompany.setCp_Direccion(company.getCp_Direccion());
             existenteCompany.setCp_abreviatura(company.getCp_abreviatura());
+            existenteCompany.setEvento(company.getEvento());
             Company companyGuardado=companyRepository.save(existenteCompany);
             return companyGuardado;
         }catch (Exception e){
