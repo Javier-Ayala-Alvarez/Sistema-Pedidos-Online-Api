@@ -20,6 +20,8 @@ public class Company {
 
     @Column
     private  String cp_abreviatura;
-    @ManyToOne
+    //@ManyToOne(cascade = CascadeType.ALL)
+    //cacmbiare a oneTOone
+    @OneToOne(cascade = CascadeType.ALL)
     private Evento evento;
 }

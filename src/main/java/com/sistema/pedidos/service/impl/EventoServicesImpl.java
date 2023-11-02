@@ -16,6 +16,7 @@ import java.util.List;
 @Service
 public class EventoServicesImpl implements EventoService {
 
+    @Autowired
 private EventoRepository eventoRepository;
     @Override
     public List<Evento> listarEvento() {
