@@ -3,6 +3,8 @@ package com.sistema.pedidos.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "ventas")
@@ -21,11 +23,16 @@ public class VentaEntity {
     private String  otrasIndicaciones;
     @Column
     private Double  total;
+    @Column
+    private Date fecha;
+
     @OneToOne
     @JoinColumn(name = "usuario_id" , nullable = false)
     private Usuario usuario;
     @OneToOne
     @JoinColumn(name = "sucursal_id" , nullable = false)
+
+
     private Sucursal sucursal;
     @Column
     private Double altitud;
@@ -35,5 +42,14 @@ public class VentaEntity {
     private String estado; //p = pedido; c = preparando en cocina; d = despacho; e = entregado al cliente
     @Column
     private String comentarioEntrega;
+
+
+    @ManyToMany
+    @JoinTable(
+            name  = "venta_empleado",
+            joinColumns = @JoinColumn(name = "venta_id"),
+            inverseJoinColumns = @JoinColumn(name = "empleado_id")
+    )
+    Set<Empleado> empleados;
 
 }

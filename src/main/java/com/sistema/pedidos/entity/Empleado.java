@@ -1,11 +1,13 @@
 package com.sistema.pedidos.entity;
 
+import com.sistema.pedidos.Utileria.EstadoEmpleado;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "empleado")
@@ -33,10 +35,16 @@ public class Empleado {
     private String dui;
     @Column
     private Boolean estado;
+
+    @Column
+    EstadoEmpleado estadoEmpleado;
     @ManyToOne
     private Sucursal sucursal;
     @ManyToOne
     private PuestoLaboral puestoLaboral;
     @OneToOne
     private Usuario usuario;
+
+    @ManyToMany(mappedBy = "empleados")
+    Set<VentaEntity> ventas;
 }
