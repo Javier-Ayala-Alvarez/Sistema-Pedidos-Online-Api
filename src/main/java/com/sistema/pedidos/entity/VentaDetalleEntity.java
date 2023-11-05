@@ -18,14 +18,17 @@ public class VentaDetalleEntity {
     @Column
     private double precioTotal;
     @OneToOne
-    @JoinColumn(name = "producto_id", nullable = false)
+    @JoinColumn(name = "producto_id", nullable = true)
     private Product product;
+
+
     @OneToOne
     @JoinColumn(name = "venta_id", nullable = false)
     private VentaEntity ventaEntity;
 
     @OneToOne
-    @JoinColumn(name = "plato_id", nullable = false)
+    @JoinColumn(name = "plato_id", nullable = true)
     private Plato plato;
+
 }
 

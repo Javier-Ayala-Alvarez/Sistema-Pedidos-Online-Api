@@ -1,6 +1,7 @@
 package com.sistema.pedidos.service.impl;
 
 import com.sistema.pedidos.DTO.VentasDetalleDTO;
+import com.sistema.pedidos.entity.Product;
 import com.sistema.pedidos.entity.VentaDetalleEntity;
 import com.sistema.pedidos.entity.VentaEntity;
 import com.sistema.pedidos.repository.VentasDetalleRepository;
@@ -53,11 +54,19 @@ public class VentasDetalleServicesImpl implements VentasDetalleServices {
     public ResponseEntity<List<VentasDetalleDTO>> buscarId(long id) {
         try {
             List<VentaDetalleEntity> ventaDetalleEntities = ventasDetalleRepository.buscar(id);
-
             if (!ventaDetalleEntities.isEmpty()) {
                 List<VentasDetalleDTO> dtos = new ArrayList<>();
 
                 for (VentaDetalleEntity ventaDetalleEntity : ventaDetalleEntities) {
+                    if(ventaDetalleEntity.getProduct() == null){
+                        Product product = new Product();
+
+                        product.setId(ventaDetalleEntity.getPlato().getId());
+                        product.setUrlImagen(ventaDetalleEntity.getPlato().getUrlImagen());
+                        product.setNombre(ventaDetalleEntity.getPlato().getNombre());
+                        ventaDetalleEntity.setProduct(product);
+
+                    }
                     VentasDetalleDTO dto = mapearDTO(ventaDetalleEntity); // Asumiendo que mapearDTO devuelve un DTO
                     dtos.add(dto);
                 }
@@ -78,6 +87,12 @@ public class VentasDetalleServicesImpl implements VentasDetalleServices {
 
     private VentasDetalleDTO mapearDTO(VentaDetalleEntity venta) {
         VentasDetalleDTO ventaDTO = modelMapper.map(venta, VentasDetalleDTO.class);
+        if (venta.getProduct() != null && venta.getProduct().getId() == 0) {
+            ventaDTO.setProduct(null);
+        }
+        if (venta.getPlato() != null && venta.getPlato().getId() == 0) {
+            ventaDTO.setPlato(null);
+        }
         return ventaDTO;
     }
 
@@ -88,7 +103,7 @@ public class VentasDetalleServicesImpl implements VentasDetalleServices {
         if (ventasDTO.getProduct() != null && ventasDTO.getProduct().getId() == 0) {
             venta.setProduct(null);
         }
-        if (ventasDTO.getPlatoDTO() != null && ventasDTO.getPlatoDTO().getId() == 0) {
+        if (ventasDTO.getPlato() != null && ventasDTO.getPlato().getId() == 0) {
             venta.setPlato(null);
         }
         return venta;

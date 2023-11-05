@@ -16,7 +16,7 @@ import javax.validation.Valid;
 
 @Controller
 @RestController
-@RequestMapping("/venta")
+@RequestMapping("venta")
 @CrossOrigin("*")
 public class VentasController {
     @Autowired
