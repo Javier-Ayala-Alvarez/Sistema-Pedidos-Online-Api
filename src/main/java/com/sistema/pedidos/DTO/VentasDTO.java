@@ -5,6 +5,8 @@ import com.sistema.pedidos.entity.Usuario;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Date;
+
 @Data
 public class VentasDTO {
 
@@ -24,5 +26,6 @@ public class VentasDTO {
     private Double longitud;
     private String estado; //p = pedido; c = preparando en cocina; d = despacho; e = entregado al cliente
     private String comentarioEntrega;
+    private Date fecha;
 
 }

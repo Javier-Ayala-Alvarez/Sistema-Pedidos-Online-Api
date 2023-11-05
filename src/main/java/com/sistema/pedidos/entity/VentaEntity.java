@@ -3,6 +3,7 @@ package com.sistema.pedidos.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "ventas")
@@ -35,5 +36,11 @@ public class VentaEntity {
     private String estado; //p = pedido; c = preparando en cocina; d = despacho; e = entregado al cliente
     @Column
     private String comentarioEntrega;
+    @Column
+    private Date fecha;
+    @PrePersist
+    protected void onCreate() {
+        fecha = new Date();
+    }
 
 }

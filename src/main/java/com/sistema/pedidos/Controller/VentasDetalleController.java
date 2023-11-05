@@ -32,4 +32,14 @@ public class VentasDetalleController {
         }
     }
 
+    @GetMapping("/list/{id}")
+    public ResponseEntity<List<VentasDetalleDTO>> listarCategoryPorId(@PathVariable Long id){
+        try {
+            VentasDetalleDTO sucursalDTO= (VentasDetalleDTO) ventasDetalleServices.buscarId(id).getBody();
+            return new ResponseEntity<List<VentasDetalleDTO>>((List<VentasDetalleDTO>) sucursalDTO,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<List<VentasDetalleDTO>>(HttpStatus.NOT_FOUND);
+        }
+    }
+
 }

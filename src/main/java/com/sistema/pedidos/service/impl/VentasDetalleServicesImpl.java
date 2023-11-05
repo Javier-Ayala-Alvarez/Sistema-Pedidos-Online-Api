@@ -2,6 +2,7 @@ package com.sistema.pedidos.service.impl;
 
 import com.sistema.pedidos.DTO.VentasDetalleDTO;
 import com.sistema.pedidos.entity.VentaDetalleEntity;
+import com.sistema.pedidos.entity.VentaEntity;
 import com.sistema.pedidos.repository.VentasDetalleRepository;
 import com.sistema.pedidos.service.VentasDetalleServices;
 import org.modelmapper.ModelMapper;
@@ -14,6 +15,7 @@ import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -46,6 +48,30 @@ public class VentasDetalleServicesImpl implements VentasDetalleServices {
             return new ResponseEntity<>(Collections.singletonMap("error", e.toString()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @Override
+    public ResponseEntity<List<VentasDetalleDTO>> buscarId(long id) {
+        try {
+            List<VentaDetalleEntity> ventaDetalleEntities = ventasDetalleRepository.buscar(id);
+
+            if (!ventaDetalleEntities.isEmpty()) {
+                List<VentasDetalleDTO> dtos = new ArrayList<>();
+
+                for (VentaDetalleEntity ventaDetalleEntity : ventaDetalleEntities) {
+                    VentasDetalleDTO dto = mapearDTO(ventaDetalleEntity); // Asumiendo que mapearDTO devuelve un DTO
+                    dtos.add(dto);
+                }
+
+                return new ResponseEntity<>(dtos, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            e.printStackTrace(); // Esto es útil para depurar errores
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
 
 
