@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "ventas")
@@ -22,11 +23,14 @@ public class VentaEntity {
     private String  otrasIndicaciones;
     @Column
     private Double  total;
+
     @OneToOne
     @JoinColumn(name = "usuario_id" , nullable = false)
     private Usuario usuario;
     @OneToOne
     @JoinColumn(name = "sucursal_id" , nullable = false)
+
+
     private Sucursal sucursal;
     @Column
     private Double altitud;
@@ -42,5 +46,14 @@ public class VentaEntity {
     protected void onCreate() {
         fecha = new Date();
     }
+
+
+    @ManyToMany
+    @JoinTable(
+            name  = "venta_empleado",
+            joinColumns = @JoinColumn(name = "venta_id"),
+            inverseJoinColumns = @JoinColumn(name = "empleado_id")
+    )
+    Set<Empleado> empleados;
 
 }

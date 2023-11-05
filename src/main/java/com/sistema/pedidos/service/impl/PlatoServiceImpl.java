@@ -69,29 +69,23 @@ public class PlatoServiceImpl extends GenericServiceImpl<Plato, Long> implements
             Optional<Promocion> objPromocion = promocionRepository.findById(savePlatoDTO.getIdPromocion());
             if (!objPromocion.isPresent())
                 return new ResponseEntity<>("No existe la promocion con id: " + savePlatoDTO.getIdPromocion(), HttpStatus.BAD_REQUEST);
-
             plato.setPromocion(objPromocion.get());
         }
 
         return new ResponseEntity<>(new PlatoMapper().platoToPlatoDTO(save(plato)), HttpStatus.CREATED);
-
     }
-
     @Override
     public Page<PlatoDTO> listPlateActiveWithPagination(Pageable pageable) {
         Page<Plato> platoPage = platoRepository.getAllByEstadoEquals(Boolean.TRUE, pageable);
         PlatoMapper platoMapper = new PlatoMapper();
         return platoPage.map(platoMapper::platoToPlatoDTO);
     }
-
     @Override
-
     public ResponseEntity<String> updatePlateState(Boolean estado, Long id) {
         int result = platoRepository.updateEstado(estado, id);
         if (result > 0) return new ResponseEntity(HttpStatus.OK);
         return new ResponseEntity("no existe", HttpStatus.NOT_FOUND);
     }
-
     @Override
     public Optional<Plato> getPlateById(Long id) {
         return platoRepository.findById(id);
@@ -99,13 +93,10 @@ public class PlatoServiceImpl extends GenericServiceImpl<Plato, Long> implements
 
 
     public ResponseEntity<Object> updatePlato(EditPlatoDTO savePlatoDTO) {
-
-
         Optional<Plato> platoOptional = platoRepository.findById(savePlatoDTO.getId());
         if (!platoOptional.isPresent())
             return new ResponseEntity<>("No existe el plato con id: " + savePlatoDTO.getId(), HttpStatus.BAD_REQUEST);
         Plato plato = platoOptional.get();
-
         plato.setNombre(savePlatoDTO.getNombre());
         plato.setPrecio(savePlatoDTO.getPrecio());
         plato.setDescripcion(savePlatoDTO.getDescripcion());

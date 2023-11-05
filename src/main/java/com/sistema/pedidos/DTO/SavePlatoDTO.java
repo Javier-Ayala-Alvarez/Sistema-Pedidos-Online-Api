@@ -13,33 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 
-/**
- = ''{_id: 0, _nombre: "2", _descripcion: "2", _urlImagen: "2", _listaProductos: [2], _idCategoria: 2,…}
- _descripcion
- :
- "2"
- _id
- :
- 0
- _idCategoria
- :
- 2
- _idPromocion
- :
- 0
- _listaProductos
- :
- [2]
- _nombre
- :
- "2"
- _precio
- :
- 22
- _urlImagen
- :
- "2"
- */
+
 
 public class SavePlatoDTO {
     private Long id;

@@ -39,17 +39,6 @@ public  class PlatoMapper {
         platoDTO.setCategoria(categoriaDTO);
         platoDTO.setProductos(productsDTO);
 
-
-        if (plato.getPromocion() != null) {
-            PromocionDTO promocionDTO = new PromocionDTO();
-            promocionDTO.setId(plato.getPromocion().getId());
-            promocionDTO.setNombre(plato.getPromocion().getNombre());
-            promocionDTO.setCantidad(plato.getPromocion().getCantidad());
-            promocionDTO.setPorcentaje(plato.getPromocion().getPorcentaje());
-            platoDTO.setPromocion(promocionDTO);
-        }
-
-
         return platoDTO;
     }
 
@@ -87,14 +76,7 @@ public  class PlatoMapper {
             platoProductos.add(platoProducto);
         });
 
-        if (platoDTO.getPromocion() != null) {
-            Promocion promocion = new Promocion();
-            promocion.setId(platoDTO.getPromocion().getId());
-            promocion.setNombre(platoDTO.getPromocion().getNombre());
-            promocion.setCantidad(platoDTO.getPromocion().getCantidad());
-            promocion.setPorcentaje(platoDTO.getPromocion().getPorcentaje());
-            plato.setPromocion(promocion);
-        }
+
 
         plato.setCategoria(category);
         plato.setPlatoProducto(platoProductos);

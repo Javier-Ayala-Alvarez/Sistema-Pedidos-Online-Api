@@ -8,13 +8,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PlatoDTO {
+public class PlatoDTO implements Serializable {
     private long id;
 
     private String nombre;
@@ -24,6 +25,5 @@ public class PlatoDTO {
     private String urlImagen;
     private CategoriaDTO categoria;
     private List<ProductDTO> productos;
-    private PromocionDTO promocion;
 
 }
