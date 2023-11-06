@@ -11,6 +11,10 @@ import com.sistema.pedidos.repository.VentasRepository;
 import com.sistema.pedidos.service.VentasServices;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -51,6 +55,16 @@ public class VentasServicesImpl implements VentasServices {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @Override
+    public ResponseEntity<Page<VentasDTO>> listar(long nombre, Pageable pageable) {
+        try {
+            Page<VentaEntity> ventaEntities = ventasRepository.listarPorNombrePagina(nombre, pageable);
+            Page<VentasDTO> ventasDTOS = ventaEntities.map(ventaEntity -> mapearDTO(ventaEntity));
+            return new ResponseEntity<>(ventasDTOS, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     private VentasDTO mapearDTO(VentaEntity venta) {
         return modelMapper.map(venta, VentasDTO.class);
@@ -58,9 +72,10 @@ public class VentasServicesImpl implements VentasServices {
 
     // Convierte de DTO a Entidad
     private VentaEntity mapearEntidad(VentasDTO ventasDTO) {
-
-        return modelMapper.map(ventasDTO, VentaEntity.class);
+        VentaEntity venta = modelMapper.map(ventasDTO, VentaEntity.class);
+        return venta;
     }
+
 
     // devuelve ventasDetalleDTO por id de empleado
     public ResponseEntity<Object> detalleVentasPorIdEmpleado(Long id) {

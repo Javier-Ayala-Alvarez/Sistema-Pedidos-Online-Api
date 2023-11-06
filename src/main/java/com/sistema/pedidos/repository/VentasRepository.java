@@ -2,6 +2,8 @@ package com.sistema.pedidos.repository;
 
 import com.sistema.pedidos.Utileria.EstadoEmpleado;
 import com.sistema.pedidos.entity.VentaEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -11,7 +13,10 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
+
 public interface VentasRepository extends JpaRepository<VentaEntity, Long> {
+    @Query(value = "SELECT * FROM ventas c WHERE c.usuario_id = ?1", nativeQuery = true)
+    Page<VentaEntity> listarPorNombrePagina(Long id_Usuario, Pageable pageable);
 
 
     @Query(value = "select v.id_venta           as id,\n" +
@@ -58,16 +63,16 @@ public interface VentasRepository extends JpaRepository<VentaEntity, Long> {
             "       v.altitud            as latitud,\n" +
             "       v.longitud,\n" +
             "       v.estado\n" +
-            "from ventas v  where v.sucursal_id = (select e.sucursal_id from empleado e where e.usuario_id = :id ) and v.estado = :estado ;" , nativeQuery = true)
+            "from ventas v  where v.sucursal_id = (select e.sucursal_id from empleado e where e.usuario_id = :id ) and v.estado = :estado ;", nativeQuery = true)
     List<Map<String, Object>> ventasPendientesPorSucursalDelEmpleado(@Param("id") Long id, @Param("estado") String estado);
 
 
     // cambiar estado de ventas
-    @Query(value = "update ventas set estado = :estado where id_venta = :id ;" , nativeQuery = true)
+    @Query(value = "update ventas set estado = :estado where id_venta = :id ;", nativeQuery = true)
     int cambiarEstadoDeVenta(@Param("id") Long id, @Param("estado") String estado);
 
     // agregar comentario a ventas
-    @Query(value = "update ventas set comentario_entrega = :comentario where id_venta = :id ;" , nativeQuery = true)
+    @Query(value = "update ventas set comentario_entrega = :comentario where id_venta = :id ;", nativeQuery = true)
     int agregarComentarioAVenta(@Param("id") Long id, @Param("comentario") String comentario);
 
 

@@ -17,7 +17,7 @@ public class VentasDetalleDTO {
     private double precioTotal;
 
     private ProductDTO product;
-    private  PlatoDTO platoDTO;
+    private  PlatoDTO plato;
 
     private VentasDTO ventaEntity;
 

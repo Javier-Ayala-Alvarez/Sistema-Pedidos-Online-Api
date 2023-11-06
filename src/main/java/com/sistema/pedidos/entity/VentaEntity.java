@@ -23,8 +23,6 @@ public class VentaEntity {
     private String  otrasIndicaciones;
     @Column
     private Double  total;
-    @Column
-    private Date fecha;
 
     @OneToOne
     @JoinColumn(name = "usuario_id" , nullable = false)
@@ -42,6 +40,12 @@ public class VentaEntity {
     private String estado; //p = pedido; c = preparando en cocina; d = despacho; e = entregado al cliente
     @Column
     private String comentarioEntrega;
+    @Column
+    private Date fecha;
+    @PrePersist
+    protected void onCreate() {
+        fecha = new Date();
+    }
 
 
     @ManyToMany
