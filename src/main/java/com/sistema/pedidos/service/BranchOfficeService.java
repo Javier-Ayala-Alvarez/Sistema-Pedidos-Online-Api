@@ -25,4 +25,6 @@ public interface BranchOfficeService {
     public Page<Sucursal> listarSucursalPorNombrePagina(String nombre, Pageable pageable);
 
     public void eliminar(long id);
+
+    public Sucursal getsucursalByIdUsuario(Long id);
 }

@@ -28,8 +28,8 @@ public class BranchOfficeServiceImpl implements BranchOfficeService {
     @Override
     public ResponseEntity<Object> guardarSucursal(Sucursal sucursal) {
 
-        Optional<Company> companyOptional=companyRepository.findById(sucursal.getEmpresa().getId());
-        if(!companyOptional.isPresent()){
+        Optional<Company> companyOptional = companyRepository.findById(sucursal.getEmpresa().getId());
+        if (!companyOptional.isPresent()) {
             return ResponseEntity.unprocessableEntity().build();
         }
 
@@ -39,20 +39,20 @@ public class BranchOfficeServiceImpl implements BranchOfficeService {
         sucursal.setEstado(sucursal.isEstado());
         sucursal.setEmpresa(companyOptional.get());
 
-        Sucursal sucursalGuardado=branchOfficeRepository.save(sucursal);
+        Sucursal sucursalGuardado = branchOfficeRepository.save(sucursal);
         return ResponseEntity.ok(sucursalGuardado);
 
     }
 
     @Override
-    public ResponseEntity<Sucursal> actualizarSucursal(Sucursal sucursal,Long id) {
-        Optional<Company> companyOptional=companyRepository.findById(sucursal.getEmpresa().getId());
-        Optional<Sucursal> sucursalOptional=branchOfficeRepository.findById(id);
+    public ResponseEntity<Sucursal> actualizarSucursal(Sucursal sucursal, Long id) {
+        Optional<Company> companyOptional = companyRepository.findById(sucursal.getEmpresa().getId());
+        Optional<Sucursal> sucursalOptional = branchOfficeRepository.findById(id);
 
-        if (!companyOptional.isPresent()){
+        if (!companyOptional.isPresent()) {
             return ResponseEntity.unprocessableEntity().build();
         }
-        if(!sucursalOptional.isPresent()){
+        if (!sucursalOptional.isPresent()) {
             return ResponseEntity.unprocessableEntity().build();
         }
 
@@ -65,7 +65,7 @@ public class BranchOfficeServiceImpl implements BranchOfficeService {
         sucursal.setId(sucursalOptional.get().getId());
 
 
-        Sucursal sucursalGuardado=branchOfficeRepository.save(sucursal);
+        Sucursal sucursalGuardado = branchOfficeRepository.save(sucursal);
         return ResponseEntity.ok(sucursalGuardado);
     }
 
@@ -92,11 +92,16 @@ public class BranchOfficeServiceImpl implements BranchOfficeService {
 
     @Override
     public Page<Sucursal> listarSucursalPorNombrePagina(String nombre, Pageable pageable) {
-        return branchOfficeRepository.listarSucursalPorNombrePagina(nombre,pageable);
+        return branchOfficeRepository.listarSucursalPorNombrePagina(nombre, pageable);
     }
 
     @Override
     public void eliminar(long id) {
         branchOfficeRepository.deleteById(id);
+    }
+
+    @Override
+    public Sucursal getsucursalByIdUsuario(Long id) {
+        return branchOfficeRepository.getsucursalByIdUsuario(id);
     }
 }

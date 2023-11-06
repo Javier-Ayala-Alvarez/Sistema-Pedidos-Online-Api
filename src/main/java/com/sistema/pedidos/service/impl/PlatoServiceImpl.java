@@ -74,18 +74,21 @@ public class PlatoServiceImpl extends GenericServiceImpl<Plato, Long> implements
 
         return new ResponseEntity<>(new PlatoMapper().platoToPlatoDTO(save(plato)), HttpStatus.CREATED);
     }
+
     @Override
     public Page<PlatoDTO> listPlateActiveWithPagination(Pageable pageable) {
         Page<Plato> platoPage = platoRepository.getAllByEstadoEquals(Boolean.TRUE, pageable);
         PlatoMapper platoMapper = new PlatoMapper();
         return platoPage.map(platoMapper::platoToPlatoDTO);
     }
+
     @Override
     public ResponseEntity<String> updatePlateState(Boolean estado, Long id) {
         int result = platoRepository.updateEstado(estado, id);
         if (result > 0) return new ResponseEntity(HttpStatus.OK);
         return new ResponseEntity("no existe", HttpStatus.NOT_FOUND);
     }
+
     @Override
     public Optional<Plato> getPlateById(Long id) {
         return platoRepository.findById(id);
@@ -146,12 +149,7 @@ public class PlatoServiceImpl extends GenericServiceImpl<Plato, Long> implements
 
         Plato platoGuardado = transacionPlato(plato);
 
-        return new ResponseEntity<>(new
-
-                PlatoMapper().
-
-                platoToPlatoDTO(platoGuardado), HttpStatus.CREATED);
-
+        return new ResponseEntity<>(new PlatoMapper().platoToPlatoDTO(platoGuardado), HttpStatus.CREATED);
     }
 
 
@@ -159,6 +157,15 @@ public class PlatoServiceImpl extends GenericServiceImpl<Plato, Long> implements
         //platoRepository.deleteRelationPlatoProducto(plato.getId());
         Plato platoGuardado = platoRepository.save(plato);
         return platoGuardado;
+    }
+
+    public List<PlatoDTO> getPlatosByVentasDetalle(Long id) {
+        List<Plato> platos = platoRepository.getPlatosByVentasDetalle(id);
+        List<PlatoDTO> platoDTOS = new ArrayList<>();
+        for (Plato plato : platos) {
+            platoDTOS.add(new PlatoMapper().platoToPlatoDTO(plato));
+        }
+        return platoDTOS;
     }
 
 

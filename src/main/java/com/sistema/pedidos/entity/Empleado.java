@@ -37,7 +37,7 @@ public class Empleado {
     private Boolean estado;
 
     @Column
-    EstadoEmpleado estadoEmpleado;
+    String estadoEmpleado;
     @ManyToOne
     private Sucursal sucursal;
     @ManyToOne

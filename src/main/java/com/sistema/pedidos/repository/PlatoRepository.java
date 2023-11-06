@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 public interface PlatoRepository extends JpaRepository<Plato, Long> {
 
@@ -28,6 +29,11 @@ public interface PlatoRepository extends JpaRepository<Plato, Long> {
     @Modifying
     @Query(value = "delete from PlatoProducto p where p.id = ?1")
      void deletePlatoProducto(Long id) ;
+
+
+    // Query get plato by relation ventasDetalle.platoid
+    @Query("select p from Plato p inner join VentaDetalleEntity v on p.id = v.plato.id where v.ventaEntity.idVenta = :id")
+    List<Plato> getPlatosByVentasDetalle(Long id);
 
 
 }

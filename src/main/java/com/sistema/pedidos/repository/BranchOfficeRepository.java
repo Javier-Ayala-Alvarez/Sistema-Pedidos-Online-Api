@@ -9,12 +9,15 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface BranchOfficeRepository extends JpaRepository<Sucursal, Long>  {
+public interface BranchOfficeRepository extends JpaRepository<Sucursal, Long> {
 
 
-   @Query(value = "SELECT * FROM sucursales s WHERE s.nombre LIKE ?1% ", nativeQuery = true)
-    Page <Sucursal> listarSucursalPorNombrePagina(String nombre, Pageable pageable);
+    @Query(value = "SELECT * FROM sucursales s WHERE s.nombre LIKE ?1% ", nativeQuery = true)
+    Page<Sucursal> listarSucursalPorNombrePagina(String nombre, Pageable pageable);
 
-    @Query(value = "SELECT * FROM sucursales s WHERE s.estado=true",nativeQuery = true)
+    @Query(value = "SELECT * FROM sucursales s WHERE s.estado=true", nativeQuery = true)
     List<Sucursal> listarSucursalActivo();
+
+    @Query(value = "select s.* from empleado e inner join public.sucursales s on s.id = e.sucursal_id  where e.usuario_id = :id ;", nativeQuery = true)
+    Sucursal getsucursalByIdUsuario(Long id);
 }

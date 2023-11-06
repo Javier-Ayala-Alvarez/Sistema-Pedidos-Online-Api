@@ -74,4 +74,21 @@ public class EmpleadoServiceImpl extends GenericServiceImpl<Empleado,Integer> im
         return  ResponseEntity.ok(emmpleadoGuardado);
     }
 
+    @Override
+    public Optional<String> getEstadoEmpleadoByIdUsuario(Long id) {
+        Optional<String> estadoEmpleado=Optional.ofNullable(empleadoRepository.getEstadoEmpleadoByIdUsuario(id));
+        return estadoEmpleado;
+
+    }
+
+
+    public ResponseEntity updateEstadoEmpleado(Long id, String estado) {
+        int rpta=empleadoRepository.updateEstadoEmpleado(estado,id);
+        if (rpta>0){
+            return ResponseEntity.ok().build();
+        }
+
+        return ResponseEntity.unprocessableEntity().build();
+    }
+
 }

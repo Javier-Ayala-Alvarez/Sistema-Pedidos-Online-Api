@@ -25,4 +25,6 @@ public interface ProductService {
     public void eliminar(Long id);
 
     public List<ProductDTO> produtosDTOActivos();
+
+    public List<ProductDTO> listarProductosPorDetallePedido(Long id);
 }

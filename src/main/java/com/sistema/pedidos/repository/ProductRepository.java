@@ -46,4 +46,8 @@ public interface ProductRepository extends JpaRepository <Product, Long>{
     Page<Product> listarProductPorNombrePagina(String nombre, Pageable pageable);
     @Query(value = "SELECT p.* FROM producto p inner join plato_producto pp on pp.producto_id = p.id_producto where pp.plato_id = ?1 ",nativeQuery = true)
     List<Product> listarProductPorCombo(Long id);
+
+
+    @Query(value = "select p.* from producto p inner join ventas_detalle vd on p.id_producto = vd.producto_id where vd.venta_id = :id", nativeQuery = true)
+    List<Product> ObtenerProductosPorDetallePedido(Long id);
 }

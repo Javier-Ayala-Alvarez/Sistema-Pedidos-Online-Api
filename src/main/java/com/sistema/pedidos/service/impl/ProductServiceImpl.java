@@ -35,7 +35,7 @@ public class ProductServiceImpl implements ProductService {
             return ResponseEntity.unprocessableEntity().build();
         }
         Product product1 = new Product();
-       product1.setId(productRepository.idMaximo()+1);
+        product1.setId(productRepository.idMaximo() + 1);
         product1.setNombre(product.getNombre());
         product1.setDescripcion(product.getDescripcion());
         product1.setEstado(product.isEstado());
@@ -59,7 +59,7 @@ public class ProductServiceImpl implements ProductService {
         if (!productOptional.isPresent()) {
             return ResponseEntity.unprocessableEntity().build();
         }
-    Product product1 = new Product();
+        Product product1 = new Product();
         product1.setId(productOptional.get().getId());
         product1.setCategory(categoryOptional.get());
 
@@ -98,7 +98,6 @@ public class ProductServiceImpl implements ProductService {
             return new PageImpl<>(productDTOList, pageable, productPage.getTotalElements());
         }
 */
-
 
 
     @Override
@@ -154,13 +153,23 @@ public class ProductServiceImpl implements ProductService {
         return productDTOList;
     }
 
-    private Product mapearEntidad(ProductDTO productDTO) {
+    public Product mapearEntidad(ProductDTO productDTO) {
         Product producto = modelMapper.map(productDTO, Product.class);
         return producto;
     }
 
-    private ProductDTO mapearDTO(Product product) {
+    public ProductDTO mapearDTO(Product product) {
         ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
         return productDTO;
+    }
+
+    public List<ProductDTO> listarProductosPorDetallePedido(Long id) {
+        List<Product> productList = productRepository.ObtenerProductosPorDetallePedido(id);
+        List<ProductDTO> productDTOList = new ArrayList<>();
+        for (Product product : productList) {
+            ProductDTO productDTO = mapearDTO(product);
+            productDTOList.add(productDTO);
+        }
+        return productDTOList;
     }
 }

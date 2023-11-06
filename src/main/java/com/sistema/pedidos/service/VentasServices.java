@@ -5,4 +5,5 @@ import org.springframework.http.ResponseEntity;
 
 public interface VentasServices {
     public ResponseEntity<VentasDTO> save(VentasDTO ventasDTO);
+    ResponseEntity<Object> detalleVentasPorIdEmpleado(Long id);
 }

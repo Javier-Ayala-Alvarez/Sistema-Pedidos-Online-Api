@@ -6,12 +6,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigInteger;
+import java.util.List;
+
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class VentasDeliveryDTO {
+public class VentasDeliveryDTO  {
 
     private Long id;
     private String nombreEncargado;
@@ -22,9 +25,6 @@ public class VentasDeliveryDTO {
     private Double altitud;
     private Double longitud;
     private String estado; //p = pedido; c = preparando en cocina; d = despacho; e = entregado al cliente
-    private ProductDTO producto;
-    private PlatoDTO plato;
-
-
-
+    private List<ProductDTO> productos;
+    private List<PlatoDTO> plato;
 }

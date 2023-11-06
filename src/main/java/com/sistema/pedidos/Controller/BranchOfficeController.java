@@ -82,4 +82,15 @@ public class BranchOfficeController {
         branchOfficeService.eliminar(id);
     }
 
+    @GetMapping("/usuario/id/{id}")
+    public ResponseEntity<Sucursal> getsucursalByIdUsuario(@PathVariable Long id){
+        try{
+            Sucursal sucursal=branchOfficeService.getsucursalByIdUsuario(id);
+            return new ResponseEntity<Sucursal>(sucursal,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<Sucursal>(HttpStatus.NOT_FOUND);
+        }
+
+    }
+
 }

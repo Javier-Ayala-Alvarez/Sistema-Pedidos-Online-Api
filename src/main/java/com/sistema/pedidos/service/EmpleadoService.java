@@ -6,6 +6,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
+import java.util.Optional;
+
 public interface EmpleadoService extends GenericServiceApi<Empleado,Integer> {
     Page<Empleado> getAllWithPaginationByEstado(Pageable pageables,Boolean estado);
 
@@ -16,5 +18,15 @@ public interface EmpleadoService extends GenericServiceApi<Empleado,Integer> {
     Empleado listarEmpleadoPorId(Integer id);
 
     ResponseEntity<Empleado> actualizarEmpleado2(Empleado empleado,Integer id);
+
+
+    // obtener estado de empleado por id
+    public Optional<String> getEstadoEmpleadoByIdUsuario(Long id);
+
+
+    public ResponseEntity updateEstadoEmpleado(Long id, String estado);
+
+
+
 
 }

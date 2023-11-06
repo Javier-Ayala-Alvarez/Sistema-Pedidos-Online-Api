@@ -1,6 +1,7 @@
 package com.sistema.pedidos.Controller;
 
 import com.sistema.pedidos.DTO.VentasDTO;
+import com.sistema.pedidos.DTO.VentasDeliveryDTO;
 import com.sistema.pedidos.service.VentasServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,13 @@ public class VentasController {
         } else {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+
+    //generate controller for ventasDeliveryDTO
+    @GetMapping("/delivery/{id}")
+    public ResponseEntity<Object> consultaPedidoPorDelivery(@PathVariable("id") Long id) {
+        return ventasServices.detalleVentasPorIdEmpleado(id);
     }
 
 }

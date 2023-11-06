@@ -114,9 +114,10 @@ public class EmpleadoController {
         Empleado empleadoActualizado = empleadoService.save(empleado);
         return new ResponseEntity<>(empleadoActualizado, HttpStatus.OK);
     }
+
     @PutMapping("update2/{id}")
-    public ResponseEntity<Empleado> actualizarEmpleado2(@RequestBody Empleado empleado,@PathVariable Integer id){
-        return empleadoService.actualizarEmpleado2(empleado,id);
+    public ResponseEntity<Empleado> actualizarEmpleado2(@RequestBody Empleado empleado, @PathVariable Integer id) {
+        return empleadoService.actualizarEmpleado2(empleado, id);
     }
 
     @PutMapping("/baja/{id}")
@@ -126,30 +127,60 @@ public class EmpleadoController {
 
     @GetMapping("/list/search")
     public ResponseEntity<Page<Empleado>> listarEmpleadosPorNombrePagina(
-            @RequestParam("empleado")String emp_Nombre,
-            @RequestParam(defaultValue =ConstantUtileria.NUMERO_PAGINA_DEFECTO) int page,
-            @RequestParam(defaultValue =ConstantUtileria.MEDIDA_PAGINA_DEFECTO) int size,
+            @RequestParam("empleado") String emp_Nombre,
+            @RequestParam(defaultValue = ConstantUtileria.NUMERO_PAGINA_DEFECTO) int page,
+            @RequestParam(defaultValue = ConstantUtileria.MEDIDA_PAGINA_DEFECTO) int size,
             @RequestParam(defaultValue = ConstantUtileria.ORDENAR_DIRECCION_DEFECTO) boolean asc
     ) {
-        Page<Empleado> EmpleadoPage=empleadoService.listarEmpleadoPorNombrePagina(emp_Nombre,
-                PageRequest.of(page,size));
-        return  new ResponseEntity<Page<Empleado>>(EmpleadoPage,HttpStatus.OK);
+        Page<Empleado> EmpleadoPage = empleadoService.listarEmpleadoPorNombrePagina(emp_Nombre,
+                PageRequest.of(page, size));
+        return new ResponseEntity<Page<Empleado>>(EmpleadoPage, HttpStatus.OK);
     }
 
     @GetMapping("/list/{id}")
-    public ResponseEntity<Empleado> listarEmpleadoPorId(@PathVariable Integer id){
+    public ResponseEntity<Empleado> listarEmpleadoPorId(@PathVariable Integer id) {
         try {
-            Empleado empleado=empleadoService.listarEmpleadoPorId(id);
-            return new ResponseEntity<Empleado>(empleado,HttpStatus.OK);
-        }catch (Exception e){
+            Empleado empleado = empleadoService.listarEmpleadoPorId(id);
+            return new ResponseEntity<Empleado>(empleado, HttpStatus.OK);
+        } catch (Exception e) {
             return new ResponseEntity<Empleado>(HttpStatus.NOT_FOUND);
         }
     }
 
     @GetMapping("/listtt/{id}")
-    public Empleado getEmpleado(@PathVariable Integer id){
+    public Empleado getEmpleado(@PathVariable Integer id) {
         return empleadoService.listarEmpleadoPorId(id);
     }
+
+
+    // obtener estado de empleado por id
+    @GetMapping("/usuario/estado/{id}")
+    public ResponseEntity<Object> getEstadoEmpleadoByIdUsuario(@PathVariable Long id) {
+        Optional<String> opEstado = empleadoService.getEstadoEmpleadoByIdUsuario(id);
+        if (!opEstado.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(opEstado.get(), HttpStatus.OK);
+    }
+
+    @PutMapping("/estado/{id}")
+    public ResponseEntity updateEstadoEmpleado(@PathVariable Long id, @RequestBody String estado) {
+        return empleadoService.updateEstadoEmpleado(id, estado);
+    }
+
+    @GetMapping("/usuario/estado/delivery/{id}")
+    public ResponseEntity<Object> getEstadoEntregandoEmpleadoByIdUsuario(@PathVariable Long id) {
+        Optional<String> opEstado = empleadoService.getEstadoEmpleadoByIdUsuario(id);
+        if (!opEstado.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        if (opEstado.get().equals("ENTREGANDO")) return new ResponseEntity<>(true, HttpStatus.OK);
+
+        return new ResponseEntity<>(false, HttpStatus.OK);
+
+
+    }
+
 }
 
 
