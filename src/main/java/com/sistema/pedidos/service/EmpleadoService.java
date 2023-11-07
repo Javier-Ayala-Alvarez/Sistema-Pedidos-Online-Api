@@ -1,5 +1,6 @@
 package com.sistema.pedidos.service;
 
+import com.sistema.pedidos.DTO.EmpleadoDTO;
 import com.sistema.pedidos.commons.GenericServiceApi;
 import com.sistema.pedidos.entity.Empleado;
 import org.springframework.data.domain.Page;
@@ -26,7 +27,7 @@ public interface EmpleadoService extends GenericServiceApi<Empleado,Integer> {
 
     public ResponseEntity updateEstadoEmpleado(Long id, String estado);
 
-    public Page<Empleado> listarEmpleadosPorPagina(Pageable pageable);
+    public Page<EmpleadoDTO> listarEmpleadosPorPagina(Pageable pageable);
 
 
 

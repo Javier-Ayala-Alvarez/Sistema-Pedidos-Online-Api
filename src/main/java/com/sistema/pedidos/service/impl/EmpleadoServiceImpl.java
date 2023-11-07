@@ -1,13 +1,20 @@
 package com.sistema.pedidos.service.impl;
 
+import com.sistema.pedidos.DTO.EmpleadoDTO;
+import com.sistema.pedidos.DTO.VentasDetalleDTO;
 import com.sistema.pedidos.commons.GenericServiceImpl;
 import com.sistema.pedidos.entity.Empleado;
+import com.sistema.pedidos.entity.Product;
 import com.sistema.pedidos.entity.Sucursal;
+import com.sistema.pedidos.entity.VentaDetalleEntity;
 import com.sistema.pedidos.repository.BranchOfficeRepository;
 import com.sistema.pedidos.repository.EmpleadoRepository;
 import com.sistema.pedidos.service.EmpleadoService;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
@@ -15,7 +22,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.PersistenceException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 
@@ -29,7 +39,8 @@ public class EmpleadoServiceImpl extends GenericServiceImpl<Empleado,Integer> im
         return empleadoRepository;
     }
 
-
+    @Autowired
+    private ModelMapper modelMapper;
     @Override
     public Page<Empleado> getAllWithPaginationByEstado(Pageable pageables, Boolean estado) {
 
@@ -92,8 +103,27 @@ public class EmpleadoServiceImpl extends GenericServiceImpl<Empleado,Integer> im
     }
 
     @Override
-    public Page<Empleado> listarEmpleadosPorPagina(Pageable pageable) {
-        return empleadoRepository.findAll(pageable);
+    public Page<EmpleadoDTO> listarEmpleadosPorPagina(Pageable pageable) {
+        Page<Empleado> page = empleadoRepository.findAll(pageable);
+
+        Page<EmpleadoDTO> result = new PageImpl<>(
+                page.get().map(entity -> mapearDTO(entity)).collect(Collectors.toList()),
+                pageable,
+                page.getTotalElements()
+        );
+
+        return result;
     }
 
+    private EmpleadoDTO mapearDTO( Empleado empleado) {
+        EmpleadoDTO emplea = modelMapper.map(empleado, EmpleadoDTO.class);
+        return emplea;
+    }
+
+    // Convierte de DTO a Entidad
+    private Empleado mapearEntidad(EmpleadoDTO empleadoDTO) {
+        Empleado emple = modelMapper.map(empleadoDTO, Empleado.class);
+        // Manejar el caso de product con id null
+        return emple;
+    }
 }
