@@ -93,8 +93,7 @@ public class EmpleadoServiceImpl extends GenericServiceImpl<Empleado,Integer> im
 
     @Override
     public Page<Empleado> listarEmpleadosPorPagina(Pageable pageable) {
-        //return empleadoRepository.findAll(pageable);
-        return empleadoRepository.getAll(pageable);
+        return empleadoRepository.findAll(pageable);
     }
 
 }
