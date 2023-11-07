@@ -55,7 +55,7 @@ public class EmpleadoController {
             @RequestParam(defaultValue = ConstantUtileria.ORDENAR_DEFECTO) String order,
             @RequestParam(defaultValue = ConstantUtileria.ORDENAR_DIRECCION_DEFECTO) boolean asc
     ) {
-        Page<Empleado> empleadoPage = empleadoService.getAllWithPagination(PageRequest.of(page, size, Sort.by(order)));
+        Page<Empleado> empleadoPage = empleadoService.listarEmpleadoPorPagina(PageRequest.of(page, size, Sort.by(order)));
        return new ResponseEntity<Page<Empleado>>(empleadoPage, HttpStatus.OK);
     }
 
