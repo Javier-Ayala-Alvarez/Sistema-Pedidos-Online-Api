@@ -26,7 +26,7 @@ public interface EmpleadoService extends GenericServiceApi<Empleado,Integer> {
 
     public ResponseEntity updateEstadoEmpleado(Long id, String estado);
 
-    public Page<Empleado> listarEmpleadoPorPagina(Pageable pageable);
+    public Page<Empleado> listarEmpleadosPorPagina(Pageable pageable);
 
 
 
