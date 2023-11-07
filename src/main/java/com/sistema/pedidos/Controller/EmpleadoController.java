@@ -48,7 +48,7 @@ public class EmpleadoController {
         return new ResponseEntity<>(empleadoService.getAll(), HttpStatus.OK);
     }
 
-    @GetMapping("/list/pageable")
+    @GetMapping("/list/pageables")
     public ResponseEntity<Page<Empleado>> listarEmpleadosPorPagina(
             @RequestParam(defaultValue = ConstantUtileria.NUMERO_PAGINA_DEFECTO) int page,
             @RequestParam(defaultValue = ConstantUtileria.MEDIDA_PAGINA_DEFECTO) int size,
