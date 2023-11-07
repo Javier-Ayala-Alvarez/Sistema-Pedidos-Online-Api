@@ -12,6 +12,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 public class DetalleDeVentaDTO implements Serializable {
+    private  Long id;
     private  String imagen;
     private  String nombre;
     private  Double precio;

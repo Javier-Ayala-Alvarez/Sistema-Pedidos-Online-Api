@@ -103,7 +103,8 @@ public class VentasServicesImpl implements VentasServices {
             // recorrer lista de detalle de ventas y asignar valores a ventasDetalleDTO
             detalles.forEach((Map<String, Object> row) -> {
                 DetalleDeVentaDTO detalleDTO = new DetalleDeVentaDTO();
-                detalleDTO.setImagen((String) row.get("imagen"));
+                detalleDTO.setId(Long.parseLong(row.get("id").toString()));
+                detalleDTO.setImagen((String) row.get("img"));
                 detalleDTO.setNombre((String) row.get("nombre"));
                 detalleDTO.setPrecio((Double) row.get("precio"));
                 detalleDTO.setCantidad((Integer) row.get("cantidad"));

@@ -77,7 +77,7 @@ public interface VentasRepository extends JpaRepository<VentaEntity, Long> {
 
     //obtener detalle de ventas por id de ventas
     @Query(value = "\n" +
-            "SELECT\n" +
+            "SELECT vd.id_venta_detalle as id,\n" +
             "    CASE\n" +
             "        WHEN vd.producto_id IS NOT NULL THEN p.url_imagen\n" +
             "        ELSE pm.url_imagen\n" +
