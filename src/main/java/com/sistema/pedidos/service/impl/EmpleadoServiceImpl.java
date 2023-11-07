@@ -91,4 +91,9 @@ public class EmpleadoServiceImpl extends GenericServiceImpl<Empleado,Integer> im
         return ResponseEntity.unprocessableEntity().build();
     }
 
+    @Override
+    public Page<Empleado> listarEmpleadosPorPagina(Pageable pageable) {
+        return empleadoRepository.findAll(pageable);
+    }
+
 }
