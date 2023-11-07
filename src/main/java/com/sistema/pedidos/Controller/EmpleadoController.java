@@ -1,5 +1,6 @@
 package com.sistema.pedidos.Controller;
 
+import com.sistema.pedidos.DTO.EmpleadoDTO;
 import com.sistema.pedidos.Utileria.ConstantUtileria;
 import com.sistema.pedidos.entity.*;
 import com.sistema.pedidos.repository.BranchOfficeRepository;
@@ -49,15 +50,15 @@ public class EmpleadoController {
     }
 
     @GetMapping("/list/pageable")
-    public ResponseEntity<Page<Empleado>> listarEmpleadosPorPagina(
+    public ResponseEntity<Page<EmpleadoDTO>> listarEmpleadosPorPagina(
             @RequestParam(defaultValue = ConstantUtileria.NUMERO_PAGINA_DEFECTO) int page,
             @RequestParam(defaultValue = ConstantUtileria.MEDIDA_PAGINA_DEFECTO) int size,
             @RequestParam(defaultValue = ConstantUtileria.ORDENAR_DEFECTO) String order,
             @RequestParam(defaultValue = ConstantUtileria.ORDENAR_DIRECCION_DEFECTO) boolean asc
     ) {
-        Page<Empleado> empleadoPage = empleadoService.listarEmpleadosPorPagina(
+        Page<EmpleadoDTO> empleadoPage = empleadoService.listarEmpleadosPorPagina(
             PageRequest.of(page, size, Sort.by(order)));
-       return new ResponseEntity<Page<Empleado>>(empleadoPage, HttpStatus.OK);
+       return new ResponseEntity<Page<EmpleadoDTO>>(empleadoPage, HttpStatus.OK);
     }
 
     @PostMapping("/new")
