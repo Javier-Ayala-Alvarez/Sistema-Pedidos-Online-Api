@@ -75,5 +75,28 @@ public interface VentasRepository extends JpaRepository<VentaEntity, Long> {
     @Query(value = "update ventas set comentario_entrega = :comentario where id_venta = :id ;", nativeQuery = true)
     int agregarComentarioAVenta(@Param("id") Long id, @Param("comentario") String comentario);
 
+    //obtener detalle de ventas por id de ventas
+    @Query(value = "\n" +
+            "SELECT\n" +
+            "    CASE\n" +
+            "        WHEN vd.producto_id IS NOT NULL THEN p.url_imagen\n" +
+            "        ELSE pm.url_imagen\n" +
+            "        END AS img,\n" +
+            "    CASE\n" +
+            "        WHEN vd.producto_id IS NOT NULL THEN p.nombre\n" +
+            "        ELSE pm.nombre\n" +
+            "        END AS nombre,\n" +
+            "    CASE\n" +
+            "        WHEN vd.producto_id IS NOT NULL THEN p.precio_venta\n" +
+            "        ELSE pm.precio_total\n" +
+            "        END AS precio,\n" +
+            "    vd.cantidad,\n" +
+            "    vd.precio_total as total\n" +
+            "FROM ventas_detalle vd\n" +
+            "         LEFT JOIN public.producto p ON p.id_producto = vd.producto_id\n" +
+            "         LEFT JOIN public.plato_menu pm ON pm.id = vd.plato_id\n" +
+            "WHERE vd.venta_id = :id ;", nativeQuery = true)
+    List<Map<String, Object>> detalleVentaPorId(@Param("id") Long id);
+
 
 }

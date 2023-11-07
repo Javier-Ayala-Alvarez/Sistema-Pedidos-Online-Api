@@ -25,6 +25,5 @@ public class VentasDeliveryDTO  {
     private Double altitud;
     private Double longitud;
     private String estado; //p = pedido; c = preparando en cocina; d = despacho; e = entregado al cliente
-    private List<ProductDTO> productos;
-    private List<PlatoDTO> plato;
+    private List<DetalleDeVentaDTO> ventasDetalleDTO;
 }

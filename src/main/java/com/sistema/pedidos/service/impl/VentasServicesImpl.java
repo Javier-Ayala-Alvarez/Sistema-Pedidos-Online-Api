@@ -1,9 +1,6 @@
 package com.sistema.pedidos.service.impl;
 
-import com.sistema.pedidos.DTO.PlatoDTO;
-import com.sistema.pedidos.DTO.ProductDTO;
-import com.sistema.pedidos.DTO.VentasDTO;
-import com.sistema.pedidos.DTO.VentasDeliveryDTO;
+import com.sistema.pedidos.DTO.*;
 import com.sistema.pedidos.Utileria.EstadoEmpleado;
 import com.sistema.pedidos.Utileria.EstadoPedido;
 import com.sistema.pedidos.entity.VentaEntity;
@@ -20,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -99,20 +97,23 @@ public class VentasServicesImpl implements VentasServices {
                 ventasDTO.setEstado((String) row.get("estado"));
             });
 
+            // generar lista de detalle de ventas
+            List<DetalleDeVentaDTO> ventasDetalle  = new ArrayList<>();
+            List<Map<String, Object>> detalles =  this.ventasRepository.detalleVentaPorId(ventasDTO.getId());
+            // recorrer lista de detalle de ventas y asignar valores a ventasDetalleDTO
+            detalles.forEach((Map<String, Object> row) -> {
+                DetalleDeVentaDTO detalleDTO = new DetalleDeVentaDTO();
+                detalleDTO.setImagen((String) row.get("imagen"));
+                detalleDTO.setNombre((String) row.get("nombre"));
+                detalleDTO.setPrecio((Double) row.get("precio"));
+                detalleDTO.setCantidad((Integer) row.get("cantidad"));
+                detalleDTO.setTotal(Double.parseDouble(row.get("total").toString()));
+
+                ventasDetalle.add(detalleDTO);
+            });
+            ventasDTO.setVentasDetalleDTO(ventasDetalle);
 
 
-
-            // generar objeto optional con cada uno de los listados de productoDTO y PlatoDTO
-            Optional<List<ProductDTO>> listaProductos = Optional.ofNullable(productServices.listarProductosPorDetallePedido(ventasDTO.getId()));
-            Optional<List<PlatoDTO>> listaPlatos = Optional.ofNullable(platoServices.getPlatosByVentasDetalle(ventasDTO.getId()));
-
-            if (!(listaPlatos.isPresent() && listaProductos.isPresent())) {
-                return new ResponseEntity<>("No existen productos asociados a la venta: " + ventasDTO.getId(), HttpStatus.BAD_REQUEST);
-            }
-
-            // asignar listas de productos y platos a ventasDTO
-            if (listaProductos.isPresent()) ventasDTO.setProductos(listaProductos.get());
-            if (listaPlatos.isPresent()) ventasDTO.setPlato(listaPlatos.get());
 
             // retornar ventasDTO
             return new ResponseEntity<>(ventasDTO, HttpStatus.OK);
