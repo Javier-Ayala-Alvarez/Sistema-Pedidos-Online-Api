@@ -5,10 +5,12 @@ import com.sistema.pedidos.entity.VentaEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Map;
 
@@ -68,12 +70,16 @@ public interface VentasRepository extends JpaRepository<VentaEntity, Long> {
 
 
     // cambiar estado de ventas
+    @Transactional
+    @Modifying
     @Query(value = "update ventas set estado = :estado where id_venta = :id ;", nativeQuery = true)
-    int cambiarEstadoDeVenta(@Param("id") Long id, @Param("estado") String estado);
+    void cambiarEstadoDeVenta(@Param("id") Long id, @Param("estado") String estado);
 
     // agregar comentario a ventas
+    @Transactional
+    @Modifying
     @Query(value = "update ventas set comentario_entrega = :comentario where id_venta = :id ;", nativeQuery = true)
-    int agregarComentarioAVenta(@Param("id") Long id, @Param("comentario") String comentario);
+    void agregarComentarioAVenta(@Param("id") Long id, @Param("comentario") String comentario);
 
     //obtener detalle de ventas por id de ventas
     @Query(value = "\n" +

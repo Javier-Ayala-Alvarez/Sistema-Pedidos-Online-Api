@@ -131,19 +131,21 @@ public class VentasServicesImpl implements VentasServices {
 
     // cambiar estado del pedido
     public ResponseEntity<Object> cambiarEstadoPedido(Long id, String estado) {
-       if (ventasRepository.cambiarEstadoDeVenta(id, estado) == 1) {
-            return new ResponseEntity<>("Pedido :" + estado, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("No se pudo actualizar el estado del pedido", HttpStatus.UNPROCESSABLE_ENTITY);
+        try {
+            ventasRepository.cambiarEstadoDeVenta(id, estado);
+            return new ResponseEntity<>( HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>( HttpStatus.UNPROCESSABLE_ENTITY);
         }
     }
 
     // agregar comentario a pedido
     public ResponseEntity agregarComentarioPedido(Long id, String comentario) {
-        if (ventasRepository.agregarComentarioAVenta(id, comentario) == 1) {
-            return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
+        try {
+            ventasRepository.agregarComentarioAVenta(id, comentario);
+            return new ResponseEntity<>( HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>( HttpStatus.UNPROCESSABLE_ENTITY);
         }
     }
 

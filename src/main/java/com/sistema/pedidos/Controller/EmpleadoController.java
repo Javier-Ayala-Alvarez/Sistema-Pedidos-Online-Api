@@ -1,6 +1,7 @@
 package com.sistema.pedidos.Controller;
 
 import com.sistema.pedidos.DTO.EmpleadoDTO;
+import com.sistema.pedidos.DTO.TextoDTO;
 import com.sistema.pedidos.Utileria.ConstantUtileria;
 import com.sistema.pedidos.entity.*;
 import com.sistema.pedidos.repository.BranchOfficeRepository;
@@ -165,9 +166,9 @@ public class EmpleadoController {
         return new ResponseEntity<>(opEstado.get(), HttpStatus.OK);
     }
 
-    @PutMapping("/estado/{id}")
-    public ResponseEntity updateEstadoEmpleado(@PathVariable Long id, @RequestBody String estado) {
-        return empleadoService.updateEstadoEmpleado(id, estado);
+    @PutMapping("/estadoEntrega")
+    public ResponseEntity updateEstadoEmpleado( @RequestBody TextoDTO estado) {
+        return empleadoService.updateEstadoEmpleado( estado.getId(), estado.getTexto());
     }
 
     @GetMapping("/usuario/estado/delivery/{id}")

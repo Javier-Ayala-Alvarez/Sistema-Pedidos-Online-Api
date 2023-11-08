@@ -1,5 +1,6 @@
 package com.sistema.pedidos.Controller;
 
+import com.sistema.pedidos.DTO.TextoDTO;
 import com.sistema.pedidos.DTO.VentasDTO;
 import com.sistema.pedidos.Utileria.ConstantUtileria;
 import com.sistema.pedidos.service.VentasServices;
@@ -49,6 +50,18 @@ public class VentasController {
     @GetMapping("/delivery/{id}")
     public ResponseEntity<Object> consultaPedidoPorDelivery(@PathVariable("id") Long id) {
         return ventasServices.detalleVentasPorIdEmpleado(id);
+    }
+
+    // cambiar estado del pedido
+    @PutMapping("/cambiarEstado")
+    public ResponseEntity<Object> cambiarEstadoPedido(@RequestBody TextoDTO texto) {
+        return ventasServices.cambiarEstadoPedido(texto.getId(), texto.getTexto());
+    }
+
+    // agregar comentario al pedido
+    @PutMapping("/agregarComentario")
+    public ResponseEntity<Object> agregarComentarioPedido(@RequestBody TextoDTO texto) {
+        return ventasServices.agregarComentarioPedido(texto.getId(), texto.getTexto());
     }
 
 }

@@ -12,5 +12,7 @@ public interface VentasServices {
 
     public ResponseEntity<Page<VentasDTO>> listar(long nombre, Pageable pageable);
 
+    ResponseEntity agregarComentarioPedido(Long id, String comentario);
+    ResponseEntity<Object> cambiarEstadoPedido(Long id, String estado);
 
 }
