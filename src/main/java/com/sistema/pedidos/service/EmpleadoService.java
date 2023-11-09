@@ -18,6 +18,8 @@ public interface EmpleadoService extends GenericServiceApi<Empleado,Integer> {
 
     Empleado listarEmpleadoPorId(Integer id);
 
+    EmpleadoDTO listarEmpleadoPorId2(Integer id);
+
     ResponseEntity<Empleado> actualizarEmpleado2(Empleado empleado,Integer id);
 
 

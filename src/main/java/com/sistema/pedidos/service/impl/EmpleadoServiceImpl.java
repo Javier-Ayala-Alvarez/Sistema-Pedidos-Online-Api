@@ -68,6 +68,13 @@ public class EmpleadoServiceImpl extends GenericServiceImpl<Empleado,Integer> im
     }
 
     @Override
+    public EmpleadoDTO listarEmpleadoPorId2(Integer id) {
+        Empleado empleado=empleadoRepository.findById(id).get();
+        EmpleadoDTO empleadoDTO=mapearDTO(empleado);
+        return empleadoDTO;
+    }
+
+    @Override
     public ResponseEntity<Empleado> actualizarEmpleado2(Empleado empleado, Integer id) {
         Optional<Empleado> empleadoOptional=empleadoRepository.findById(id);
         Optional<Sucursal> sucursalOptional=branchOfficeRepository.findById(empleado.getSucursal().getId());

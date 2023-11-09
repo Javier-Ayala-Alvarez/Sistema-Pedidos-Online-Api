@@ -183,6 +183,15 @@ public class EmpleadoController {
 
 
     }
+    @GetMapping("/list2/{id}")
+    public ResponseEntity<EmpleadoDTO> listarEmpleadoPorId2(@PathVariable Integer id) {
+        try {
+            EmpleadoDTO empleado = empleadoService.listarEmpleadoPorId2(id);
+            return new ResponseEntity<EmpleadoDTO>(empleado, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<EmpleadoDTO>(HttpStatus.NOT_FOUND);
+        }
+    }
 
 }
 
