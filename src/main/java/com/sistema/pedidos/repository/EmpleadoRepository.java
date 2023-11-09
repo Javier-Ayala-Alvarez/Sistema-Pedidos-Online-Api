@@ -1,5 +1,6 @@
 package com.sistema.pedidos.repository;
 
+import com.sistema.pedidos.DTO.EmpleadoDTO;
 import com.sistema.pedidos.entity.Category;
 import com.sistema.pedidos.entity.Empleado;
 import com.sistema.pedidos.entity.Sucursal;
@@ -24,6 +25,9 @@ public interface EmpleadoRepository extends JpaRepository<Empleado, Integer> {
 
     @Query(value = "SELECT * FROM empleado e WHERE  e.nombre LIKE ?1%", nativeQuery = true)
     Page<Empleado> listarEmpleadoPorNombrePagina(String CT_Nombre, Pageable pageable);
+
+    @Query(value = "SELECT * FROM empleado e WHERE  e.nombre LIKE ?1%", nativeQuery = true)
+    Page<Empleado> listarEmpleadoPorNombrePagina2(String CT_Nombre, Pageable pageable);
 
 
     // obtener estado de empleado por id

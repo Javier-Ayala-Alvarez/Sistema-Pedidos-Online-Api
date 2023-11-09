@@ -129,15 +129,15 @@ public class EmpleadoController {
     }
 
     @GetMapping("/list/search")
-    public ResponseEntity<Page<Empleado>> listarEmpleadosPorNombrePagina(
+    public ResponseEntity<Page<EmpleadoDTO>> listarEmpleadosPorNombrePagina(
             @RequestParam("empleado") String emp_Nombre,
             @RequestParam(defaultValue = ConstantUtileria.NUMERO_PAGINA_DEFECTO) int page,
             @RequestParam(defaultValue = ConstantUtileria.MEDIDA_PAGINA_DEFECTO) int size,
             @RequestParam(defaultValue = ConstantUtileria.ORDENAR_DIRECCION_DEFECTO) boolean asc
     ) {
-        Page<Empleado> EmpleadoPage = empleadoService.listarEmpleadoPorNombrePagina(emp_Nombre,
+        Page<EmpleadoDTO> EmpleadoPage = empleadoService.listarEmpleadoPorNombrePagina2(emp_Nombre,
                 PageRequest.of(page, size));
-        return new ResponseEntity<Page<Empleado>>(EmpleadoPage, HttpStatus.OK);
+        return new ResponseEntity<Page<EmpleadoDTO>>(EmpleadoPage, HttpStatus.OK);
     }
 
     @GetMapping("/list/{id}")

@@ -16,6 +16,8 @@ public interface EmpleadoService extends GenericServiceApi<Empleado,Integer> {
 
     Page<Empleado>listarEmpleadoPorNombrePagina(String CT_Nombre, Pageable pageable);
 
+    Page<EmpleadoDTO>listarEmpleadoPorNombrePagina2(String CT_Nombre, Pageable pageable);
+
     Empleado listarEmpleadoPorId(Integer id);
 
     EmpleadoDTO listarEmpleadoPorId2(Integer id);

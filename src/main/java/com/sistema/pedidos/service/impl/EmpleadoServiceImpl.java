@@ -63,6 +63,19 @@ public class EmpleadoServiceImpl extends GenericServiceImpl<Empleado,Integer> im
     }
 
     @Override
+    public Page<EmpleadoDTO> listarEmpleadoPorNombrePagina2(String CT_Nombre, Pageable pageable) {
+        Page<Empleado> page = empleadoRepository.listarEmpleadoPorNombrePagina2(CT_Nombre,pageable);
+
+        Page<EmpleadoDTO> result = new PageImpl<>(
+                page.get().map(entity -> mapearDTO(entity)).collect(Collectors.toList()),
+                pageable,
+                page.getTotalElements()
+        );
+
+        return result;
+    }
+
+    @Override
     public Empleado listarEmpleadoPorId(Integer id) {
         return empleadoRepository.findById(id).get();
     }
