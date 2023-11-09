@@ -1,5 +1,6 @@
 package com.sistema.pedidos.repository;
 
+import com.sistema.pedidos.DTO.VentasDeliveryDTO;
 import com.sistema.pedidos.Utileria.EstadoEmpleado;
 import com.sistema.pedidos.entity.VentaEntity;
 import org.springframework.data.domain.Page;
@@ -15,7 +16,6 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-
 public interface VentasRepository extends JpaRepository<VentaEntity, Long> {
     @Query(value = "SELECT * FROM ventas c WHERE c.usuario_id = ?1", nativeQuery = true)
     Page<VentaEntity> listarPorNombrePagina(Long id_Usuario, Pageable pageable);
@@ -29,13 +29,13 @@ public interface VentasRepository extends JpaRepository<VentaEntity, Long> {
             "       v.total,\n" +
             "       v.altitud            as latitud,\n" +
             "       v.longitud,\n" +
-            "       v.estado\n" +
+            "       v.estado, v.fecha \n" +
             "from empleado e\n" +
             "         inner join public.venta_empleado ve on e.id_empleado = ve.empleado_id\n" +
             "         inner join ventas v on ve.venta_id = v.id_venta\n" +
             "where e.usuario_id = :id \n" +
-            "  and e.estado_empleado = :estado ;", nativeQuery = true)
-    List<Map<String, Object>> ventasPorEmpleado(@Param("id") Long id, @Param("estado") String estado);
+            "  and e.estado_empleado = :estado and v.estado =:vestado  ", nativeQuery = true)
+    List<Map<String, Object>> ventasPorEmpleado(@Param("id") Long id, @Param("estado") String estado, @Param("vestado") String ventasEstado);
 
 
     @Query(value = "\n" +
@@ -47,7 +47,7 @@ public interface VentasRepository extends JpaRepository<VentaEntity, Long> {
             "       v.total,\n" +
             "       v.altitud            as latitud,\n" +
             "       v.longitud,\n" +
-            "       v.estado\n" +
+            "       v.estado , v.fecha\n" +
             "from empleado e\n" +
             "         inner join public.venta_empleado ve on e.id_empleado = ve.empleado_id\n" +
             "         inner join ventas v on ve.venta_id = v.id_venta\n" +
@@ -64,8 +64,8 @@ public interface VentasRepository extends JpaRepository<VentaEntity, Long> {
             "       v.total,\n" +
             "       v.altitud            as latitud,\n" +
             "       v.longitud,\n" +
-            "       v.estado\n" +
-            "from ventas v  where v.sucursal_id = (select e.sucursal_id from empleado e where e.usuario_id = :id ) and v.estado = :estado ;", nativeQuery = true)
+            "       v.estado , v.fecha \n" +
+            "from ventas v  where v.sucursal_id = (select e.sucursal_id from empleado e where e.usuario_id =:id ) and v.estado = :estado ;", nativeQuery = true)
     List<Map<String, Object>> ventasPendientesPorSucursalDelEmpleado(@Param("id") Long id, @Param("estado") String estado);
 
 

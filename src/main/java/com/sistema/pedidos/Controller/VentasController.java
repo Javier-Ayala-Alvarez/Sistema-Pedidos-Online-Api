@@ -64,4 +64,17 @@ public class VentasController {
         return ventasServices.agregarComentarioPedido(texto.getId(), texto.getTexto());
     }
 
+    // Controlador que devuelve todas los deliverys de un usuario
+    @GetMapping("/deliverys/{id}")
+    public ResponseEntity<Object> obtenerEntregasPorIdEmpleado(@PathVariable("id") Long id) {
+        return ventasServices.obtenerEntregasPorIdEmpleado(id);
+    }
+
+    // Controlador que devuelve el detalle de un pedido
+    @GetMapping("/pedido/detalle/{id}")
+    public ResponseEntity<Object> detalleDePedidoPorIdDeVenta(@PathVariable("id") Long id) {
+        return ventasServices.detalleDePedidoPorIdDeVenta(id);
+    }
+
+
 }

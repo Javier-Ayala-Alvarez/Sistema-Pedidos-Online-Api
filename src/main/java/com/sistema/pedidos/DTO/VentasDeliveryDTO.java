@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigInteger;
+import java.util.Date;
 import java.util.List;
 
 
@@ -25,5 +26,6 @@ public class VentasDeliveryDTO  {
     private Double altitud;
     private Double longitud;
     private String estado; //p = pedido; c = preparando en cocina; d = despacho; e = entregado al cliente
+    private Date fecha;
     private List<DetalleDeVentaDTO> ventasDetalleDTO;
 }

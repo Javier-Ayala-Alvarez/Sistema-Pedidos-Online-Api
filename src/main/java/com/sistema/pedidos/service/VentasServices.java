@@ -15,4 +15,8 @@ public interface VentasServices {
     ResponseEntity agregarComentarioPedido(Long id, String comentario);
     ResponseEntity<Object> cambiarEstadoPedido(Long id, String estado);
 
+    public ResponseEntity<Object> obtenerEntregasPorIdEmpleado(Long id);
+
+    public ResponseEntity<Object> detalleDePedidoPorIdDeVenta(Long id);
+
 }

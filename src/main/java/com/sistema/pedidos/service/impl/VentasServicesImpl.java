@@ -53,6 +53,7 @@ public class VentasServicesImpl implements VentasServices {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @Override
     public ResponseEntity<Page<VentasDTO>> listar(long nombre, Pageable pageable) {
         try {
@@ -79,7 +80,7 @@ public class VentasServicesImpl implements VentasServices {
     public ResponseEntity<Object> detalleVentasPorIdEmpleado(Long id) {
         try {
 
-            List<Map<String, Object>> resultado = ventasRepository.ventasPorEmpleado(id, EstadoEmpleado.ENTREGANDO.name());
+            List<Map<String, Object>> resultado = ventasRepository.ventasPorEmpleado(id, EstadoEmpleado.ENTREGANDO.name(), EstadoPedido.PENDIENTE.name());
             // crear instancia de ventasDTO
             VentasDeliveryDTO ventasDTO = new VentasDeliveryDTO();
 
@@ -95,11 +96,12 @@ public class VentasServicesImpl implements VentasServices {
                 ventasDTO.setAltitud((Double) row.get("latitud"));
                 ventasDTO.setLongitud((Double) row.get("longitud"));
                 ventasDTO.setEstado((String) row.get("estado"));
+                ventasDTO.setFecha((java.util.Date) row.get("fecha"));
             });
 
             // generar lista de detalle de ventas
-            List<DetalleDeVentaDTO> ventasDetalle  = new ArrayList<>();
-            List<Map<String, Object>> detalles =  this.ventasRepository.detalleVentaPorId(ventasDTO.getId());
+            List<DetalleDeVentaDTO> ventasDetalle = new ArrayList<>();
+            List<Map<String, Object>> detalles = this.ventasRepository.detalleVentaPorId(ventasDTO.getId());
             // recorrer lista de detalle de ventas y asignar valores a ventasDetalleDTO
             detalles.forEach((Map<String, Object> row) -> {
                 DetalleDeVentaDTO detalleDTO = new DetalleDeVentaDTO();
@@ -110,10 +112,10 @@ public class VentasServicesImpl implements VentasServices {
                 detalleDTO.setCantidad((Integer) row.get("cantidad"));
                 detalleDTO.setTotal(Double.parseDouble(row.get("total").toString()));
 
+
                 ventasDetalle.add(detalleDTO);
             });
             ventasDTO.setVentasDetalleDTO(ventasDetalle);
-
 
 
             // retornar ventasDTO
@@ -133,9 +135,9 @@ public class VentasServicesImpl implements VentasServices {
     public ResponseEntity<Object> cambiarEstadoPedido(Long id, String estado) {
         try {
             ventasRepository.cambiarEstadoDeVenta(id, estado);
-            return new ResponseEntity<>( HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>( HttpStatus.UNPROCESSABLE_ENTITY);
+            return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
         }
     }
 
@@ -143,13 +145,77 @@ public class VentasServicesImpl implements VentasServices {
     public ResponseEntity agregarComentarioPedido(Long id, String comentario) {
         try {
             ventasRepository.agregarComentarioAVenta(id, comentario);
-            return new ResponseEntity<>( HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>( HttpStatus.UNPROCESSABLE_ENTITY);
+            return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
         }
     }
 
 
+    // obtener todas las ventas por id de empleado
+    public ResponseEntity<Object> obtenerEntregasPorIdEmpleado(Long id) {
+        try {
+            List<Map<String, Object>> resultado = ventasRepository.todasLasEntregasPorEmpleado(id);
+            // lista de ventasDTO
+            List<VentasDeliveryDTO> ventasDTOS = new ArrayList<>();
+
+            // recorrer lista resultado
+            resultado.forEach((Map<String, Object> row) -> {
+                // crear instancia de ventasDTO
+
+                VentasDeliveryDTO venta = new VentasDeliveryDTO();
+                venta.setId(Long.parseLong(row.get("id").toString()));
+                venta.setNombreEncargado((String) row.get("nombre"));
+                venta.setCorreoEncargado((String) row.get("correo"));
+                venta.setNumeroTelefono((String) row.get("telefono"));
+                venta.setOtrasIndicaciones((String) row.get("indicaciones"));
+                venta.setTotal((Double) row.get("total"));
+                venta.setAltitud((Double) row.get("latitud"));
+                venta.setLongitud((Double) row.get("longitud"));
+                venta.setEstado((String) row.get("estado"));
+                venta.setFecha((java.util.Date) row.get("fecha"));
+
+                ventasDTOS.add(venta);
+            });
+
+            return new ResponseEntity<>(ventasDTOS, HttpStatus.OK);
+
+        } catch (Exception e) {
+            // En caso de error, maneja la excepción y devuelve una respuesta de error
+            System.out.println(e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    // obtener detalleDePedidoPorIdDeVenta
+    public ResponseEntity<Object> detalleDePedidoPorIdDeVenta(Long id) {
+        try {
+            List<Map<String, Object>> resultado = ventasRepository.detalleVentaPorId(id);
+            // lista de ventasDTO
+            List<DetalleDeVentaDTO> ventasDTOS = new ArrayList<>();
+
+            // recorrer lista resultado
+            resultado.forEach((Map<String, Object> row) -> {
+                // crear instancia de ventasDTO
+
+                DetalleDeVentaDTO detalleDTO = new DetalleDeVentaDTO();
+                detalleDTO.setId(Long.parseLong(row.get("id").toString()));
+                detalleDTO.setImagen((String) row.get("img"));
+                detalleDTO.setNombre((String) row.get("nombre"));
+                detalleDTO.setPrecio((Double) row.get("precio"));
+                detalleDTO.setCantidad((Integer) row.get("cantidad"));
+                detalleDTO.setTotal(Double.parseDouble(row.get("total").toString()));
+                ventasDTOS.add(detalleDTO);
+            });
+
+            return new ResponseEntity<>(ventasDTOS, HttpStatus.OK);
+
+        } catch (Exception e) {
+            // En caso de error, maneja la excepción y devuelve una respuesta de error
+            System.out.println(e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
 
 
