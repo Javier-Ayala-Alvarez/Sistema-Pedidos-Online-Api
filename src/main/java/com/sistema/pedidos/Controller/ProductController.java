@@ -52,7 +52,7 @@ public class ProductController {
 
         Page<Product> productPage=productService.listarProductPorPagina(
                 PageRequest.of(page,size, Sort.by(order)));
-        return new ResponseEntity<Page<Product>>(productPage, HttpStatus.ACCEPTED);
+        return new ResponseEntity<Page<Product>>(productPage, HttpStatus.OK);
     }
 
     @GetMapping("/list")
