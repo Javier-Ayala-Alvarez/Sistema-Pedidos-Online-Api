@@ -1,19 +1,23 @@
 package com.sistema.pedidos.Controller;
 
+import com.sistema.pedidos.DTO.ResportVentaDTO;
 import com.sistema.pedidos.DTO.TextoDTO;
 import com.sistema.pedidos.DTO.VentasDTO;
 import com.sistema.pedidos.Utileria.ConstantUtileria;
 import com.sistema.pedidos.service.VentasServices;
+import com.sistema.pedidos.service.impl.VentasServicesImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RestController
@@ -22,6 +26,9 @@ import javax.validation.Valid;
 public class VentasController {
     @Autowired
     VentasServices ventasServices;
+
+    @Autowired
+    VentasServicesImpl ventasServicesImpl;
 
     @PostMapping("/guardar")
     public ResponseEntity<VentasDTO> guardar(@Valid @RequestBody VentasDTO ventasDTOList) {
@@ -62,6 +69,11 @@ public class VentasController {
     @PutMapping("/agregarComentario")
     public ResponseEntity<Object> agregarComentarioPedido(@RequestBody TextoDTO texto) {
         return ventasServices.agregarComentarioPedido(texto.getId(), texto.getTexto());
+    }
+
+    @GetMapping("/listarReporteVentas/{fecha}")
+    public ResponseEntity<Object> listarReporteVentas(@PathVariable("fecha") String fecha){
+        return new ResponseEntity<>(ventasServices.listarReporteVentas(fecha), HttpStatus.OK);
     }
 
 }

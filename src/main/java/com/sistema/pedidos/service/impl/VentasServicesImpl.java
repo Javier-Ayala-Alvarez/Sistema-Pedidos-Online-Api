@@ -8,7 +8,6 @@ import com.sistema.pedidos.repository.VentasRepository;
 import com.sistema.pedidos.service.VentasServices;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -20,7 +19,6 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -146,6 +144,43 @@ public class VentasServicesImpl implements VentasServices {
             return new ResponseEntity<>( HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>( HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+    }
+    @Override
+
+   /* public ResponseEntity<List<Object>> listarReporteVentas(String fecha){
+        try {
+            List<Object> resultado = ventasRepository.listarReporteVentas(fecha);
+            // crear instancia de ventasDTO
+
+            return new ResponseEntity<>(resultado, HttpStatus.OK);
+        }catch (Exception e){
+            System.out.println(e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }*/
+
+    public ResponseEntity<List<ResportVentaDTO>> listarReporteVentas(String fecha) {
+        try {
+            List<Object[]> resultado = ventasRepository.listarReporteVentas(fecha);
+
+            // Mapear los resultados a ReporteVentasDTO manualmente
+            List<ResportVentaDTO> reporteVentasDTOList = new ArrayList<>();
+            for (Object[] objArray : resultado) {
+                ResportVentaDTO dto = new ResportVentaDTO();
+                dto.setId((BigInteger) objArray[0]);
+                dto.setNombre((String) objArray[1]);
+                dto.setDireccion((String) objArray[2]);
+                dto.setVentas((Double) objArray[3]);
+                // Agrega las demás propiedades según las columnas de tu reporte
+
+                reporteVentasDTOList.add(dto);
+            }
+
+            return new ResponseEntity<>(reporteVentasDTOList, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

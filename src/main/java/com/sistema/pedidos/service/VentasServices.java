@@ -1,9 +1,12 @@
 package com.sistema.pedidos.service;
 
+import com.sistema.pedidos.DTO.ResportVentaDTO;
 import com.sistema.pedidos.DTO.VentasDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+
+import java.util.List;
 
 public interface VentasServices {
     public ResponseEntity<VentasDTO> save(VentasDTO ventasDTO);
@@ -14,5 +17,7 @@ public interface VentasServices {
 
     ResponseEntity agregarComentarioPedido(Long id, String comentario);
     ResponseEntity<Object> cambiarEstadoPedido(Long id, String estado);
+
+    public ResponseEntity<List<ResportVentaDTO>> listarReporteVentas(String fecha);
 
 }
