@@ -4,6 +4,7 @@ import com.sistema.pedidos.DTO.ResportVentaDTO;
 import com.sistema.pedidos.DTO.TextoDTO;
 import com.sistema.pedidos.DTO.VentasDTO;
 import com.sistema.pedidos.Utileria.ConstantUtileria;
+import com.sistema.pedidos.Utileria.EstadoPedido;
 import com.sistema.pedidos.service.VentasServices;
 import com.sistema.pedidos.service.impl.VentasServicesImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,5 +89,21 @@ public class VentasController {
     public ResponseEntity<Object> listarReporteVentas(@PathVariable("fecha") String fecha){
         return new ResponseEntity<>(ventasServices.listarReporteVentas(fecha), HttpStatus.OK);
     }
+
+
+    // Controlador que devuelve todas los deliverys de un usuario con estado
+    @GetMapping("pedidos/sucursal{id}")
+    public ResponseEntity<Object> obtenerEntregasPorIdEmpleadoConEstado(@PathVariable("id") Long id) {
+        return ventasServices.obtenerEntregasPorIdEmpleadoConEstado(id, EstadoPedido.p.name());
+    }
+
+    // mcontrolador que recibe el idempleado y el idventa para insertar en la tabla venta_empleado
+    @PostMapping("/asignarEntrega")
+    public ResponseEntity<Object> asignarEntrega(@RequestBody TextoDTO texto) {
+        return ventasServices.asignarEntrega(texto.getId(), Long.parseLong(texto.getTexto()));
+    }
+
+
+
 
 }

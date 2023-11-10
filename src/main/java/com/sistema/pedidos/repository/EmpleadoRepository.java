@@ -4,6 +4,7 @@ import com.sistema.pedidos.DTO.EmpleadoDTO;
 import com.sistema.pedidos.entity.Category;
 import com.sistema.pedidos.entity.Empleado;
 import com.sistema.pedidos.entity.Sucursal;
+import org.hibernate.sql.Select;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -38,6 +39,11 @@ public interface EmpleadoRepository extends JpaRepository<Empleado, Integer> {
     @Modifying(clearAutomatically = true)
     @Query(value = "UPDATE empleado set estado_empleado = :estado  where usuario_id = :id ;", nativeQuery = true)
     int updateEstadoEmpleado(@Param("estado") String estado, @Param("id") Long id);
+
+   // obtener empleados con estado entregando
+   @Query("Select e from Empleado e where e.estadoEmpleado = :estado")
+   List<Empleado> empleadosConEstadoEntrega( @Param("estado") String estado);
+
 
 
 

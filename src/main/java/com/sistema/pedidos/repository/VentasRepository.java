@@ -117,4 +117,10 @@ public interface VentasRepository extends JpaRepository<VentaEntity, Long> {
             "\t\t\tORDER BY s.id",nativeQuery = true)
     List<Object[]> listarReporteVentas(String fecha);
 
+    // insertar idventas e idempleado en la tabla intermedia de empleado y ventas
+    @Transactional
+    @Modifying
+    @Query(value = "insert into venta_empleado (venta_id, empleado_id) values (:idVenta, :idEmpleado);", nativeQuery = true)
+    void insertarIdVentaIdEmpleado(@Param("idVenta") Long idVenta, @Param("idEmpleado") Long idEmpleado);
+
 }

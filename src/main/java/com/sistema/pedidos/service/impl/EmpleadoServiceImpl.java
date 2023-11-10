@@ -135,6 +135,11 @@ public class EmpleadoServiceImpl extends GenericServiceImpl<Empleado,Integer> im
         return result;
     }
 
+    @Override
+    public ResponseEntity<Object> empleadosConEstadoEntrega(String estado) {
+        return null;
+    }
+
     private EmpleadoDTO mapearDTO( Empleado empleado) {
         EmpleadoDTO emplea = modelMapper.map(empleado, EmpleadoDTO.class);
         return emplea;

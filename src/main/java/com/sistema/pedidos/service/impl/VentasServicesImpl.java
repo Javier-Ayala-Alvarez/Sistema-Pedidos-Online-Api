@@ -148,6 +148,7 @@ public class VentasServicesImpl implements VentasServices {
             return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
         }
     }
+
     @Override
 
    /* public ResponseEntity<List<Object>> listarReporteVentas(String fecha){
@@ -247,6 +248,69 @@ public class VentasServicesImpl implements VentasServices {
 
         } catch (Exception e) {
             // En caso de error, maneja la excepción y devuelve una respuesta de error
+            System.out.println(e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    public ResponseEntity<Object> obtenerEntregasPorIdEmpleadoConEstado(Long id, String estado) {
+        try {
+            List<Map<String, Object>> resultado = ventasRepository.ventasPendientesPorSucursalDelEmpleado(id, estado);
+            // lista de ventasDTO
+            List<VentasDeliveryDTO> ventasDTOS = new ArrayList<>();
+
+            // recorrer lista resultado
+            resultado.forEach((Map<String, Object> row) -> {
+                // crear instancia de ventasDTO
+
+                VentasDeliveryDTO venta = new VentasDeliveryDTO();
+                venta.setId(Long.parseLong(row.get("id").toString()));
+                venta.setNombreEncargado((String) row.get("nombre"));
+                venta.setCorreoEncargado((String) row.get("correo"));
+                venta.setNumeroTelefono((String) row.get("telefono"));
+                venta.setOtrasIndicaciones((String) row.get("indicaciones"));
+                venta.setTotal((Double) row.get("total"));
+                venta.setAltitud((Double) row.get("latitud"));
+                venta.setLongitud((Double) row.get("longitud"));
+                venta.setEstado((String) row.get("estado"));
+                venta.setFecha((java.util.Date) row.get("fecha"));
+
+                // detalle del pedido
+                List<Map<String, Object>> detalles = this.ventasRepository.detalleVentaPorId(venta.getId());
+                // generar lista de detalle de ventas
+                List<DetalleDeVentaDTO> ventasDetalle = new ArrayList<>();
+                // recorrer lista de detalle de ventas y asignar valores a ventasDetalleDTO
+                detalles.forEach((Map<String, Object> row2) -> {
+
+                            DetalleDeVentaDTO detalleDTO = new DetalleDeVentaDTO();
+                            detalleDTO.setId(Long.parseLong(row2.get("id").toString()));
+                            detalleDTO.setImagen((String) row2.get("img"));
+                            detalleDTO.setNombre((String) row2.get("nombre"));
+                            detalleDTO.setPrecio((Double) row2.get("precio"));
+                            detalleDTO.setCantidad((Integer) row2.get("cantidad"));
+                            detalleDTO.setTotal(Double.parseDouble(row2.get("total").toString()));
+                            ventasDetalle.add(detalleDTO);
+                        }
+                );
+                venta.setVentasDetalleDTO(ventasDetalle);
+                ventasDTOS.add(venta);
+            });
+
+            return new ResponseEntity<>(ventasDTOS, HttpStatus.OK);
+
+        } catch (Exception e) {
+            // En caso de error, maneja la excepción y devuelve una respuesta de error
+            System.out.println(e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public ResponseEntity<Object> asignarEntrega(Long idEmpleado, Long idVenta){
+        try {
+            ventasRepository.insertarIdVentaIdEmpleado(idEmpleado, idVenta);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }catch (Exception e){
             System.out.println(e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
