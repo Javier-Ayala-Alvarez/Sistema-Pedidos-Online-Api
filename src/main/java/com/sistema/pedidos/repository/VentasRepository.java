@@ -1,6 +1,7 @@
 package com.sistema.pedidos.repository;
 
 import com.sistema.pedidos.DTO.VentasDeliveryDTO;
+import com.sistema.pedidos.DTO.ResportVentaDTO;
 import com.sistema.pedidos.Utileria.EstadoEmpleado;
 import com.sistema.pedidos.entity.VentaEntity;
 import org.springframework.data.domain.Page;
@@ -104,5 +105,16 @@ public interface VentasRepository extends JpaRepository<VentaEntity, Long> {
             "WHERE vd.venta_id = :id ;", nativeQuery = true)
     List<Map<String, Object>> detalleVentaPorId(@Param("id") Long id);
 
+    @Transactional
+    @Query(value = "SELECT \tDISTINCT s.id,\n" +
+            "\t\ts.nombre,\n" +
+            "\t\ts.direccion,  \n" +
+            "\t\t(SELECT SUM(total)\n" +
+            "\t\t FROM ventas WHERE sucursal_id=v.sucursal_id and estado='e' AND CAST(fecha AS VARCHAR)  LIKE ?1%) as ventas\n" +
+            "\tFROM sucursales s\n" +
+            "\t\tLEFT JOIN ventas v\n" +
+            "\t\t\tON s.id=v.sucursal_id \n" +
+            "\t\t\tORDER BY s.id",nativeQuery = true)
+    List<Object[]> listarReporteVentas(String fecha);
 
 }
