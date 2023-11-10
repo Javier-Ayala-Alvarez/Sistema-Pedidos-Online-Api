@@ -42,6 +42,10 @@ public class Product implements Serializable {
     @JsonIgnore
     @ManyToOne
     private  Promocion promocion;
+    @JsonIgnore
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "category")
+    private List<Plato> platosList;
 
     @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
