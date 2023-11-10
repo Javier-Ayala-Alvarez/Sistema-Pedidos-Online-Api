@@ -1,9 +1,9 @@
 package com.sistema.pedidos.Utileria;
 
 public enum EstadoPedido {
-    PENDIENTE,
-    EN_PROCESO,
-    ENTREGADO,
-    CANCELADO
+    p, // pedido
+    c, // cocina
+    d, // despacho
+    e // entregado
 
 }

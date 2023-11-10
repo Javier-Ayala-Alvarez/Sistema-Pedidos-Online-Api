@@ -40,7 +40,7 @@ public class VentasServicesImpl implements VentasServices {
     public ResponseEntity<VentasDTO> save(VentasDTO ventasDTO) {
         try {
             // Convierte el DTO a la entidad
-            ventasDTO.setEstado(EstadoPedido.PENDIENTE.name());
+            ventasDTO.setEstado(EstadoPedido.p.name());
             VentaEntity ventaEntity = mapearEntidad(ventasDTO);
             // Guarda la entidad en la base de datos
             ventaEntity = ventasRepository.save(ventaEntity);
@@ -80,7 +80,7 @@ public class VentasServicesImpl implements VentasServices {
     public ResponseEntity<Object> detalleVentasPorIdEmpleado(Long id) {
         try {
 
-            List<Map<String, Object>> resultado = ventasRepository.ventasPorEmpleado(id, EstadoEmpleado.ENTREGANDO.name(), EstadoPedido.PENDIENTE.name());
+            List<Map<String, Object>> resultado = ventasRepository.ventasPorEmpleado(id, EstadoEmpleado.ENTREGANDO.name(), EstadoPedido.d.name());
             // crear instancia de ventasDTO
             VentasDeliveryDTO ventasDTO = new VentasDeliveryDTO();
 
