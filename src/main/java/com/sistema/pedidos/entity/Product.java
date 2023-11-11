@@ -42,7 +42,7 @@ public class Product implements Serializable {
     @JsonIgnore
     @ManyToOne
     private  Promocion promocion;
-
+    @JsonIgnore
     @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<PlatoProducto> platoProducto;
