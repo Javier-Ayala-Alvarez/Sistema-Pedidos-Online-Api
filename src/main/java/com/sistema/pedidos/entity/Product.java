@@ -39,7 +39,6 @@ public class Product implements Serializable {
     @ManyToOne
     private Evento evento;
 
-    @JsonIgnore
     @ManyToOne
     private  Promocion promocion;
     @JsonIgnore
